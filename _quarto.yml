@@ -1,0 +1,38 @@
+# ═══════════════════════════════════════════════════════════════
+# _quarto.yml — Yash Tiwari Portfolio
+#
+# KEY SETTINGS:
+#   output-dir: docs   → GitHub Pages reads from /docs folder
+#   theme: none        → Zero Bootstrap/Quarto default styles
+#   css: styles/custom.css → Your single stylesheet (edit colors there)
+#
+# DEPLOY COMMANDS (run in order):
+#   quarto render            → builds the docs/ folder
+#   quarto publish gh-pages  → pushes docs/ to GitHub Pages
+# ═══════════════════════════════════════════════════════════════
+
+project:
+  type: website
+  output-dir: docs
+  resources:
+    - js/       # → copied to docs/js/   (main.js)
+    - assets/   # → copied to docs/assets/ (resume.pdf, profile.jpg)
+  render:
+    - "*.qmd"   # Only render .qmd files — excludes info.md and index.html
+
+website:
+  title: "Yash Tiwari — Portfolio"
+  navbar: false    # We build our own navbar in each page's HTML
+  sidebar: false
+
+format:
+  html:
+    theme: none         # Disable all Bootstrap / Quarto defaults
+    minimal: true       # Strip every optional Quarto scaffold element
+    css: styles/custom.css
+    include-in-header: _partials/head-extras.html   # Google Fonts + dark-mode init
+    include-after-body: _partials/scripts.html      # All JS (theme, typewriter, copy)
+    toc: false
+    anchor-sections: false
+    smooth-scroll: false
+    html-math-method: plain

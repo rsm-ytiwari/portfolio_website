@@ -1,0 +1,284 @@
+---
+pagetitle: "Yash Tiwari — Portfolio"
+page-layout: custom
+---
+
+```{=html}
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR
+     EDIT NAV LINKS HERE — update href values to change destinations.
+     The active link is set automatically by JS (js/main.js).
+     GitHub / LinkedIn hrefs are also here.
+═══════════════════════════════════════════════════════════════ -->
+<header class="navbar">
+  <a href="index.html" class="nav-logo">YT.</a>
+
+  <nav class="nav-links">
+    <a href="index.html"    class="nav-link">Home</a>
+    <a href="projects.html" class="nav-link">Projects</a>
+    <a href="resume.html"   class="nav-link">Resume</a>
+    <a href="about.html"    class="nav-link">About</a>
+  </nav>
+
+  <div class="nav-right">
+    <!-- GitHub — EDIT href -->
+    <a href="https://github.com/rsm-ytiwari" target="_blank" rel="noopener" class="nav-icon" aria-label="GitHub">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+      </svg>
+    </a>
+    <!-- LinkedIn — EDIT href -->
+    <a href="https://www.linkedin.com/in/yash-tiwari-here/" target="_blank" rel="noopener" class="nav-icon" aria-label="LinkedIn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+    <!-- Search (decorative — wire up if needed) -->
+    <button class="nav-icon" aria-label="Search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+    <!-- Theme toggle -->
+    <button class="theme-pill" id="theme-toggle" aria-label="Toggle theme">
+      <span id="theme-icon">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════════ -->
+<div class="hero-wrap">
+  <div class="hero-inner">
+
+    <!-- LEFT COLUMN ──────────────────────────────────────── -->
+    <div>
+
+      <!-- Availability badge — EDIT badge text here -->
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Open to Opportunities</span>
+      </div>
+
+      <!-- Name — EDIT HERE -->
+      <h1 class="hero-name">Yash Tiwari</h1>
+
+      <!-- Typewriter role line — EDIT in js/main.js → TW_TEXT -->
+      <p class="hero-role" id="typewriter" aria-label="MS Business Analytics · Builder · Agentic AI"></p>
+
+      <!-- ── EDIT BIO HERE ──────────────────────────────── -->
+      <p class="hero-bio" style="margin-bottom: 20px;">
+        Building AI systems that act, grounded in ML.
+        Two startups. ML pipelines ranked #1 out of 60 teams.
+        Systems that automate real work, not demos.
+      </p>
+      <p class="hero-bio" style="margin-bottom: 44px;">
+        Engineering, business, and UX, each sharpening
+        the other in practice. I work best when something
+        real needs to ship.
+      </p>
+      <!-- ── END BIO ──────────────────────────────────── -->
+
+      <div class="cta-row">
+        <a href="#projects" class="btn-primary">
+          View Projects
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+        <!-- EDIT href to point to your resume PDF -->
+        <a href="assets/resume.pdf" download class="btn-ghost">
+          Download Resume
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="scroll-hint">
+        <svg class="scroll-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+        <span>Scroll</span>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN — BENTO GRID ───────────────────────── -->
+    <!-- ── EDIT BENTO HERE ── each .cell is one card -->
+    <div class="bento">
+
+      <!-- Cell A: Role interest — EDIT to update target roles -->
+      <div class="cell">
+        <span class="c-label">Looking to Build</span>
+        <div class="c-t1">Where data meets decisions</div>
+        <div class="c-t2">Roles where models ship to production, not slides</div>
+        <hr class="c-div">
+        <div class="c-t3">open to DS, analytics &amp; AI-adjacent roles</div>
+      </div>
+
+      <!-- Cell B: Availability — EDIT dates here -->
+      <div class="cell cell-available">
+        <span class="c-label">Available</span>
+        <div class="c-t1-avail">Dec 2026</div>
+        <div class="c-t2">Full-time · Open to relocate</div>
+        <hr class="c-div">
+        <div class="c-t2">Summer 2026 · Internship</div>
+        <div class="dot-row">
+          <span class="dot-green"></span>
+          <span class="c-t2" style="font-size:10px">Actively looking</span>
+        </div>
+      </div>
+
+      <!-- Cell C: Terminal (full width) — EDIT lines below -->
+      <div class="cell cell-full terminal-cell">
+        <div class="mac-dots">
+          <div class="mac-dot" style="background:#FF5F57"></div>
+          <div class="mac-dot" style="background:#FEBC2E"></div>
+          <div class="mac-dot" style="background:#28C840"></div>
+        </div>
+        <div class="t-dim">&gt;&gt;&gt; yt.load('yash_tiwari')</div>
+        <div class="t-dim">&gt;&gt;&gt; profile.arc</div>
+        <div class="t-bright">['2x founder', 'defense UX', 'ML analyst', 'agent builder']</div>
+        <div class="t-dim">&gt;&gt;&gt; profile.approach</div>
+        <div class="t-bright">'Ship first. Explain why it works second.'</div>
+        <div class="t-bright"><span class="blink-cursor">█</span></div>
+      </div>
+
+      <!-- Cell D: Philosophy + current work -->
+      <div class="cell">
+        <span class="c-label">Philosophy</span>
+        <div class="c-quote">"You are what<br>you don't automate."</div>
+        <hr class="c-div">
+        <div class="c-building-sub">Currently Building</div>
+        <div class="c-t2">Agentic Workflows · n8n · OpenAI API</div>
+      </div>
+
+      <!-- Cell E: Contact — EDIT email + copy-btn target in js/main.js -->
+      <div class="cell cell-contact">
+        <span class="c-label">Let's Talk</span>
+        <div class="c-t1" style="font-size:14px;font-weight:500;margin-bottom:0">ytiwari@ucsd.edu</div>
+        <button class="copy-btn" id="copy-btn">Copy email ↗</button>
+      </div>
+
+    </div><!-- /bento -->
+    <!-- ── END BENTO ── -->
+
+  </div><!-- /hero-inner -->
+</div><!-- /hero-wrap -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     TOOLS STRIP (marquee)
+     EDIT the text inside .marquee-track to change the tools shown.
+     Duplicate the text twice (needed for seamless loop).
+═══════════════════════════════════════════════════════════════ -->
+<div class="tools-strip">
+  <span class="tools-label">Tools &amp; Technologies</span>
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      Python · SQL · Pandas · Polars · Scikit-learn · XGBoost · PyTorch · Tableau · Snowflake · FastAPI · Streamlit · n8n · Git · &nbsp;&nbsp;&nbsp;&nbsp;
+      Python · SQL · Pandas · Polars · Scikit-learn · XGBoost · PyTorch · Tableau · Snowflake · FastAPI · Streamlit · n8n · Git · &nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SELECTED WORK (3 featured project cards)
+     EDIT PROJECTS HERE — duplicate a .p-card block to add one.
+     Update "Read more" href to the project's case study page.
+     Full grid lives in projects.qmd.
+═══════════════════════════════════════════════════════════════ -->
+<div class="projects-section" id="projects">
+  <div class="sec-header">
+    <span class="sec-label">Selected Work</span>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="cards-grid">
+
+    <!-- PROJECT 01 — EDIT HERE -->
+    <div class="p-card">
+      <div class="p-preview"><span>Project Preview</span></div>
+      <!-- Swap the above div with an <img> when you have screenshots -->
+      <div class="p-body">
+        <div class="p-meta">
+          <span class="p-num">01</span>
+          <span class="p-year">2026</span>
+        </div>
+        <div class="p-title">Intuit QuickBooks Upsell Targeting</div>
+        <div class="p-desc">Profit-maximizing ML ensemble ranked #1 of 60 teams, scaled to 800K+ records.</div>
+        <div class="p-tags">
+          <span class="p-tag">Python</span>
+          <span class="p-tag">XGBoost</span>
+          <span class="p-tag">Scikit-learn</span>
+          <span class="p-tag">GLM</span>
+        </div>
+        <a href="projects/intuit.html" class="p-more">Read more →</a>
+      </div>
+    </div>
+    <!-- END PROJECT 01 -->
+
+    <!-- PROJECT 02 — EDIT HERE -->
+    <div class="p-card">
+      <div class="p-preview"><span>Project Preview</span></div>
+      <div class="p-body">
+        <div class="p-meta">
+          <span class="p-num">02</span>
+          <span class="p-year">2026</span>
+        </div>
+        <div class="p-title">Customer Message Optimization</div>
+        <div class="p-desc">XGBoost pipeline on 600K rows delivering +51.3% uplift vs random baseline.</div>
+        <div class="p-tags">
+          <span class="p-tag">Python</span>
+          <span class="p-tag">Polars</span>
+          <span class="p-tag">XGBoost</span>
+          <span class="p-tag">MLP</span>
+        </div>
+        <a href="projects/nptb.html" class="p-more">Read more →</a>
+      </div>
+    </div>
+    <!-- END PROJECT 02 -->
+
+    <!-- PROJECT 03 — EDIT HERE -->
+    <div class="p-card">
+      <div class="p-preview"><span>Project Preview</span></div>
+      <div class="p-body">
+        <div class="p-meta">
+          <span class="p-num">03</span>
+          <span class="p-year">2024</span>
+        </div>
+        <div class="p-title">Traway Operations Analytics</div>
+        <div class="p-desc">Cohort and pricing analysis for a mobility startup across 3,200 customers.</div>
+        <div class="p-tags">
+          <span class="p-tag">Python</span>
+          <span class="p-tag">SQL</span>
+          <span class="p-tag">Regression</span>
+          <span class="p-tag">EDA</span>
+        </div>
+        <a href="projects/traway.html" class="p-more">Read more →</a>
+      </div>
+    </div>
+    <!-- END PROJECT 03 -->
+
+  </div><!-- /cards-grid -->
+
+  <div class="view-all">
+    <a href="projects.html">View all projects →</a>
+  </div>
+</div>
+<!-- ── END PROJECTS ── -->
+
+
+<!-- Toast notification (used by copy-email button) -->
+<div class="toast" id="toast">✓ Copied to clipboard</div>
+```

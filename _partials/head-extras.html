@@ -1,0 +1,20 @@
+<!-- ═══════════════════════════════════════════════════════════
+     head-extras.html — injected into <head> on every page
+     via include-in-header in _quarto.yml
+
+     FONTS IN USE:
+       Instrument Serif (italic) — logo, hero name, case study titles
+       Geist                     — all body text, UI labels
+       JetBrains Mono            — terminal bento cell
+
+     To swap fonts: update the Google Fonts URL below,
+     then update font-family values in styles/custom.css.
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- Dark mode initialised before first paint — prevents flash of light mode -->
+<script>document.documentElement.classList.add('dark');</script>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">

@@ -1,0 +1,191 @@
+---
+pagetitle: "Projects — Yash Tiwari"
+page-layout: custom
+---
+
+```{=html}
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR — identical across all pages.
+     EDIT NAV LINKS HERE if you rename pages.
+═══════════════════════════════════════════════════════════════ -->
+<header class="navbar">
+  <a href="index.html" class="nav-logo">YT.</a>
+
+  <nav class="nav-links">
+    <a href="index.html"    class="nav-link">Home</a>
+    <a href="projects.html" class="nav-link">Projects</a>
+    <a href="resume.html"   class="nav-link">Resume</a>
+    <a href="about.html"    class="nav-link">About</a>
+  </nav>
+
+  <div class="nav-right">
+    <a href="https://github.com/rsm-ytiwari" target="_blank" rel="noopener" class="nav-icon" aria-label="GitHub">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+      </svg>
+    </a>
+    <a href="https://www.linkedin.com/in/yash-tiwari-here/" target="_blank" rel="noopener" class="nav-icon" aria-label="LinkedIn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+    <button class="nav-icon" aria-label="Search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+    <button class="theme-pill" id="theme-toggle" aria-label="Toggle theme">
+      <span id="theme-icon">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FEATURED BANNER
+     EDIT BANNER HERE — change the title and subtitle freely.
+     The label ("Work") is a small uppercase tag above the title.
+═══════════════════════════════════════════════════════════════ -->
+<div class="page-banner">
+  <!-- EDIT LABEL -->
+  <div class="banner-label">Work</div>
+
+  <!-- EDIT TITLE -->
+  <h1 class="banner-title">All Projects</h1>
+
+  <!-- EDIT SUBTITLE -->
+  <p class="banner-sub">
+    ML pipelines, product analytics, and agentic systems — built
+    to drive measurable business outcomes, not just to demo well.
+  </p>
+</div>
+<!-- ── END BANNER ── -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FULL PROJECTS GRID
+     EDIT PROJECTS HERE — to add a new project:
+       1. Duplicate one .p-card block below
+       2. Update the number, year, title, desc, tags, and href
+       3. Create the matching projects/yourproject.qmd file
+          (duplicate projects/traway.qmd as a starting point)
+═══════════════════════════════════════════════════════════════ -->
+<div class="projects-section">
+  <div class="cards-grid">
+
+    <!-- PROJECT 01 — EDIT HERE -->
+    <div class="p-card">
+      <div class="p-preview"><span>Project Preview</span></div>
+      <div class="p-body">
+        <div class="p-meta">
+          <span class="p-num">01</span>
+          <span class="p-year">2026</span>
+        </div>
+        <div class="p-title">Intuit QuickBooks Upsell Targeting</div>
+        <div class="p-desc">
+          Profit-maximizing ML ensemble ranked #1 of 60 teams. Engineered features on
+          75K structured records, built and tuned Logistic Regression, Random Forest,
+          XGBoost, and MLP models, then scaled predictions to 800K+ population.
+        </div>
+        <div class="p-tags">
+          <span class="p-tag">Python</span>
+          <span class="p-tag">XGBoost</span>
+          <span class="p-tag">Scikit-learn</span>
+          <span class="p-tag">GLM</span>
+          <span class="p-tag">MLP</span>
+        </div>
+        <a href="projects/intuit.html" class="p-more">Read more →</a>
+      </div>
+    </div>
+    <!-- END PROJECT 01 -->
+
+    <!-- PROJECT 02 — EDIT HERE -->
+    <div class="p-card">
+      <div class="p-preview"><span>Project Preview</span></div>
+      <div class="p-body">
+        <div class="p-meta">
+          <span class="p-num">02</span>
+          <span class="p-year">2026</span>
+        </div>
+        <div class="p-title">Customer Message Optimization (NPTB)</div>
+        <div class="p-desc">
+          End-to-end ML pipeline on ~600K customer-email rows using Python and Polars.
+          XGBoost final model achieved €0.84/customer and +51.3% uplift vs random
+          — ~€1.42M projected at 5M customers.
+        </div>
+        <div class="p-tags">
+          <span class="p-tag">Python</span>
+          <span class="p-tag">Polars</span>
+          <span class="p-tag">XGBoost</span>
+          <span class="p-tag">MLP</span>
+          <span class="p-tag">Uplift</span>
+        </div>
+        <a href="projects/nptb.html" class="p-more">Read more →</a>
+      </div>
+    </div>
+    <!-- END PROJECT 02 -->
+
+    <!-- PROJECT 03 — EDIT HERE -->
+    <div class="p-card">
+      <div class="p-preview"><span>Project Preview</span></div>
+      <div class="p-body">
+        <div class="p-meta">
+          <span class="p-num">03</span>
+          <span class="p-year">2024</span>
+        </div>
+        <div class="p-title">Traway Operations Analytics</div>
+        <div class="p-desc">
+          Cohort and pricing analysis for a student-led mobility startup across
+          3,200 customers. Applied segmentation and regression to improve retention
+          to 60%+ and achieve 3× increase in AOV.
+        </div>
+        <div class="p-tags">
+          <span class="p-tag">Python</span>
+          <span class="p-tag">SQL</span>
+          <span class="p-tag">Regression</span>
+          <span class="p-tag">EDA</span>
+          <span class="p-tag">Cohort Analysis</span>
+        </div>
+        <a href="projects/traway.html" class="p-more">Read more →</a>
+      </div>
+    </div>
+    <!-- END PROJECT 03 -->
+
+    <!-- ── ADD NEW PROJECTS BELOW THIS LINE ────────────────
+         Duplicate the block below and fill in your details.
+    ─────────────────────────────────────────────────────── -->
+
+    <!-- PROJECT 04 — DUPLICATE THIS BLOCK FOR A NEW PROJECT
+    <div class="p-card">
+      <div class="p-preview"><span>Project Preview</span></div>
+      <div class="p-body">
+        <div class="p-meta">
+          <span class="p-num">04</span>
+          <span class="p-year">2026</span>
+        </div>
+        <div class="p-title">Your Project Title</div>
+        <div class="p-desc">One or two line description of the project and its impact.</div>
+        <div class="p-tags">
+          <span class="p-tag">Tool 1</span>
+          <span class="p-tag">Tool 2</span>
+        </div>
+        <a href="projects/yourproject.html" class="p-more">Read more →</a>
+      </div>
+    </div>
+    -->
+    <!-- ── END NEW PROJECT TEMPLATE ── -->
+
+  </div><!-- /cards-grid -->
+</div>
+<!-- ── END PROJECTS GRID ── -->
+
+
+<!-- Toast (shared element for clipboard feedback) -->
+<div class="toast" id="toast">✓ Copied to clipboard</div>
+```
