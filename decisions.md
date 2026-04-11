@@ -337,3 +337,59 @@ screen edge far from the blob's anchor point; 120px keeps the effect dramatic
 without the blob disappearing behind other elements. The idle timer and
 `mouseleave` reset prevent stale drift when the user leaves the window or goes
 idle — both return to origin via the same lerp loop so the transition is smooth.
+
+---
+
+## 24. `.hero-wrap` full-viewport width; constraints moved to `.hero-inner`
+
+**Decision:** `.hero-wrap` lost `max-width`, `margin: 0 auto`, and horizontal
+padding. Those three properties moved to `.hero-inner`. The `::before` pseudo-element
+(dot grid) now spans edge-to-edge with `inset: -20px`, unrestricted by any container
+width. Mobile breakpoint updated: `.hero-wrap { padding: 64px 0 0 }`, `.hero-inner
+{ padding: 0 24px }`.
+
+**Why:** The dot grid was clipped to the 1280px content box, creating a hard visible
+edge on wide viewports where the page background continued beyond the grid. Separating
+layout concerns — `.hero-wrap` owns only position and top padding; `.hero-inner` owns
+the content column — lets the `::before` texture cover the full viewport while the
+text and bento stay centered. The mobile fix moves padding to `.hero-inner` so the
+grid still bleeds to screen edges on small screens while content stays inset.
+
+---
+
+## 25. Dot grid: cursor spotlight + dreamy grid parallax (two-layer system)
+
+**Decision:** The dot grid `::before` `background` property now layers two
+`radial-gradient` calls in a single shorthand. Layer 1 (top): a large soft circle
+at `var(--mouse-x, -500px) var(--mouse-y, -500px)` — 280px radius in dark, 240px
+in light — illuminates dots near the cursor. Layer 2: the repeating dot pattern,
+shifted by `var(--grid-x) var(--grid-y)`. The JS IIFE was rewritten to set
+`--mouse-x`/`--mouse-y` with zero lerp (direct, instantaneous) and `--grid-x`/
+`--grid-y` with `LERP_GRID=0.035`, `MAX_SHIFT=4px`. Touch devices excluded via
+`(hover: none)` media query. `mouseleave` sets spotlight to `-500px` to hide it
+instantly.
+
+**Why:** Two separate interaction qualities serve two separate purposes. The
+spotlight must feel *alive* — any lerp delay between cursor and lit dots reads as
+lag and breaks the illusion. Grid parallax must feel *ambient* — instant response
+would make the grid jitter distractingly. Setting them through separate CSS variables
+means each effect is independently tunable without coupling the animation loops.
+`-500px` as the off-screen default ensures the spotlight never appears on page load
+or on touch devices where no cursor position is available.
+
+---
+
+## 26. Light mode blob → monochromatic depth vignette
+
+**Decision:** The light mode `html:not(.dark) .hero-inner::after` was changed from
+a coloured blob (first indigo/purple, then amber-rose) to a pure monochromatic
+depth vignette: `rgba(13,13,12,0.05)` at the ellipse centre, fading to transparent,
+with `blur(48px)`. Fixed anchor at `62% 35%` rather than cursor-reactive. No colour.
+
+**Why:** Every coloured blob tested against the warm off-white page background
+created a palette conflict — the blob colour had to either dominate (too loud) or be
+so faint it was invisible. The Apple-style approach: use only luminosity to create
+depth. A very subtle dark shadow behind the bento grid separates it from the page
+without introducing a competing hue. The fixed anchor point (`62% 35%`) places the
+deepest shadow roughly behind the bento grid's upper-right quadrant, reinforcing
+the grid's elevation without requiring cursor tracking in light mode.
