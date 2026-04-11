@@ -300,3 +300,40 @@ primary action. On a light background the solid fill already has sufficient
 contrast and the glass treatment would make the text colour unpredictable
 across different underlying content. The asymmetric handling reflects that
 glass is most effective as a dark-mode pattern.
+
+---
+
+## 22. Light mode blob — higher opacity, larger size, `mix-blend-mode: multiply`
+
+**Decision:** `html:not(.dark) .hero-inner::after` updated: core opacity 0.13→0.28,
+mid-stop 0.06→0.14, blur 24→32px, dimensions 600→640px, offset -100/-80→-120/-100px.
+`mix-blend-mode: multiply` and `z-index: 0` added.
+
+**Why:** The original light-mode blob was too faint to compete with the warm page
+background — visible only on close inspection and providing no compositional weight.
+Raising opacity and increasing blur spread make it perceptible as an ambient colour
+field. `mix-blend-mode: multiply` darkens where the blob overlaps page content,
+which is correct behaviour on a light background (multiply darkens, screen lightens —
+the opposite of dark mode where no blend mode is needed because the additive glow
+reads naturally against a dark canvas). `z-index: 0` is explicit to ensure the blob
+sits behind text content regardless of stacking context changes.
+
+---
+
+## 23. Cursor-reactive blob — global listener, MAX_DRIFT cap, idle return
+
+**Decision:** The blob IIFE was rewritten from a `heroInner`-scoped `mousemove`
+listener to a `document`-level listener. STRENGTH raised 0.20→0.35, LERP 0.06→0.09,
+convergence threshold 0.1→0.05. A `MAX_DRIFT = 120px` clamp prevents the blob from
+drifting off-screen. A 3-second idle timer and a `document.mouseleave` handler both
+call `resetTarget()` to smoothly return the blob to origin.
+
+**Why:** The original implementation only responded when the cursor was inside
+`.hero-inner`. On a typical screen the hero occupies ~50% of the viewport — moving
+the cursor to the nav or bento grid froze the blob mid-drift. The global listener
+means every cursor movement influences the blob, giving a persistent ambient
+responsiveness. `MAX_DRIFT` prevents extreme positions when the cursor is at a
+screen edge far from the blob's anchor point; 120px keeps the effect dramatic
+without the blob disappearing behind other elements. The idle timer and
+`mouseleave` reset prevent stale drift when the user leaves the window or goes
+idle — both return to origin via the same lerp loop so the transition is smooth.

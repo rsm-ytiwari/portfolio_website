@@ -79,3 +79,68 @@ if (copyBtn && toast) {
     }
   });
 })();
+
+/* ── 5. Cursor-reactive blob ──
+   Blob follows cursor globally at 35% speed, capped at
+   MAX_DRIFT px from origin. Returns to origin after 3 s
+   of idle or on mouse leave.                                   */
+(function() {
+  const heroInner = document.querySelector('.hero-inner');
+  if (!heroInner) return;
+
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
+  let rafId = null;
+  let idleTimer = null;
+  const STRENGTH  = 0.35;
+  const LERP      = 0.09;
+  const MAX_DRIFT = 120;
+
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  function lerp(a, b, t)    { return a + (b - a) * t; }
+
+  function animate() {
+    currentX = lerp(currentX, targetX, LERP);
+    currentY = lerp(currentY, targetY, LERP);
+
+    heroInner.style.setProperty('--blob-x', currentX.toFixed(2) + 'px');
+    heroInner.style.setProperty('--blob-y', currentY.toFixed(2) + 'px');
+
+    if (
+      Math.abs(currentX - targetX) > 0.05 ||
+      Math.abs(currentY - targetY) > 0.05
+    ) {
+      rafId = requestAnimationFrame(animate);
+    } else {
+      rafId = null;
+    }
+  }
+
+  function resetTarget() {
+    targetX = 0;
+    targetY = 0;
+    if (!rafId) rafId = requestAnimationFrame(animate);
+  }
+
+  function scheduleIdle() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(resetTarget, 3000);
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const rect = heroInner.getBoundingClientRect();
+    const cx = rect.left + rect.width  / 2;
+    const cy = rect.top  + rect.height / 2;
+
+    const rawX = (e.clientX - cx) * STRENGTH;
+    const rawY = (e.clientY - cy) * STRENGTH;
+
+    targetX = clamp(rawX, -MAX_DRIFT, MAX_DRIFT);
+    targetY = clamp(rawY, -MAX_DRIFT, MAX_DRIFT);
+
+    if (!rafId) rafId = requestAnimationFrame(animate);
+    scheduleIdle();
+  });
+
+  document.addEventListener('mouseleave', resetTarget);
+})();

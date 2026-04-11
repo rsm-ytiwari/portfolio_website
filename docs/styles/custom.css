@@ -1146,10 +1146,11 @@ html:not(.dark) .theme-pill {
 
 /* Bento cells — glass panels over dot grid */
 html.dark .cell:not(.terminal-cell) {
-  background: rgba(22,22,20,0.7);
+  background: rgba(22,22,20,0.5);
   backdrop-filter: blur(16px) saturate(120%);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
   border: 1px solid rgba(255,255,255,0.06);
+  border-left: 3px solid transparent;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.06),
     0 4px 16px rgba(0,0,0,0.3);
@@ -1160,6 +1161,7 @@ html:not(.dark) .cell:not(.terminal-cell) {
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   border: 1px solid rgba(255,255,255,0.9);
+  border-left: 3px solid transparent;
   box-shadow:
     0 2px 8px rgba(0,0,0,0.05),
     inset 0 1px 0 rgba(255,255,255,1);
@@ -1269,4 +1271,104 @@ html:not(.dark) .btn-primary {
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.15),
     0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* ════════════════════════════════════════════
+   GLASS SYSTEM FIXES + ENHANCEMENTS
+════════════════════════════════════════════ */
+
+/* FIX 1 — Restore hover states on glass cells
+   Previous glass rules broke border-left hover.
+   These rules re-establish hover with higher
+   specificity using !important on border only. */
+
+html.dark .cell:not(.terminal-cell):hover {
+  border-left-color: var(--accent) !important;
+  background: rgba(30,30,28,0.75) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 8px 32px rgba(0,0,0,0.4) !important;
+  transform: translateY(-2px);
+}
+html:not(.dark) .cell:not(.terminal-cell):hover {
+  border-left-color: var(--accent) !important;
+  background: rgba(255,255,255,0.9) !important;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+  transform: translateY(-2px);
+}
+
+/* FIX 2 — Ambient color blob behind bento
+   Positioned via hero-inner's right column.
+   Low opacity — gives glass cells depth to
+   work with without being distracting. */
+
+.hero-inner {
+  position: relative;
+}
+.hero-inner::after {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -60px;
+  width: 560px;
+  height: 560px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(200,255,62,0.18) 0%,
+    rgba(200,255,62,0.08) 35%,
+    rgba(200,255,62,0.02) 60%,
+    transparent 75%
+  );
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(20px);
+  transform: translate(
+    var(--blob-x, 0px),
+    var(--blob-y, 0px)
+  );
+  transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  will-change: transform;
+}
+
+/* Light mode blob — warmer, more subtle */
+html:not(.dark) .hero-inner::after {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(99,102,241,0.28) 0%,
+    rgba(99,102,241,0.14) 30%,
+    rgba(139,92,246,0.06) 55%,
+    transparent 72%
+  );
+  filter: blur(32px);
+  width: 640px;
+  height: 640px;
+  top: -120px;
+  right: -100px;
+  mix-blend-mode: multiply;
+  z-index: 0;
+}
+
+/* Ensure bento sits above blob */
+.bento { position: relative; z-index: 1; }
+
+/* FIX 3 — Make dot grid slightly more visible
+   in dark mode so glass has texture to work with */
+html.dark .hero-wrap::before {
+  background-image: radial-gradient(
+    circle,
+    rgba(255,255,255,0.07) 1px,
+    transparent 1px
+  );
+}
+
+/* FIX 4 — Add transition to all cells so
+   hover lift animates smoothly */
+.cell:not(.terminal-cell) {
+  transition:
+    transform 200ms cubic-bezier(0.16,1,0.3,1),
+    box-shadow 200ms cubic-bezier(0.16,1,0.3,1),
+    background 200ms ease,
+    border-color 200ms ease;
 }
