@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Yash Tiwari — Portfolio</title>
+<title>Project Title — Yash Tiwari – Yash Tiwari — Portfolio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -49,52 +49,52 @@ ul.task-list li input[type="checkbox"] {
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&amp;family=Geist:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
 
 
-<link rel="stylesheet" href="styles/custom.css">
+<link rel="stylesheet" href="../styles/custom.css">
 </head>
 
 <body>
 
-
-
-
-
 <!-- ═══════════════════════════════════════════════════════════
-     NAVBAR
-     EDIT NAV LINKS HERE — update href values to change destinations.
-     The active link is set automatically by JS (js/main.js).
-     GitHub / LinkedIn hrefs are also here.
+     case-study-template.html
+     Shared navbar for all pages in projects/ subdirectory.
+     Included via: include-before-body: ../_partials/case-study-template.html
+
+     NOTE ON VARIABLES:
+     Quarto's include-before-body inserts this file verbatim —
+     Pandoc $variable$ substitution does NOT run here.
+     Page-specific content (banner, meta, results) lives in the
+     individual .qmd file. See projects/new-project-template.qmd.
+
+     EDIT NAV LINKS HERE if you rename pages.
+     All hrefs use ../ because case studies live in projects/.
 ═══════════════════════════════════════════════════════════════ -->
 <header class="navbar">
-  <a href="index.html" class="nav-logo">YT.</a>
+  <a href="../index.html" class="nav-logo">YT.</a>
 
   <nav class="nav-links">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="projects.html" class="nav-link">Projects</a>
-    <a href="resume.html" class="nav-link">Resume</a>
-    <a href="about.html" class="nav-link">About</a>
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../projects.html" class="nav-link">Projects</a>
+    <a href="../resume.html" class="nav-link">Resume</a>
+    <a href="../about.html" class="nav-link">About</a>
   </nav>
 
   <div class="nav-right">
-    <!-- GitHub — EDIT href -->
     <a href="https://github.com/rsm-ytiwari" target="_blank" rel="noopener" class="nav-icon" aria-label="GitHub">
       <svg width="17" height="17" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
       </svg>
     </a>
-    <!-- LinkedIn — EDIT href -->
     <a href="https://www.linkedin.com/in/yash-tiwari-here/" target="_blank" rel="noopener" class="nav-icon" aria-label="LinkedIn">
       <svg width="17" height="17" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
         <rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
       </svg>
     </a>
-    <!-- Search (decorative — wire up if needed) -->
     <button class="nav-icon" aria-label="Search">
       <svg width="17" height="17" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
     </button>
-    <!-- Theme toggle -->
     <button class="theme-pill" id="theme-toggle" aria-label="Toggle theme">
       <span id="theme-icon">
         <svg width="13" height="13" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -107,224 +107,89 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+
+
 <!-- ═══════════════════════════════════════════════════════════
-     HERO
+     CASE STUDY BANNER
+     EDIT every field below.
 ═══════════════════════════════════════════════════════════════ -->
-<div class="hero-wrap">
-  <div class="hero-inner">
+<div class="case-banner">
 
-    <!-- LEFT COLUMN ──────────────────────────────────────── -->
-    <div>
+  <a href="../projects.html" class="back-link">
+    <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    All Projects
+  </a>
 
-      <!-- Availability badge — EDIT badge text here -->
-      <div class="badge">
-        <span class="badge-dot"></span>
-        <span class="badge-text">Open to Opportunities</span>
-      </div>
+  <!-- EDIT: short category label, e.g. "Analytics · ML" -->
+  <div class="case-tag">Analytics · ML</div>
 
-      <!-- Name — EDIT HERE -->
-      <h1 class="hero-name">Yash Tiwari</h1>
+  <!-- EDIT: project title -->
+  <h1 class="case-title">Your Project Title</h1>
 
-      <!-- Typewriter role line — EDIT in js/main.js → TW_TEXT -->
-      <p class="hero-role" id="typewriter" aria-label="MS Business Analytics · Builder · Agentic AI"></p>
+  <!-- EDIT: one compelling sentence about what you built and why it mattered -->
+  <p class="case-subtitle">
+    One sentence — what you built and why it mattered.
+  </p>
 
-      <!-- ── EDIT BIO HERE ──────────────────────────────── -->
-      <p class="hero-bio" style="margin-bottom: 20px;">
-        Building AI systems that act, grounded in ML.
-        Two startups. ML pipelines ranked #1 out of 60 teams.
-        Systems that automate real work, not demos.
-      </p>
-      <p class="hero-bio" style="margin-bottom: 44px;">
-        Engineering, business, and UX, each sharpening
-        the other in practice. I work best when something
-        real needs to ship.
-      </p>
-      <!-- ── END BIO ──────────────────────────────────── -->
-
-      <div class="cta-row">
-        <a href="#projects" class="btn-primary">
-          View Projects
-          <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </a>
-        <!-- EDIT href to point to your resume PDF -->
-        <a href="assets/resume.pdf" download="" class="btn-ghost">
-          Download Resume
-          <svg width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-        </a>
-      </div>
-
-      <div class="scroll-hint">
-        <svg class="scroll-chev" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-        <span>Scroll</span>
-      </div>
+  <!-- EDIT: four fact fields shown as a metadata row -->
+  <div class="case-meta-row">
+    <div class="case-meta-item">
+      <span class="case-meta-key">Timeline</span>
+      <span class="case-meta-val">Month Year – Month Year</span>
     </div>
-
-    <!-- RIGHT COLUMN — BENTO GRID ───────────────────────── -->
-    <!-- ── EDIT BENTO HERE ── each .cell is one card -->
-    <div class="bento">
-
-      <!-- Cell A: Role interest — EDIT to update target roles -->
-      <div class="cell">
-        <span class="c-label">Looking to Build</span>
-        <div class="c-t1">Where data meets decisions</div>
-        <div class="c-t2">Roles where models ship to production, not slides</div>
-        <hr class="c-div">
-        <div class="c-t3">open to DS, analytics &amp; AI-adjacent roles</div>
-      </div>
-
-      <!-- Cell B: Availability — EDIT dates here -->
-      <div class="cell cell-available">
-        <span class="c-label">Available</span>
-        <div class="c-t1-avail">Dec 2026</div>
-        <div class="c-t2">Full-time · Open to relocate</div>
-        <hr class="c-div">
-        <div class="c-t2">Summer 2026 · Internship</div>
-        <div class="dot-row">
-          <span class="dot-green"></span>
-          <span class="c-t2" style="font-size:10px">Actively looking</span>
-        </div>
-      </div>
-
-      <!-- Cell C: Terminal (full width) — EDIT lines below -->
-      <div class="cell cell-full terminal-cell">
-        <div class="mac-dots">
-          <div class="mac-dot" style="background:#FF5F57"></div>
-          <div class="mac-dot" style="background:#FEBC2E"></div>
-          <div class="mac-dot" style="background:#28C840"></div>
-        </div>
-        <div class="t-dim">&gt;&gt;&gt; yt.load('yash_tiwari')</div>
-        <div class="t-dim">&gt;&gt;&gt; profile.arc</div>
-        <div class="t-bright">['2x founder', 'defense UX', 'ML analyst', 'agent builder']</div>
-        <div class="t-dim">&gt;&gt;&gt; profile.approach</div>
-        <div class="t-bright">'Ship first. Explain why it works second.'</div>
-        <div class="t-bright"><span class="blink-cursor">█</span></div>
-      </div>
-
-      <!-- Cell D: Philosophy + current work -->
-      <div class="cell">
-        <span class="c-label">Philosophy</span>
-        <div class="c-quote">"You are what<br>you don't automate."</div>
-        <hr class="c-div">
-        <div class="c-building-sub">Currently Building</div>
-        <div class="c-t2">Agentic Workflows · n8n · OpenAI API</div>
-      </div>
-
-      <!-- Cell E: Contact — EDIT email + copy-btn target in js/main.js -->
-      <div class="cell cell-contact">
-        <span class="c-label">Let's Talk</span>
-        <div class="c-t1" style="font-size:14px;font-weight:500;margin-bottom:0">ytiwari@ucsd.edu</div>
-        <button class="copy-btn" id="copy-btn">Copy email ↗</button>
-      </div>
-
-    </div><!-- /bento -->
-    <!-- ── END BENTO ── -->
-
-  </div><!-- /hero-inner -->
-</div><!-- /hero-wrap -->
-
-
-<!-- ═══════════════════════════════════════════════════════════
-     TOOLS STRIP (marquee)
-     EDIT the text inside .marquee-track to change the tools shown.
-     Duplicate the text twice (needed for seamless loop).
-═══════════════════════════════════════════════════════════════ -->
-<div class="tools-strip">
-  <span class="tools-label">Tools &amp; Technologies</span>
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      Python · SQL · Pandas · Polars · Scikit-learn · XGBoost · PyTorch · Tableau · Snowflake · FastAPI · Streamlit · n8n · Git · &nbsp;&nbsp;&nbsp;&nbsp;
-      Python · SQL · Pandas · Polars · Scikit-learn · XGBoost · PyTorch · Tableau · Snowflake · FastAPI · Streamlit · n8n · Git · &nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="case-meta-item">
+      <span class="case-meta-key">Role</span>
+      <span class="case-meta-val">Your Role</span>
+    </div>
+    <div class="case-meta-item">
+      <span class="case-meta-key">Stack</span>
+      <span class="case-meta-val">Python · SQL · Tool</span>
+    </div>
+    <div class="case-meta-item">
+      <span class="case-meta-key">Outcome</span>
+      <span class="case-meta-val">Key metric or result</span>
     </div>
   </div>
+
 </div>
+<!-- ── END BANNER ── -->
 
 
-<!-- ═══════════════════════════════════════════════════════════
-     SELECTED WORK — featured projects pulled from projects.json
-     Set featured: true (max 3) in projects.json to show here.
-     Full grid lives in projects.qmd.
-═══════════════════════════════════════════════════════════════ -->
-
-<!-- Featured projects pulled from projects.json
-     Set featured: true (max 3) to show here -->
-<div class="projects-section" id="projects">
-  <div class="sec-header">
-    <span class="sec-label">Selected Work</span>
-    <div class="sec-line"></div>
+<!-- Open case body — markdown sections below render inside this div -->
+<div class="case-body">
+<h2 id="overview">Overview</h2>
+<p>Write normally in markdown here. No HTML needed. Just prose. Quarto renders it inside the <code>.case-body</code> div automatically.</p>
+<h2 id="problem">Problem</h2>
+<p>Describe the problem you were solving.</p>
+<h2 id="approach">Approach</h2>
+<ul>
+<li>Use bullet points freely</li>
+<li>They render correctly</li>
+<li>No class names needed</li>
+</ul>
+<h2 id="results">Results</h2>
+<!-- EDIT: three stat cards — headline numbers for this project -->
+<div class="result-grid">
+  <div class="result-card">
+    <span class="result-num">00%</span>
+    <span class="result-label">What this number means</span>
   </div>
-
-  <div id="featured-grid" class="cards-grid"></div>
-
-  <div class="view-all">
-    <a href="projects.html">View all projects →</a>
+  <div class="result-card">
+    <span class="result-num">00×</span>
+    <span class="result-label">What this number means</span>
+  </div>
+  <div class="result-card">
+    <span class="result-num">000</span>
+    <span class="result-label">What this number means</span>
   </div>
 </div>
-<!-- ── END PROJECTS ── -->
+<p>Add narrative context here in prose after the stat cards.</p>
+<h2 id="learnings">Learnings</h2>
+<p>Optional section. Delete if not needed.</p>
+</div><!-- /case-body -->
 
-<script>
-/* EDIT projects.json to add/remove featured projects */
-(function () {
-  const depth = window.location.pathname.split('/').filter(Boolean).length;
-  const base  = depth > 1 ? '../'.repeat(depth - 1) : './';
-
-  function cardHTML(item) {
-    const preview = item.image
-      ? `<img src="${item.image}" alt="${item.title}" class="p-preview-img">`
-      : `<div class="p-preview"><span>Project Preview</span></div>`;
-
-    const tags = item.tags.slice(0, 4)
-      .map(t => `<span class="p-tag">${t}</span>`)
-      .join('');
-
-    const link = item.href || '#';
-
-    return `
-      <div class="p-card">
-        ${preview}
-        <div class="p-body">
-          <div class="p-meta">
-            <span class="p-num">${item.number}</span>
-            <span class="p-year">${item.year}</span>
-          </div>
-          <div class="p-title">${item.title}</div>
-          <div class="p-desc">${item.summary}</div>
-          <div class="p-tags">${tags}</div>
-          <a href="${link}" class="p-more">Read more →</a>
-        </div>
-      </div>`;
-  }
-
-  fetch(base + 'projects.json')
-    .then(function (r) { return r.json(); })
-    .then(function (projects) {
-      const featured = projects.filter(function (p) { return p.featured; }).slice(0, 3);
-      document.getElementById('featured-grid').innerHTML =
-        featured.map(cardHTML).join('');
-      document.querySelectorAll('#featured-grid .p-card').forEach(function (card) {
-        card.addEventListener('click', function (e) {
-          if (e.target.closest('a')) return;
-          var link = this.querySelector('.p-more');
-          if (link && link.getAttribute('href') !== '#') {
-            window.location.href = link.href;
-          }
-        });
-      });
-    })
-    .catch(function (err) {
-      console.error('Could not load projects.json:', err);
-    });
-})();
-</script>
-
-
-<!-- Toast notification (used by copy-email button) -->
 <div class="toast" id="toast">✓ Copied to clipboard</div>
 
 

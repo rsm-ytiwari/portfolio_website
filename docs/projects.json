@@ -1,0 +1,35 @@
+[
+  {
+    "id": "intuit-upsell",
+    "number": "01",
+    "year": "2026",
+    "title": "Intuit QuickBooks Upsell Targeting",
+    "summary": "Profit-maximizing ML ensemble ranked #1 of 60 teams. Engineered features on 75K structured records, built and tuned Logistic Regression, Random Forest, XGBoost, and MLP models, then scaled predictions to 800K+ population.",
+    "tags": ["Python", "XGBoost", "Scikit-learn", "GLM"],
+    "href": "projects/intuit.html",
+    "featured": true,
+    "image": ""
+  },
+  {
+    "id": "nptb-optimization",
+    "number": "02",
+    "year": "2026",
+    "title": "Customer Message Optimization (NPTB)",
+    "summary": "End-to-end ML pipeline on ~600K customer-email rows using Python and Polars. XGBoost final model achieved \u20ac0.84/customer and +51.3% uplift vs random \u2014 ~\u20ac1.42M projected at 5M customers.",
+    "tags": ["Python", "Polars", "XGBoost", "MLP"],
+    "href": "projects/nptb.html",
+    "featured": true,
+    "image": ""
+  },
+  {
+    "id": "traway-analytics",
+    "number": "03",
+    "year": "2024",
+    "title": "Traway Operations Analytics",
+    "summary": "Cohort and pricing analysis for a student-led mobility startup across 3,200 customers. Applied segmentation and regression to improve retention to 60%+ and achieve 3\u00d7 increase in AOV.",
+    "tags": ["Python", "SQL", "Regression", "EDA"],
+    "href": "projects/traway-bridge.html",
+    "featured": true,
+    "image": ""
+  }
+]

@@ -427,3 +427,71 @@ with the page. The fix is a deletion, not an addition — the base rule already 
 correct sticky declaration. The glass block only needed to override visual properties
 (background, backdrop-filter, border); layout properties should never be set in a
 theme override block.
+
+---
+
+## 29. `projects.json` as single source of truth for project cards
+
+**Decision:** All project metadata (title, summary, tags, year, href, featured flag,
+image path) lives in `projects.json` at the project root. `projects.qmd` and
+`index.qmd` fetch this file at runtime and render cards via a vanilla JS template
+literal. `_quarto.yml` adds `projects.json` to `resources` so it is copied to
+`docs/projects.json` on every render. To add a project: edit the JSON, create a
+case-study `.qmd`, run `quarto render`. No HTML to touch.
+
+**Why:** The previous hardcoded approach required updating card HTML in two separate
+files (`index.qmd` and `projects.qmd`) for every project change, with no guarantee
+the two stayed in sync. A single JSON source eliminates the duplication. The `featured`
+boolean lets the homepage and the full grid share one dataset without separate
+maintenance. Vanilla `fetch()` with no dependencies keeps the approach consistent
+with the rest of the site's zero-dependency JS philosophy.
+
+---
+
+## 30. Whole card clickable via delegated click handler
+
+**Decision:** After cards are injected into the DOM, each `.p-card` gets a click
+listener that navigates to `link.href` — unless `e.target.closest('a')` is truthy,
+in which case the event is left to the anchor's default behaviour. `.p-card` already
+had `cursor: pointer` in CSS; no CSS change was needed.
+
+**Why:** Users expect the entire card to be clickable, not just the "Read more" text.
+The guard `e.target.closest('a')` prevents double-navigation when the "Read more"
+link itself is clicked — without it, both the card listener and the anchor's default
+would fire, causing two navigations. Using `getAttribute('href') !== '#'` checks the
+raw attribute (not the resolved absolute URL) to correctly detect disabled/placeholder
+links without string-comparing full URLs.
+
+---
+
+## 31. Case study template: `include-before-body` for navbar only
+
+**Decision:** `_partials/case-study-template.html` contains the shared navbar with
+`../` paths. It is used via `include-before-body: ../_partials/case-study-template.html`
+in each case study's front matter. The banner, result cards, and case body are
+authored directly in each `.qmd` as `{=html}` blocks interleaved with markdown.
+`projects/new-project-template.qmd` is the copy-and-fill starter file.
+
+**Why:** Quarto's `include-before-body` inserts files verbatim — Pandoc's `$variable$`
+template substitution does not run in raw includes. Attempting to inject YAML metadata
+via `$project_tag$` etc. in the include would produce literal dollar-sign strings in
+the output. The working pattern is: the partial owns only the truly static, shared
+structure (navbar); page-specific data is authored inline with clear EDIT HERE markers.
+This is identical to how every other page in the site already works — it just formalises
+the navbar as a shared partial to avoid drift across case study pages.
+
+---
+
+## 32. Traway bridge page instead of direct external link
+
+**Decision:** `projects/traway-bridge.qmd` is a lightweight portfolio page that
+introduces the Traway analysis and links out to `traway.live`. The project card in
+`projects.json` points to `projects/traway-bridge.html`. The direct `https://traway.live`
+href (briefly set in the JSON) was removed.
+
+**Why:** Linking a project card directly to an external URL breaks the expected UX
+pattern — clicking a card in a portfolio should land on a page within the portfolio,
+not jump off-site without warning. The bridge page gives context (banner, metadata,
+stat cards), presents the external analysis as a deliberate handoff, and keeps the
+navigation model consistent. It also lets the Traway entry carry the standard
+case-study design (case-banner, result-grid) without hosting the full analysis inline.

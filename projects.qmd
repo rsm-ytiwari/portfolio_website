@@ -68,122 +68,77 @@ page-layout: custom
 <!-- ── END BANNER ── -->
 
 
+<!--
+TO ADD A NEW PROJECT:
+1. Add an entry to projects.json (set featured: false
+   unless you want it on the homepage too)
+2. Create projects/your-project.qmd (copy traway.qmd)
+3. Run: quarto render
+That's it. No HTML to touch.
+-->
+
 <!-- ═══════════════════════════════════════════════════════════
-     FULL PROJECTS GRID
-     EDIT PROJECTS HERE — to add a new project:
-       1. Duplicate one .p-card block below
-       2. Update the number, year, title, desc, tags, and href
-       3. Create the matching projects/yourproject.qmd file
-          (duplicate projects/traway.qmd as a starting point)
+     FULL PROJECTS GRID — rendered from projects.json
+     EDIT projects.json to add, remove, or update projects.
 ═══════════════════════════════════════════════════════════════ -->
 <div class="projects-section">
-  <div class="cards-grid">
-
-    <!-- PROJECT 01 — EDIT HERE -->
-    <div class="p-card">
-      <div class="p-preview"><span>Project Preview</span></div>
-      <div class="p-body">
-        <div class="p-meta">
-          <span class="p-num">01</span>
-          <span class="p-year">2026</span>
-        </div>
-        <div class="p-title">Intuit QuickBooks Upsell Targeting</div>
-        <div class="p-desc">
-          Profit-maximizing ML ensemble ranked #1 of 60 teams. Engineered features on
-          75K structured records, built and tuned Logistic Regression, Random Forest,
-          XGBoost, and MLP models, then scaled predictions to 800K+ population.
-        </div>
-        <div class="p-tags">
-          <span class="p-tag">Python</span>
-          <span class="p-tag">XGBoost</span>
-          <span class="p-tag">Scikit-learn</span>
-          <span class="p-tag">GLM</span>
-          <span class="p-tag">MLP</span>
-        </div>
-        <a href="projects/intuit.html" class="p-more">Read more →</a>
-      </div>
-    </div>
-    <!-- END PROJECT 01 -->
-
-    <!-- PROJECT 02 — EDIT HERE -->
-    <div class="p-card">
-      <div class="p-preview"><span>Project Preview</span></div>
-      <div class="p-body">
-        <div class="p-meta">
-          <span class="p-num">02</span>
-          <span class="p-year">2026</span>
-        </div>
-        <div class="p-title">Customer Message Optimization (NPTB)</div>
-        <div class="p-desc">
-          End-to-end ML pipeline on ~600K customer-email rows using Python and Polars.
-          XGBoost final model achieved €0.84/customer and +51.3% uplift vs random
-          — ~€1.42M projected at 5M customers.
-        </div>
-        <div class="p-tags">
-          <span class="p-tag">Python</span>
-          <span class="p-tag">Polars</span>
-          <span class="p-tag">XGBoost</span>
-          <span class="p-tag">MLP</span>
-          <span class="p-tag">Uplift</span>
-        </div>
-        <a href="projects/nptb.html" class="p-more">Read more →</a>
-      </div>
-    </div>
-    <!-- END PROJECT 02 -->
-
-    <!-- PROJECT 03 — EDIT HERE -->
-    <div class="p-card">
-      <div class="p-preview"><span>Project Preview</span></div>
-      <div class="p-body">
-        <div class="p-meta">
-          <span class="p-num">03</span>
-          <span class="p-year">2024</span>
-        </div>
-        <div class="p-title">Traway Operations Analytics</div>
-        <div class="p-desc">
-          Cohort and pricing analysis for a student-led mobility startup across
-          3,200 customers. Applied segmentation and regression to improve retention
-          to 60%+ and achieve 3× increase in AOV.
-        </div>
-        <div class="p-tags">
-          <span class="p-tag">Python</span>
-          <span class="p-tag">SQL</span>
-          <span class="p-tag">Regression</span>
-          <span class="p-tag">EDA</span>
-          <span class="p-tag">Cohort Analysis</span>
-        </div>
-        <a href="projects/traway.html" class="p-more">Read more →</a>
-      </div>
-    </div>
-    <!-- END PROJECT 03 -->
-
-    <!-- ── ADD NEW PROJECTS BELOW THIS LINE ────────────────
-         Duplicate the block below and fill in your details.
-    ─────────────────────────────────────────────────────── -->
-
-    <!-- PROJECT 04 — DUPLICATE THIS BLOCK FOR A NEW PROJECT
-    <div class="p-card">
-      <div class="p-preview"><span>Project Preview</span></div>
-      <div class="p-body">
-        <div class="p-meta">
-          <span class="p-num">04</span>
-          <span class="p-year">2026</span>
-        </div>
-        <div class="p-title">Your Project Title</div>
-        <div class="p-desc">One or two line description of the project and its impact.</div>
-        <div class="p-tags">
-          <span class="p-tag">Tool 1</span>
-          <span class="p-tag">Tool 2</span>
-        </div>
-        <a href="projects/yourproject.html" class="p-more">Read more →</a>
-      </div>
-    </div>
-    -->
-    <!-- ── END NEW PROJECT TEMPLATE ── -->
-
-  </div><!-- /cards-grid -->
+  <div id="projects-grid" class="cards-grid"></div>
 </div>
 <!-- ── END PROJECTS GRID ── -->
+
+<script>
+/* EDIT projects.json to add/remove projects */
+(function () {
+  const depth = window.location.pathname.split('/').filter(Boolean).length;
+  const base  = depth > 1 ? '../'.repeat(depth - 1) : './';
+
+  function cardHTML(item) {
+    const preview = item.image
+      ? `<img src="${item.image}" alt="${item.title}" class="p-preview-img">`
+      : `<div class="p-preview"><span>Project Preview</span></div>`;
+
+    const tags = item.tags.slice(0, 4)
+      .map(t => `<span class="p-tag">${t}</span>`)
+      .join('');
+
+    const link = item.href || '#';
+
+    return `
+      <div class="p-card">
+        ${preview}
+        <div class="p-body">
+          <div class="p-meta">
+            <span class="p-num">${item.number}</span>
+            <span class="p-year">${item.year}</span>
+          </div>
+          <div class="p-title">${item.title}</div>
+          <div class="p-desc">${item.summary}</div>
+          <div class="p-tags">${tags}</div>
+          <a href="${link}" class="p-more">Read more →</a>
+        </div>
+      </div>`;
+  }
+
+  fetch(base + 'projects.json')
+    .then(function (r) { return r.json(); })
+    .then(function (projects) {
+      document.getElementById('projects-grid').innerHTML =
+        projects.map(cardHTML).join('');
+      document.querySelectorAll('#projects-grid .p-card').forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          if (e.target.closest('a')) return;
+          var link = this.querySelector('.p-more');
+          if (link && link.getAttribute('href') !== '#') {
+            window.location.href = link.href;
+          }
+        });
+      });
+    })
+    .catch(function (err) {
+      console.error('Could not load projects.json:', err);
+    });
+})();
+</script>
 
 
 <!-- Toast (shared element for clipboard feedback) -->

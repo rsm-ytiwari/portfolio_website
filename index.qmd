@@ -193,90 +193,81 @@ page-layout: custom
 
 
 <!-- ═══════════════════════════════════════════════════════════
-     SELECTED WORK (3 featured project cards)
-     EDIT PROJECTS HERE — duplicate a .p-card block to add one.
-     Update "Read more" href to the project's case study page.
+     SELECTED WORK — featured projects pulled from projects.json
+     Set featured: true (max 3) in projects.json to show here.
      Full grid lives in projects.qmd.
 ═══════════════════════════════════════════════════════════════ -->
+
+<!-- Featured projects pulled from projects.json
+     Set featured: true (max 3) to show here -->
 <div class="projects-section" id="projects">
   <div class="sec-header">
     <span class="sec-label">Selected Work</span>
     <div class="sec-line"></div>
   </div>
 
-  <div class="cards-grid">
-
-    <!-- PROJECT 01 — EDIT HERE -->
-    <div class="p-card">
-      <div class="p-preview"><span>Project Preview</span></div>
-      <!-- Swap the above div with an <img> when you have screenshots -->
-      <div class="p-body">
-        <div class="p-meta">
-          <span class="p-num">01</span>
-          <span class="p-year">2026</span>
-        </div>
-        <div class="p-title">Intuit QuickBooks Upsell Targeting</div>
-        <div class="p-desc">Profit-maximizing ML ensemble ranked #1 of 60 teams, scaled to 800K+ records.</div>
-        <div class="p-tags">
-          <span class="p-tag">Python</span>
-          <span class="p-tag">XGBoost</span>
-          <span class="p-tag">Scikit-learn</span>
-          <span class="p-tag">GLM</span>
-        </div>
-        <a href="projects/intuit.html" class="p-more">Read more →</a>
-      </div>
-    </div>
-    <!-- END PROJECT 01 -->
-
-    <!-- PROJECT 02 — EDIT HERE -->
-    <div class="p-card">
-      <div class="p-preview"><span>Project Preview</span></div>
-      <div class="p-body">
-        <div class="p-meta">
-          <span class="p-num">02</span>
-          <span class="p-year">2026</span>
-        </div>
-        <div class="p-title">Customer Message Optimization</div>
-        <div class="p-desc">XGBoost pipeline on 600K rows delivering +51.3% uplift vs random baseline.</div>
-        <div class="p-tags">
-          <span class="p-tag">Python</span>
-          <span class="p-tag">Polars</span>
-          <span class="p-tag">XGBoost</span>
-          <span class="p-tag">MLP</span>
-        </div>
-        <a href="projects/nptb.html" class="p-more">Read more →</a>
-      </div>
-    </div>
-    <!-- END PROJECT 02 -->
-
-    <!-- PROJECT 03 — EDIT HERE -->
-    <div class="p-card">
-      <div class="p-preview"><span>Project Preview</span></div>
-      <div class="p-body">
-        <div class="p-meta">
-          <span class="p-num">03</span>
-          <span class="p-year">2024</span>
-        </div>
-        <div class="p-title">Traway Operations Analytics</div>
-        <div class="p-desc">Cohort and pricing analysis for a mobility startup across 3,200 customers.</div>
-        <div class="p-tags">
-          <span class="p-tag">Python</span>
-          <span class="p-tag">SQL</span>
-          <span class="p-tag">Regression</span>
-          <span class="p-tag">EDA</span>
-        </div>
-        <a href="projects/traway.html" class="p-more">Read more →</a>
-      </div>
-    </div>
-    <!-- END PROJECT 03 -->
-
-  </div><!-- /cards-grid -->
+  <div id="featured-grid" class="cards-grid"></div>
 
   <div class="view-all">
     <a href="projects.html">View all projects →</a>
   </div>
 </div>
 <!-- ── END PROJECTS ── -->
+
+<script>
+/* EDIT projects.json to add/remove featured projects */
+(function () {
+  const depth = window.location.pathname.split('/').filter(Boolean).length;
+  const base  = depth > 1 ? '../'.repeat(depth - 1) : './';
+
+  function cardHTML(item) {
+    const preview = item.image
+      ? `<img src="${item.image}" alt="${item.title}" class="p-preview-img">`
+      : `<div class="p-preview"><span>Project Preview</span></div>`;
+
+    const tags = item.tags.slice(0, 4)
+      .map(t => `<span class="p-tag">${t}</span>`)
+      .join('');
+
+    const link = item.href || '#';
+
+    return `
+      <div class="p-card">
+        ${preview}
+        <div class="p-body">
+          <div class="p-meta">
+            <span class="p-num">${item.number}</span>
+            <span class="p-year">${item.year}</span>
+          </div>
+          <div class="p-title">${item.title}</div>
+          <div class="p-desc">${item.summary}</div>
+          <div class="p-tags">${tags}</div>
+          <a href="${link}" class="p-more">Read more →</a>
+        </div>
+      </div>`;
+  }
+
+  fetch(base + 'projects.json')
+    .then(function (r) { return r.json(); })
+    .then(function (projects) {
+      const featured = projects.filter(function (p) { return p.featured; }).slice(0, 3);
+      document.getElementById('featured-grid').innerHTML =
+        featured.map(cardHTML).join('');
+      document.querySelectorAll('#featured-grid .p-card').forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          if (e.target.closest('a')) return;
+          var link = this.querySelector('.p-more');
+          if (link && link.getAttribute('href') !== '#') {
+            window.location.href = link.href;
+          }
+        });
+      });
+    })
+    .catch(function (err) {
+      console.error('Could not load projects.json:', err);
+    });
+})();
+</script>
 
 
 <!-- Toast notification (used by copy-email button) -->

@@ -1,0 +1,120 @@
+---
+# ══════════════════════════════════════════════════════════
+# HOW TO USE THIS TEMPLATE
+#
+#   1. Copy this file:
+#        cp projects/new-project-template.qmd projects/your-project.qmd
+#   2. Fill in all the EDIT HERE sections below
+#   3. Add an entry to projects.json (set featured: false
+#      unless you want it on the homepage)
+#   4. Run: quarto render
+#
+# That's it. No other files to touch.
+# ══════════════════════════════════════════════════════════
+
+# EDIT: browser tab title
+pagetitle: "Project Title — Yash Tiwari"
+page-layout: custom
+# Navbar is injected from the shared partial (no edits needed there)
+include-before-body: ../_partials/case-study-template.html
+---
+
+```{=html}
+<!-- ═══════════════════════════════════════════════════════════
+     CASE STUDY BANNER
+     EDIT every field below.
+═══════════════════════════════════════════════════════════════ -->
+<div class="case-banner">
+
+  <a href="../projects.html" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+    </svg>
+    All Projects
+  </a>
+
+  <!-- EDIT: short category label, e.g. "Analytics · ML" -->
+  <div class="case-tag">Analytics · ML</div>
+
+  <!-- EDIT: project title -->
+  <h1 class="case-title">Your Project Title</h1>
+
+  <!-- EDIT: one compelling sentence about what you built and why it mattered -->
+  <p class="case-subtitle">
+    One sentence — what you built and why it mattered.
+  </p>
+
+  <!-- EDIT: four fact fields shown as a metadata row -->
+  <div class="case-meta-row">
+    <div class="case-meta-item">
+      <span class="case-meta-key">Timeline</span>
+      <span class="case-meta-val">Month Year – Month Year</span>
+    </div>
+    <div class="case-meta-item">
+      <span class="case-meta-key">Role</span>
+      <span class="case-meta-val">Your Role</span>
+    </div>
+    <div class="case-meta-item">
+      <span class="case-meta-key">Stack</span>
+      <span class="case-meta-val">Python · SQL · Tool</span>
+    </div>
+    <div class="case-meta-item">
+      <span class="case-meta-key">Outcome</span>
+      <span class="case-meta-val">Key metric or result</span>
+    </div>
+  </div>
+
+</div>
+<!-- ── END BANNER ── -->
+
+
+<!-- Open case body — markdown sections below render inside this div -->
+<div class="case-body">
+```
+
+## Overview
+
+Write normally in markdown here. No HTML needed. Just prose.
+Quarto renders it inside the `.case-body` div automatically.
+
+## Problem
+
+Describe the problem you were solving.
+
+## Approach
+
+- Use bullet points freely
+- They render correctly
+- No class names needed
+
+## Results
+
+```{=html}
+<!-- EDIT: three stat cards — headline numbers for this project -->
+<div class="result-grid">
+  <div class="result-card">
+    <span class="result-num">00%</span>
+    <span class="result-label">What this number means</span>
+  </div>
+  <div class="result-card">
+    <span class="result-num">00×</span>
+    <span class="result-label">What this number means</span>
+  </div>
+  <div class="result-card">
+    <span class="result-num">000</span>
+    <span class="result-label">What this number means</span>
+  </div>
+</div>
+```
+
+Add narrative context here in prose after the stat cards.
+
+## Learnings
+
+Optional section. Delete if not needed.
+
+```{=html}
+</div><!-- /case-body -->
+
+<div class="toast" id="toast">✓ Copied to clipboard</div>
+```
