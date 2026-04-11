@@ -159,33 +159,50 @@ body {
 /* ══════════════════════════════
    HERO
 ══════════════════════════════ */
+/* hero-wrap is now full viewport width.
+   max-width and horizontal padding live on
+   hero-inner so the ::before can cover edge-to-edge. */
 .hero-wrap {
   position: relative;
-  padding: 88px 64px 0;
-  max-width: 1280px;
-  margin: 0 auto;
+  padding: 88px 0 0;
 }
-/* Stealth dot grid — dark */
-html.dark .hero-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
-  z-index: 0;
-}
-/* Stealth dot grid — light */
+/* Dot grid + cursor spotlight — light mode */
 html:not(.dark) .hero-wrap::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, rgba(0,0,0,0.05) 1px, transparent 1px);
-  background-size: 28px 28px;
+  inset: -20px;
+  background:
+    radial-gradient(
+      circle 240px at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(0,0,0,0.05) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle,
+      rgba(0,0,0,0.09) 1.5px,
+      transparent 1.5px
+    ) var(--grid-x, 0px) var(--grid-y, 0px) / 28px 28px;
   pointer-events: none;
   z-index: 0;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 6%,
+    black 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 6%,
+    black 88%,
+    transparent 100%
+  );
 }
 .hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 64px;
   position: relative;
   z-index: 1;
   display: grid;
@@ -284,7 +301,7 @@ html:not(.dark) .hero-wrap::before {
   align-items: center;
   gap: 8px;
   margin-top: 52px;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 .scroll-hint span {
   font-size: 11px;
@@ -870,8 +887,12 @@ html.dark .cell-available {
 @media (max-width: 768px) {
   .navbar           { padding: 0 24px; }
   .nav-links        { display: none; }
-  .hero-wrap        { padding: 64px 24px 0; }
-  .hero-inner       { grid-template-columns: 1fr; gap: 40px; }
+  .hero-wrap  { padding: 64px 0 0; }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 0 24px;
+  }
   .hero-name        { font-size: clamp(48px,11vw,72px); letter-spacing:-2px; }
   .cta-row          { flex-wrap: nowrap; }
   .btn-primary,
@@ -953,6 +974,9 @@ html:not(.dark) .tools-strip {
 }
 html:not(.dark) .sec-line {
   background: rgba(13,13,12,0.15);
+}
+html.dark .sec-line {
+  background: rgba(240,238,232,0.15);
 }
 html:not(.dark) .c-div {
   border-top-color: rgba(13,13,12,0.12);
@@ -1098,7 +1122,6 @@ html.dark .p-preview {
   backdrop-filter: blur(32px) saturate(180%);
   -webkit-backdrop-filter: blur(32px) saturate(180%);
   border-bottom: 1px solid rgba(255,255,255,0.06);
-  position: relative;
 }
 html:not(.dark) .navbar {
   background: rgba(244,242,237,0.6);
@@ -1157,7 +1180,7 @@ html.dark .cell:not(.terminal-cell) {
   position: relative;
 }
 html:not(.dark) .cell:not(.terminal-cell) {
-  background: rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.50);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   border: 1px solid rgba(255,255,255,0.9);
@@ -1204,7 +1227,9 @@ html:not(.dark) .copy-btn {
   color: var(--text);
 }
 html:not(.dark) .copy-btn:hover {
-  background: rgba(255,255,255,0.85);
+  background: var(--text);
+  color: var(--bg) !important;
+  border-color: var(--text);
 }
 
 /* ── LIQUID GLASS REFINEMENTS ── */
@@ -1312,18 +1337,18 @@ html:not(.dark) .cell:not(.terminal-cell):hover {
   position: absolute;
   top: -80px;
   right: -60px;
-  width: 560px;
-  height: 560px;
+  width: min(560px, 85vw);
+  height: min(560px, 85vw);
   background: radial-gradient(
     ellipse at center,
-    rgba(200,255,62,0.18) 0%,
-    rgba(200,255,62,0.08) 35%,
-    rgba(200,255,62,0.02) 60%,
+    rgba(200,255,62,0.22) 0%,
+    rgba(200,255,62,0.10) 35%,
+    rgba(200,255,62,0.03) 60%,
     transparent 75%
   );
   pointer-events: none;
   z-index: 0;
-  filter: blur(20px);
+  filter: blur(16px);
   transform: translate(
     var(--blob-x, 0px),
     var(--blob-y, 0px)
@@ -1332,34 +1357,61 @@ html:not(.dark) .cell:not(.terminal-cell):hover {
   will-change: transform;
 }
 
-/* Light mode blob — warmer, more subtle */
+/* Light mode blob — indigo at sufficient opacity
+   to be visible against warm off-white.
+   mix-blend-mode: normal prevents cell color bleed.
+   Warm-cool tension mirrors dark mode's green-on-black. */
 html:not(.dark) .hero-inner::after {
   background: radial-gradient(
     ellipse at center,
-    rgba(99,102,241,0.28) 0%,
-    rgba(99,102,241,0.14) 30%,
-    rgba(139,92,246,0.06) 55%,
+    rgba(79, 70, 229, 0.20) 0%,
+    rgba(99, 102, 241, 0.09) 38%,
+    rgba(139, 92, 246, 0.02) 60%,
     transparent 72%
   );
-  filter: blur(32px);
-  width: 640px;
-  height: 640px;
-  top: -120px;
-  right: -100px;
-  mix-blend-mode: multiply;
-  z-index: 0;
+  filter: blur(20px);
+  width: min(560px, 85vw);
+  height: min(560px, 85vw);
+  top: -80px;
+  right: -60px;
+  mix-blend-mode: normal;
+  opacity: 1;
 }
 
 /* Ensure bento sits above blob */
 .bento { position: relative; z-index: 1; }
 
-/* FIX 3 — Make dot grid slightly more visible
-   in dark mode so glass has texture to work with */
+/* Dot grid + cursor spotlight — dark mode */
 html.dark .hero-wrap::before {
-  background-image: radial-gradient(
-    circle,
-    rgba(255,255,255,0.07) 1px,
-    transparent 1px
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background:
+    radial-gradient(
+      circle 280px at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(255,255,255,0.08) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.10) 1.5px,
+      transparent 1.5px
+    ) var(--grid-x, 0px) var(--grid-y, 0px) / 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 6%,
+    black 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 6%,
+    black 88%,
+    transparent 100%
   );
 }
 

@@ -393,3 +393,37 @@ depth. A very subtle dark shadow behind the bento grid separates it from the pag
 without introducing a competing hue. The fixed anchor point (`62% 35%`) places the
 deepest shadow roughly behind the bento grid's upper-right quadrant, reinforcing
 the grid's elevation without requiring cursor tracking in light mode.
+
+---
+
+## 27. Light mode blob — settled on indigo at 20% opacity
+
+**Decision:** After iterating through amber-rose and monochromatic depth vignette,
+the light mode blob was set to indigo: `rgba(79,70,229,0.20)` at the core, fading
+through `rgba(99,102,241,0.09)` and `rgba(139,92,246,0.02)`. `blur(20px)`,
+`560×560px`, `top: -80px; right: -60px` — matching the dark mode blob's geometry.
+`mix-blend-mode: normal`.
+
+**Why:** The monochromatic vignette was invisible against the warm off-white
+background at any opacity that didn't muddy the page. Amber-rose created palette
+conflict with the page's warm neutrals. Indigo provides warm-cool tension that
+mirrors dark mode's lime-on-black — the same compositional logic, different palette.
+At 20% it reads as colour without competing with text or glass cells. `blur(20px)`
+(vs. dark mode's 16px) keeps the edge softer on the lighter canvas.
+`mix-blend-mode: normal` prevents the indigo from bleeding into cell backgrounds
+through multiply or screen compositing.
+
+---
+
+## 28. Sticky navbar — `position: relative` override removed
+
+**Decision:** The liquid glass system block contained `.navbar { position: relative; }`.
+This was removed. The base `.navbar` rule's `position: sticky; top: 0` now applies
+in both dark and light modes.
+
+**Why:** The glass system block was added after the base navbar rule and unintentionally
+overrode `position: sticky` with `position: relative`, making the navbar scroll away
+with the page. The fix is a deletion, not an addition — the base rule already had the
+correct sticky declaration. The glass block only needed to override visual properties
+(background, backdrop-filter, border); layout properties should never be set in a
+theme override block.
