@@ -82,7 +82,26 @@ That's it. No HTML to touch.
      EDIT projects.json to add, remove, or update projects.
 ═══════════════════════════════════════════════════════════════ -->
 <div class="projects-section">
+
+  <!-- Stats bar: project count + discipline tags -->
+  <div class="projects-stats">
+    <span id="project-count">—</span> Projects
+    &nbsp;·&nbsp; ML · Analytics · Agentic AI
+  </div>
+
+  <!-- Filter bar: "All" is hardcoded; category buttons injected by JS -->
+  <div class="filter-bar" id="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+  </div>
+
+  <!-- Empty state: shown when active filter has no matches -->
+  <p id="empty-state"
+     style="display:none; color:var(--text-muted); font-size:14px; padding:40px 0;">
+    No projects in this category yet.
+  </p>
+
   <div id="projects-grid" class="cards-grid"></div>
+
 </div>
 <!-- ── END PROJECTS GRID ── -->
 
@@ -98,13 +117,17 @@ That's it. No HTML to touch.
       : `<div class="p-preview"><span>Project Preview</span></div>`;
 
     const tags = item.tags.slice(0, 4)
-      .map(t => `<span class="p-tag">${t}</span>`)
+      .map(function (t) { return `<span class="p-tag">${t}</span>`; })
       .join('');
 
     const link = item.href || '#';
 
+    const catAttr = Array.isArray(item.category)
+      ? item.category.join(',')
+      : (item.category || '');
+
     return `
-      <div class="p-card">
+      <div class="p-card" data-category="${catAttr}">
         ${preview}
         <div class="p-body">
           <div class="p-meta">
@@ -119,20 +142,76 @@ That's it. No HTML to touch.
       </div>`;
   }
 
+  function updateEmptyState() {
+    const visible = Array.from(
+      document.querySelectorAll('#projects-grid .p-card')
+    ).filter(function (c) { return c.style.display !== 'none'; });
+    const emptyEl = document.getElementById('empty-state');
+    if (emptyEl) emptyEl.style.display = visible.length === 0 ? 'block' : 'none';
+  }
+
   fetch(base + 'projects.json')
     .then(function (r) { return r.json(); })
     .then(function (projects) {
+
+      /* ── Stats bar ── */
+      document.getElementById('project-count').textContent = projects.length;
+
+      /* ── Category filter buttons ── */
+      const cats = Array.from(new Set(
+        projects.reduce(function (acc, p) {
+          return acc.concat(
+            Array.isArray(p.category) ? p.category : [p.category || 'Other']
+          );
+        }, [])
+      )).sort();
+
+      const bar = document.getElementById('filter-bar');
+      cats.forEach(function (cat) {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.filter = cat;
+        btn.textContent = cat;
+        bar.appendChild(btn);
+      });
+
+      /* ── Render cards ── */
       document.getElementById('projects-grid').innerHTML =
         projects.map(cardHTML).join('');
+
+      /* ── Click-to-navigate ── */
       document.querySelectorAll('#projects-grid .p-card').forEach(function (card) {
         card.addEventListener('click', function (e) {
           if (e.target.closest('a')) return;
           var link = this.querySelector('.p-more');
           if (link && link.getAttribute('href') !== '#') {
+            this.blur();
             window.location.href = link.href;
           }
         });
       });
+
+      /* ── Filter bar click handler ── */
+      bar.addEventListener('click', function (e) {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
+
+        document.querySelectorAll('.filter-btn')
+          .forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('#projects-grid .p-card').forEach(function (card) {
+          const cardCats = card.dataset.category
+            ? card.dataset.category.split(',')
+            : [];
+          const show = filter === 'all' || cardCats.includes(filter);
+          card.style.display = show ? '' : 'none';
+        });
+
+        updateEmptyState();
+      });
+
     })
     .catch(function (err) {
       console.error('Could not load projects.json:', err);

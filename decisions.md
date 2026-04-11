@@ -495,3 +495,69 @@ not jump off-site without warning. The bridge page gives context (banner, metada
 stat cards), presents the external analysis as a deliberate handoff, and keeps the
 navigation model consistent. It also lets the Traway entry carry the standard
 case-study design (case-banner, result-grid) without hosting the full analysis inline.
+
+---
+
+## 33. Banner-to-grid spacing: constraint moved to sibling selector
+
+**Decision:** `.page-banner { padding-bottom: 48px }` (made explicit; was already
+set) combined with `.page-banner ~ .projects-section { padding-top: 0 }`. The
+`.projects-section` base rule retains `padding: 80px 64px` for the homepage context
+where it follows a hero, not a banner.
+
+**Why:** Both pages share `.projects-section` for horizontal padding and max-width,
+so modifying the base rule would collapse the homepage gap. A sibling selector scopes
+the override to only the case where a `.page-banner` precedes the section — this is
+currently only `projects.qmd`. HTML comments between elements are not DOM nodes, so
+the `~` general sibling combinator works correctly across them.
+
+---
+
+## 34. `.p-desc` clamp raised to 3 lines; `min-height` added
+
+**Decision:** `-webkit-line-clamp` changed from 2 to 3. `min-height: 60px` added to
+`.p-desc`.
+
+**Why:** Two lines truncated mid-sentence on most project summaries, hiding the
+impact metric which typically appears at the end. Three lines consistently shows the
+key number. `min-height: 60px` prevents cards with shorter descriptions from having
+less body height than their neighbours — without it, the flexbox column layout
+(`.p-body { flex: 1 }`) still works but short descriptions produce uneven visual
+rhythm across the grid.
+
+---
+
+## 35. Card focus state decoupled from hover state
+
+**Decision:** `.p-card:focus { outline: none }` removes the browser's default focus
+ring. `.p-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }`
+restores a keyboard-navigation indicator using the `:focus-visible` pseudo-class.
+Click handlers in both `projects.qmd` and `index.qmd` call `this.blur()` before
+`window.location.href` assignment.
+
+**Why:** Without `blur()`, clicking a card leaves it in a focused state — the browser
+applies `:focus` styles to the element even after the click interaction is complete.
+If `.p-card:hover` sets `border-color: var(--accent)`, the border appears "stuck"
+because `:focus` keeps the element targeted. `this.blur()` explicitly removes focus
+immediately, so the accent border disappears as soon as the navigation fires.
+`:focus-visible` preserves accessibility: keyboard users still get a visible indicator,
+but mouse clicks do not trigger it.
+
+---
+
+## 36. Category filter system on projects page
+
+**Decision:** `projects.json` gained a `"category"` field (string or array). The
+projects page JS collects unique categories, injects pill buttons after the hardcoded
+"All" button, sets `data-category` on each rendered card, and filters cards by
+toggling `display: none`. An empty-state `<p>` is shown when no cards match. The
+stats bar shows total project count from `projects.length`.
+
+Current assignments: Intuit + NPTB → `["ML", "Analytics"]`; Traway → `["Analytics"]`.
+
+**Why:** The filter bar is generated entirely from the data — no hardcoded category
+list in the HTML. Adding a new category requires only setting `"category": "Agentic AI"`
+in `projects.json`; the button appears automatically. `display: none` (rather than
+DOM removal) preserves the card elements so the "All" filter can restore them without
+a re-fetch. The empty state prevents the grid from looking broken when a new category
+has only future projects.

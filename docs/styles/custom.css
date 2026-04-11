@@ -521,8 +521,9 @@ html.dark .cell-available {
 .p-desc  {
   font-size:13px; font-weight:300; color:var(--text-muted);
   line-height:1.6; margin-bottom:14px;
-  display:-webkit-box; -webkit-line-clamp:2;
+  display:-webkit-box; -webkit-line-clamp:3;
   -webkit-box-orient:vertical; overflow:hidden;
+  min-height: 60px;
 }
 .p-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
 .p-tag  {
@@ -1424,3 +1425,60 @@ html.dark .hero-wrap::before {
     background 200ms ease,
     border-color 200ms ease;
 }
+
+
+/* ══════════════════════════════
+   PROJECTS PAGE — banner/grid spacing, filter bar, stats
+══════════════════════════════ */
+
+/* Reduce gap between page-banner and the cards grid to 48px.
+   The banner already provides 48px bottom padding; remove top
+   padding on any .projects-section that follows it. */
+.page-banner { padding-bottom: 48px; }
+.page-banner ~ .projects-section { padding-top: 0; }
+
+/* Card focus state — no outline on click, only on keyboard nav */
+.p-card:focus         { outline: none; }
+.p-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Stats bar */
+.projects-stats {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.filter-btn {
+  font-family: 'Geist', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.filter-btn:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+.filter-btn.active {
+  color: var(--accent-fg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+html.dark .filter-btn.active { color: var(--accent-fg); }

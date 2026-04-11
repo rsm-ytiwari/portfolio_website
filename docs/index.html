@@ -312,6 +312,7 @@ ul.task-list li input[type="checkbox"] {
           if (e.target.closest('a')) return;
           var link = this.querySelector('.p-more');
           if (link && link.getAttribute('href') !== '#') {
+            this.blur();
             window.location.href = link.href;
           }
         });
