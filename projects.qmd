@@ -108,8 +108,11 @@ That's it. No HTML to touch.
 <script>
 /* EDIT projects.json to add/remove projects */
 (function () {
-  const depth = window.location.pathname.split('/').filter(Boolean).length;
-  const base  = depth > 1 ? '../'.repeat(depth - 1) : './';
+  // Detect the repo base path from window.location
+  const path = window.location.pathname;
+  const base = path.includes('/portfolio_website/')
+    ? '/portfolio_website/'
+    : './';
 
   function cardHTML(item) {
     const preview = item.image

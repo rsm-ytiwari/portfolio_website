@@ -271,8 +271,11 @@ ul.task-list li input[type="checkbox"] {
 <script>
 /* EDIT projects.json to add/remove featured projects */
 (function () {
-  const depth = window.location.pathname.split('/').filter(Boolean).length;
-  const base  = depth > 1 ? '../'.repeat(depth - 1) : './';
+  // Detect the repo base path from window.location
+  const path = window.location.pathname;
+  const base = path.includes('/portfolio_website/')
+    ? '/portfolio_website/'
+    : './';
 
   function cardHTML(item) {
     const preview = item.image
