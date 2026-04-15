@@ -40,6 +40,10 @@ ul.task-list li input[type="checkbox"] {
      then update font-family values in styles/custom.css.
 ═══════════════════════════════════════════════════════════════ -->
 
+<!-- Favicon — SVG supports light/dark mode automatically -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+
 <!-- Dark mode initialised before first paint — prevents flash of light mode -->
 <script>document.documentElement.classList.add('dark');</script>
 
@@ -252,10 +256,10 @@ if (copyBtn && toast) {
 /* ── 5. Cursor-reactive blob ──
    Blob follows cursor globally at 35% speed, capped at
    MAX_DRIFT px from origin. Returns to origin after 3 s
-   of idle or on mouse leave.                                   */
+   of idle or on mouse leave. Now targets document.body
+   for site-wide effect.                                     */
 (function() {
-  const heroInner = document.querySelector('.hero-inner');
-  if (!heroInner) return;
+  const blob = document.body;
 
   let targetX = 0, targetY = 0;
   let currentX = 0, currentY = 0;
@@ -272,8 +276,8 @@ if (copyBtn && toast) {
     currentX = lerp(currentX, targetX, LERP);
     currentY = lerp(currentY, targetY, LERP);
 
-    heroInner.style.setProperty('--blob-x', currentX.toFixed(2) + 'px');
-    heroInner.style.setProperty('--blob-y', currentY.toFixed(2) + 'px');
+    blob.style.setProperty('--blob-x', currentX.toFixed(2) + 'px');
+    blob.style.setProperty('--blob-y', currentY.toFixed(2) + 'px');
 
     if (
       Math.abs(currentX - targetX) > 0.05 ||
@@ -297,7 +301,7 @@ if (copyBtn && toast) {
   }
 
   document.addEventListener('mousemove', function(e) {
-    const rect = heroInner.getBoundingClientRect();
+    const rect = blob.getBoundingClientRect();
     const cx = rect.left + rect.width  / 2;
     const cy = rect.top  + rect.height / 2;
 
@@ -319,12 +323,12 @@ if (copyBtn && toast) {
    1. Spotlight: direct cursor tracking (no lerp)
    2. Grid parallax: very slow lerp (0.035)
    Touch/stylus devices: fully excluded.
-   Spotlight hides when cursor leaves viewport.         */
+   Spotlight hides when cursor leaves viewport.
+   Now targets document.body for site-wide effect.      */
 (function() {
   if (window.matchMedia('(hover: none)').matches) return;
 
-  const heroWrap = document.querySelector('.hero-wrap');
-  if (!heroWrap) return;
+  const grid = document.body;
 
   const MAX_SHIFT  = 4;
   const LERP_GRID  = 0.035;
@@ -338,8 +342,8 @@ if (copyBtn && toast) {
   function animateGrid() {
     currentGX = lerpG(currentGX, targetGX, LERP_GRID);
     currentGY = lerpG(currentGY, targetGY, LERP_GRID);
-    heroWrap.style.setProperty('--grid-x', currentGX.toFixed(2) + 'px');
-    heroWrap.style.setProperty('--grid-y', currentGY.toFixed(2) + 'px');
+    grid.style.setProperty('--grid-x', currentGX.toFixed(2) + 'px');
+    grid.style.setProperty('--grid-y', currentGY.toFixed(2) + 'px');
     const still =
       Math.abs(currentGX - targetGX) < 0.02 &&
       Math.abs(currentGY - targetGY) < 0.02;
@@ -347,9 +351,9 @@ if (copyBtn && toast) {
   }
 
   document.addEventListener('mousemove', function(e) {
-    const rect = heroWrap.getBoundingClientRect();
-    heroWrap.style.setProperty('--mouse-x', (e.clientX - rect.left).toFixed(0) + 'px');
-    heroWrap.style.setProperty('--mouse-y', (e.clientY - rect.top).toFixed(0) + 'px');
+    const rect = grid.getBoundingClientRect();
+    grid.style.setProperty('--mouse-x', (e.clientX - rect.left).toFixed(0) + 'px');
+    grid.style.setProperty('--mouse-y', (e.clientY - rect.top).toFixed(0) + 'px');
     const cx = rect.left + rect.width  / 2;
     const cy = rect.top  + rect.height / 2;
     const rawX = ((e.clientX - cx) / rect.width)  * MAX_SHIFT * 2;
@@ -360,8 +364,8 @@ if (copyBtn && toast) {
   });
 
   document.addEventListener('mouseleave', function() {
-    heroWrap.style.setProperty('--mouse-x', '-500px');
-    heroWrap.style.setProperty('--mouse-y', '-500px');
+    grid.style.setProperty('--mouse-x', '-500px');
+    grid.style.setProperty('--mouse-y', '-500px');
     targetGX = 0; targetGY = 0;
     if (!gridRaf) gridRaf = requestAnimationFrame(animateGrid);
   });

@@ -166,11 +166,11 @@ body {
   position: relative;
   padding: 88px 0 0;
 }
-/* Dot grid + cursor spotlight — light mode */
-html:not(.dark) .hero-wrap::before {
+/* Dot grid + cursor spotlight — light mode (site-wide) */
+html:not(.dark) body::before {
   content: '';
-  position: absolute;
-  inset: -20px;
+  position: fixed;
+  inset: 0;
   background:
     radial-gradient(
       circle 240px at var(--mouse-x, -500px) var(--mouse-y, -500px),
@@ -184,20 +184,6 @@ html:not(.dark) .hero-wrap::before {
     ) var(--grid-x, 0px) var(--grid-y, 0px) / 28px 28px;
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 6%,
-    black 88%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 6%,
-    black 88%,
-    transparent 100%
-  );
 }
 .hero-inner {
   max-width: 1280px;
@@ -1333,9 +1319,9 @@ html:not(.dark) .cell:not(.terminal-cell):hover {
 .hero-inner {
   position: relative;
 }
-.hero-inner::after {
+body::after {
   content: '';
-  position: absolute;
+  position: fixed;
   top: -80px;
   right: -60px;
   width: min(560px, 85vw);
@@ -1362,7 +1348,7 @@ html:not(.dark) .cell:not(.terminal-cell):hover {
    to be visible against warm off-white.
    mix-blend-mode: normal prevents cell color bleed.
    Warm-cool tension mirrors dark mode's green-on-black. */
-html:not(.dark) .hero-inner::after {
+html:not(.dark) body::after {
   background: radial-gradient(
     ellipse at center,
     rgba(79, 70, 229, 0.20) 0%,
@@ -1379,14 +1365,12 @@ html:not(.dark) .hero-inner::after {
   opacity: 1;
 }
 
-/* Ensure bento sits above blob */
-.bento { position: relative; z-index: 1; }
 
-/* Dot grid + cursor spotlight — dark mode */
-html.dark .hero-wrap::before {
+/* Dot grid + cursor spotlight — dark mode (site-wide) */
+html.dark body::before {
   content: '';
-  position: absolute;
-  inset: -20px;
+  position: fixed;
+  inset: 0;
   background:
     radial-gradient(
       circle 280px at var(--mouse-x, -500px) var(--mouse-y, -500px),
@@ -1400,20 +1384,6 @@ html.dark .hero-wrap::before {
     ) var(--grid-x, 0px) var(--grid-y, 0px) / 28px 28px;
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 6%,
-    black 88%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 6%,
-    black 88%,
-    transparent 100%
-  );
 }
 
 /* FIX 4 — Add transition to all cells so
