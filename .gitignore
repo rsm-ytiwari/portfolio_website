@@ -1,0 +1,20 @@
+/.quarto/
+**/*.quarto_ipynb
+_partials/scripts.html
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+*.swp
+*.swo
+*~
+.idea/
+
+# Environment
+.env
+.env.local
+
+# Dependencies
+node_modules/

@@ -144,3 +144,56 @@ if (copyBtn && toast) {
 
   document.addEventListener('mouseleave', resetTarget);
 })();
+
+/* ── 6. Cursor spotlight + grid parallax ──
+   TWO separate effects layered:
+   1. Spotlight: direct cursor tracking (no lerp)
+   2. Grid parallax: very slow lerp (0.035)
+   Touch/stylus devices: fully excluded.
+   Spotlight hides when cursor leaves viewport.         */
+(function() {
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  const heroWrap = document.querySelector('.hero-wrap');
+  if (!heroWrap) return;
+
+  const MAX_SHIFT  = 4;
+  const LERP_GRID  = 0.035;
+
+  let targetGX = 0, targetGY = 0;
+  let currentGX = 0, currentGY = 0;
+  let gridRaf = null;
+
+  function lerpG(a, b, t) { return a + (b - a) * t; }
+
+  function animateGrid() {
+    currentGX = lerpG(currentGX, targetGX, LERP_GRID);
+    currentGY = lerpG(currentGY, targetGY, LERP_GRID);
+    heroWrap.style.setProperty('--grid-x', currentGX.toFixed(2) + 'px');
+    heroWrap.style.setProperty('--grid-y', currentGY.toFixed(2) + 'px');
+    const still =
+      Math.abs(currentGX - targetGX) < 0.02 &&
+      Math.abs(currentGY - targetGY) < 0.02;
+    gridRaf = still ? null : requestAnimationFrame(animateGrid);
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const rect = heroWrap.getBoundingClientRect();
+    heroWrap.style.setProperty('--mouse-x', (e.clientX - rect.left).toFixed(0) + 'px');
+    heroWrap.style.setProperty('--mouse-y', (e.clientY - rect.top).toFixed(0) + 'px');
+    const cx = rect.left + rect.width  / 2;
+    const cy = rect.top  + rect.height / 2;
+    const rawX = ((e.clientX - cx) / rect.width)  * MAX_SHIFT * 2;
+    const rawY = ((e.clientY - cy) / rect.height) * MAX_SHIFT * 2;
+    targetGX = Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, rawX));
+    targetGY = Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, rawY));
+    if (!gridRaf) gridRaf = requestAnimationFrame(animateGrid);
+  });
+
+  document.addEventListener('mouseleave', function() {
+    heroWrap.style.setProperty('--mouse-x', '-500px');
+    heroWrap.style.setProperty('--mouse-y', '-500px');
+    targetGX = 0; targetGY = 0;
+    if (!gridRaf) gridRaf = requestAnimationFrame(animateGrid);
+  });
+})();

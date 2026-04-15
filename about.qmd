@@ -58,14 +58,14 @@ page-layout: custom
          then uncomment the <img> and remove the placeholder div.
     ─────────────────────────────────────────────────────────── -->
 
-    <!--
+  
     <img src="assets/profile.jpg" alt="Yash Tiwari" class="about-photo">
-    -->
 
-    <!-- Remove this placeholder once you add profile.jpg -->
+
+    <!-- Remove this placeholder once you add profile.jpg
     <div class="about-photo-placeholder">
       Add photo →<br>assets/profile.jpg
-    </div>
+    </div> -->
 
     <!-- RIGHT — BIO + SECTIONS ───────────────────────────── -->
     <div>

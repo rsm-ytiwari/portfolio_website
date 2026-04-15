@@ -14,6 +14,7 @@
 project:
   type: website
   output-dir: docs
+  pre-render: sync-scripts.py
   resources:
     - js/            # → copied to docs/js/   (main.js)
     - assets/        # → copied to docs/assets/ (resume.pdf, profile.jpg)

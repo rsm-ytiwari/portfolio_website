@@ -52,8 +52,8 @@ pages in subdirectories — `projects/traway.html` would need `../js/main.js`
 while top-level pages need `js/main.js`. Inlining the JS sidesteps this
 entirely and works at any depth without per-page overrides.
 
-`js/main.js` is kept as the **source of truth** for editing. After making
-changes there, paste the updated code into `_partials/scripts.html`.
+`js/main.js` is the **single source of truth**. `_partials/scripts.html` is
+auto-generated on every `quarto render` by `sync-scripts.py` (see Decision 37).
 
 ---
 
@@ -561,3 +561,23 @@ in `projects.json`; the button appears automatically. `display: none` (rather th
 DOM removal) preserves the card elements so the "All" filter can restore them without
 a re-fetch. The empty state prevents the grid from looking broken when a new category
 has only future projects.
+
+---
+
+## 37. Auto-sync `js/main.js` → `_partials/scripts.html` via pre-render script
+
+**Decision:** `sync-scripts.py` is a Python pre-render script configured in
+`_quarto.yml` via `project.pre-render: sync-scripts.py`. On every `quarto render`,
+Quarto runs this script before rendering any `.qmd` files. The script reads
+`js/main.js`, wraps it in a `<script>` tag with a boilerplate header comment, and
+writes the result to `_partials/scripts.html`. `_partials/scripts.html` is listed
+in `.gitignore` as a generated artifact.
+
+**Why:** Previously, `js/main.js` was the source of truth but `_partials/scripts.html`
+had to be manually synced — a maintenance burden that led to the two files drifting
+out of sync (e.g. new cursor spotlight and grid parallax effects existed only in
+`scripts.html`). Automating the sync via pre-render eliminates the cognitive overhead:
+edit `js/main.js`, run `quarto render`, the inline copy updates automatically. No
+manual copying, no divergence risk, no git diffs on `scripts.html` from edits to
+`main.js` (it's gitignored). The pre-render approach is transparent — you don't think
+about the synchronization, it just happens.
