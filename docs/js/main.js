@@ -83,10 +83,11 @@ if (copyBtn && toast) {
 /* ── 5. Cursor-reactive blob ──
    Blob follows cursor globally at 35% speed, capped at
    MAX_DRIFT px from origin. Returns to origin after 3 s
-   of idle or on mouse leave. Now targets document.body
-   for site-wide effect.                                     */
+   of idle or on mouse leave.
+   On homepage: targets .hero-inner (prominent blob)
+   On other pages: targets document.body (ambient blob)   */
 (function() {
-  const blob = document.body;
+  const blob = document.querySelector('.hero-inner') || document.body;
 
   let targetX = 0, targetY = 0;
   let currentX = 0, currentY = 0;
@@ -151,11 +152,12 @@ if (copyBtn && toast) {
    2. Grid parallax: very slow lerp (0.035)
    Touch/stylus devices: fully excluded.
    Spotlight hides when cursor leaves viewport.
-   Now targets document.body for site-wide effect.      */
+   On homepage: targets .hero-wrap (hero grid effects)
+   On other pages: targets document.body (full-page grid)  */
 (function() {
   if (window.matchMedia('(hover: none)').matches) return;
 
-  const grid = document.body;
+  const grid = document.querySelector('.hero-wrap') || document.body;
 
   const MAX_SHIFT  = 4;
   const LERP_GRID  = 0.035;

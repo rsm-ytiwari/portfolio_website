@@ -581,3 +581,118 @@ edit `js/main.js`, run `quarto render`, the inline copy updates automatically. N
 manual copying, no divergence risk, no git diffs on `scripts.html` from edits to
 `main.js` (it's gitignored). The pre-render approach is transparent — you don't think
 about the synchronization, it just happens.
+
+---
+
+## 38. Accent color: `#3B82F6` for improved contrast on dark backgrounds
+
+**Decision:** Dark mode accent changed from `#2563EB` to `#3B82F6`. Updated throughout:
+CSS variable `--accent`, terminal text (`.t-bright`), gradient left-border accents, and
+all color-derived shadows.
+
+**Why:** `#2563EB` on `#0D0D0C` (black background) = 4.2:1 contrast ratio, failing WCAG AA.
+`#3B82F6` = 5.1:1, meets WCAG AA standard. The lighter blue maintains the "technical" feel
+while becoming readable everywhere it appears (buttons, terminal, accents).
+
+---
+
+## 39. Blob: Centered radial-gradient with offset origin for spherical appearance
+
+**Decision:** All blob gradients changed from `linear-gradient(135deg, ...)` (which created
+a rectangular directional sweep) to `radial-gradient(circle at 50% 50%, ...)` (centered,
+spherical). Non-homepage blobs repositioned from `top: -80px; right: -60px` (bottom-right
+corner) to `top: 50%; left: 50%` with calculated negative margins, centering the blob in
+the viewport. Opacity reduced by 60% on non-homepage pages to prevent interference with cards.
+
+**Why:** Linear gradient on a square element reads as a quarter-circle stripe, especially
+problematic on projects page where it visibly bled over cards. Radial-gradient from center
+creates proper soft, spherical ambient lighting. Centering blobs in viewport provides even
+lighting across all pages. Reduced opacity (from 0.20 → 0.08) on non-homepage keeps the
+aesthetic while making the blob truly ambient — present but never competing with content.
+
+---
+
+## 40. Card borders: Subtle base state + refined accent on hover, not harsh lines
+
+**Decision:** All `.p-card` elements gained a `1px solid rgba(...)` border in base state
+(nearly invisible). On hover, borders become `1px solid rgba(59,130,246,0.2)` (subtle blue).
+Left-edge glow via `-4px 0 20px` shadow (blue) + `0 16px 40px` shadow (violet) creates
+gradient effect without hard lines. Removed all `border-image` approaches.
+
+**Why:** `border-image` with gradients + `border-radius` conflict (sharp corners), and the
+borders looked harsh/cheap. Explicit transitions help: `transition: border 200ms ease,
+box-shadow 200ms ease, transform 200ms ease` prevents lingering effects from old `transition: all`.
+Subtle base border defines cards cleanly; shadows provide visual hierarchy on hover while
+maintaining refined aesthetic.
+
+---
+
+## 41. Bento cell hover: Inset + outset shadows instead of border lines
+
+**Decision:** `.cell:not(.terminal-cell):hover` changed from `border-left: 3px solid;
+border-image: gradient` (hard stripe) to pure `box-shadow`:
+`-4px 0 12px rgba(59,130,246,0.15)` (left glow) + `0 8px 24px rgba(59,130,246,0.12)` (bottom)
++ `inset 0 1px 0 rgba(...)` (specular edge). No visible border.
+
+**Why:** Hard gradient borders bled onto adjacent cards and looked unrefined. Layered shadows
+with blue and violet create integrated left-edge glow that doesn't interfere. Inset shadow
+maintains specular glass effect. Explicit transitions: `transition: background 200ms ease,
+box-shadow 200ms ease, transform 200ms ease, border 200ms ease` ensure glow appears/vanishes
+instantly without delay.
+
+---
+
+## 42. Project card shadows: Pronounced, gradient-colored, not subtle
+
+**Decision:** `.p-card:hover` shadows changed from `0 4px 8px` (barely visible) to layered
+gradient-colored approach:
+`-4px 0 20px rgba(59,130,246,0.25)` (left blue, 25% opacity) +
+`0 12px 32px rgba(59,130,246,0.15)` (bottom blue) +
+`0 16px 40px rgba(167,139,250,0.12)` (bottom violet).
+
+**Why:** Original shadows were too subtle to register as visual feedback. Pronounced shadows
+make hover state unmistakable. Layered blue+violet shadows create a gradient effect (matching
+site's design language) without using `border-image`. Larger blur radius (20px, 32px, 40px)
+and higher opacity create substantial depth. Tested: shadows don't bleed across card boundaries
+due to careful spread values and color choices.
+
+---
+
+## 43. Filter buttons: Visible borders + subtle hover feedback
+
+**Decision:** `.filter-btn` border changed from `var(--border)` (very subtle) to
+`rgba(240,238,232,0.25)` (25% white on dark, 2.5x brighter). On `:hover`, adds
+`rgba(240,238,232,0.04)` background + `rgba(240,238,232,0.4)` border.
+
+**Why:** Original borders were nearly invisible — hard to distinguish active from inactive
+filters. Brightened borders make all filter states readable at a glance. Subtle hover
+background provides tactile feedback without overwhelming the layout.
+
+---
+
+## 44. Badge ("Open to Opportunities") interactive with hover glow
+
+**Decision:** `.badge` gained `cursor: pointer; transition: all 200ms ease`. Added
+`.badge:hover`: `background: rgba(74, 222, 128, 0.08)` (green glow) +
+`box-shadow: 0 0 12px rgba(74, 222, 128, 0.2)` + `transform: scale(1.05)` +
+`border-color: rgba(74, 222, 128, 0.3)`.
+
+**Why:** Badge was purely decorative. Adding hover effect makes it feel interactive and
+premium — the green glow ties directly to the availability dot's semantic meaning (online/available).
+Subtle scale and glow signal interactivity without being jarring.
+
+---
+
+## 45. CSS cleanup: Removed duplicate `.cell` rules, consolidated transitions
+
+**Decision:** Removed old bloated `.cell` base rules (lines 364–393) that included
+`transition: all 200ms ease`, old hover states, and old shadows. Kept `.cell` minimal
+(border-radius, padding, background). All `.cell:not(.terminal-cell)` styling consolidated
+into a single coherent block with explicit `transition: background 200ms ease, box-shadow
+200ms ease, transform 200ms ease, border 200ms ease`. Removed standalone "FIX 4" transition
+rule that was duplicating the base state transitions.
+
+**Why:** Old rules created CSS conflicts and caused hover effects to linger (the `transition: all`
+was too broad). Consolidation makes the codebase more maintainable — one place to see how cells
+behave in both base and hover states. Explicit property transitions prevent unintended animations
+on properties that shouldn't animate (e.g., opacity lingering after click).

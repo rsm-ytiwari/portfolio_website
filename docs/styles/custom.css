@@ -36,7 +36,9 @@ html.dark {
   --card-bg:    #161614;
   --text:       #F0EEE8;
   --text-muted: #888580;
-  --accent:     #C8FF3E;    /* ← Lime green. Swap this for a different accent. */
+  --accent:     #3B82F6;    /* ← Bright blue (left side of gradient, better contrast) */
+  --accent-alt: #A78BFA;   /* ← Violet (right side of gradient) */
+  --accent-gradient: linear-gradient(135deg, #3B82F6 0%, #A78BFA 100%);
   --accent-fg:  #0D0D0C;
   --border:     rgba(240,238,232,0.08);
   --nav-bg:     rgba(13,13,12,0.85);
@@ -166,43 +168,7 @@ body {
   position: relative;
   padding: 88px 0 0;
 }
-/* Dot grid + cursor spotlight — light mode
-   On homepage (with .hero-wrap): scoped to hero via .hero-wrap::before
-   On other pages: site-wide body::before with gradient fade over content */
-html:not(.dark) body:not(:has(.hero-wrap))::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle 240px at var(--mouse-x, -500px) var(--mouse-y, -500px),
-      rgba(0,0,0,0.05) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      circle,
-      rgba(0,0,0,0.09) 1.5px,
-      transparent 1.5px
-    ) var(--grid-x, 0px) var(--grid-y, 0px) / 28px 28px;
-  pointer-events: none;
-  z-index: 0;
-  mask-image: radial-gradient(
-    ellipse 500px 200px at center 30%,
-    transparent 0%,
-    transparent 30%,
-    black 60%,
-    black 100%
-  );
-  -webkit-mask-image: radial-gradient(
-    ellipse 500px 200px at center 30%,
-    transparent 0%,
-    transparent 30%,
-    black 60%,
-    black 100%
-  );
-}
-
-/* Restore homepage light mode dot grid (hero-only) */
+/* HOMEPAGE DOT GRID — light mode (original) */
 html:not(.dark) .hero-wrap::before {
   content: '';
   position: absolute;
@@ -235,6 +201,44 @@ html:not(.dark) .hero-wrap::before {
     transparent 100%
   );
 }
+
+/* NON-HOMEPAGE DOT GRID — light mode (subtle fade, grid stays visible) */
+html:not(.dark) body:not(:has(.hero-wrap))::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle 240px at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(0,0,0,0.05) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle,
+      rgba(0,0,0,0.09) 1.5px,
+      transparent 1.5px
+    ) var(--grid-x, 0px) var(--grid-y, 0px) / 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 8%,
+    rgba(0,0,0,0.15) 18%,
+    rgba(0,0,0,0.10) 65%,
+    rgba(0,0,0,0) 90%,
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 8%,
+    rgba(0,0,0,0.15) 18%,
+    rgba(0,0,0,0.10) 65%,
+    rgba(0,0,0,0) 90%,
+    rgba(0,0,0,0) 100%
+  );
+}
 .hero-inner {
   max-width: 1280px;
   margin: 0 auto;
@@ -254,6 +258,14 @@ html:not(.dark) .hero-wrap::before {
   border-radius: 999px;
   padding: 5px 12px;
   margin-bottom: 44px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+.badge:hover {
+  background: rgba(74, 222, 128, 0.08);
+  box-shadow: 0 0 12px rgba(74, 222, 128, 0.2);
+  transform: scale(1.05);
+  border-color: rgba(74, 222, 128, 0.3);
 }
 .badge-dot {
   width: 7px; height: 7px;
@@ -357,35 +369,19 @@ html:not(.dark) .hero-wrap::before {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+/* Bento cells — all styling moved to .cell:not(.terminal-cell) below */
 .cell {
-  border: 1px solid var(--border);
-  border-left-width: 1px;
   border-radius: 12px;
   padding: 18px;
   background: var(--card-bg);
-  transition: all 200ms ease;
 }
-.cell:hover { border-left: 2px solid var(--accent); }
-html.dark .cell:hover       { background: rgba(200,255,62,0.03); }
-html:not(.dark) .cell:hover { background: rgba(13,13,12,0.02); }
 .cell-full { grid-column: 1 / -1; }
-/* Light mode cell depth */
-html:not(.dark) .cell {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06),
-              0 1px 2px rgba(0,0,0,0.04);
-}
-/* Dark mode cell depth */
-html.dark .cell {
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    0 1px 3px rgba(0,0,0,0.4);
-}
-/* Available cell — most important, subtle accent top border */
+/* Available cell — accent indicator */
 html:not(.dark) .cell-available {
   border-top: 2px solid rgba(13,13,12,0.2);
 }
 html.dark .cell-available {
-  border-top: 2px solid rgba(200,255,62,0.3);
+  border-top: 2px solid rgba(96,165,250,0.3);
 }
 .c-label {
   display: block;
@@ -443,7 +439,7 @@ html.dark .cell-available {
 .mac-dots { display:flex; gap:6px; margin-bottom:14px; }
 .mac-dot  { width:10px; height:10px; border-radius:50%; }
 .t-dim    { color: #555; }
-.t-bright { color: #C8FF3E; }
+.t-bright { color: #3B82F6; }
 .blink-cursor { animation: blink 1s step-end infinite; }
 
 /* Copy email button */
@@ -532,9 +528,19 @@ html.dark .cell-available {
   background: var(--card-bg);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 200ms ease, border-color 200ms ease;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  box-shadow: 0 0 0 0 rgba(37,99,235,0);
 }
-.p-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.p-card:hover {
+  transform: translateY(-4px);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 10px;
+  box-shadow:
+    -4px 0 20px rgba(59,130,246,0.25),
+    0 12px 32px rgba(59,130,246,0.15),
+    0 16px 40px rgba(167,139,250,0.12);
+  transition: border 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
 .p-preview {
   height: 176px;
   background: var(--bg-sec);
@@ -567,9 +573,9 @@ html.dark .cell-available {
   border:1px solid var(--border);
   border-radius:4px; padding:4px 10px;
 }
-.p-more    { font-size:12px; font-weight:500; color:var(--accent); text-decoration:none; }
+.p-more    { font-size:12px; font-weight:500; color:var(--text); text-decoration:none; }
 .view-all  { text-align:right; margin-top:32px; }
-.view-all a { font-size:13px; font-weight:500; color:var(--accent); text-decoration:none; }
+.view-all a { font-size:13px; font-weight:500; color:var(--text); text-decoration:none; }
 
 
 /* ══════════════════════════════
@@ -580,12 +586,12 @@ html.dark .cell-available {
   bottom: 24px; right: 24px;
   z-index: 9999;
   background: var(--card-bg);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px 20px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--text);
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 200ms ease, transform 200ms ease;
@@ -804,8 +810,8 @@ html.dark .cell-available {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--accent);
-  border: 1px solid var(--accent);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 4px 10px;
   margin-bottom: 20px;
@@ -899,7 +905,10 @@ html.dark .cell-available {
   font-style: italic;
   font-size: 40px;
   letter-spacing: -1px;
-  color: var(--accent);
+  background: linear-gradient(135deg, #3B82F6, #A78BFA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   display: block;
   margin-bottom: 8px;
 }
@@ -963,9 +972,9 @@ html:not(.dark) {
   --text-muted: #5A5754;
 }
 
-/* 2. Terminal — soften neon green for light context
-      #C8FF3E is too aggressive on warm off-white
-      #2D9E4E reads clearly as terminal output
+/* 2. Terminal — electric blue for light context
+      #2563EB (dark mode) was too bright on warm off-white
+      #3B82F6 reads clearly as terminal output
       without dominating visual hierarchy */
 html:not(.dark) .terminal-cell {
   border: 1px solid rgba(13,13,12,0.15) !important;
@@ -973,7 +982,7 @@ html:not(.dark) .terminal-cell {
   opacity: 0.93;
 }
 html:not(.dark) .t-bright {
-  color: #2D9E4E;
+  color: #3B82F6;
 }
 
 /* 3. Bento cells — separate from page background
@@ -1058,8 +1067,8 @@ html:not(.dark) .nav-link.active {
 .t-dim { color: #888; }
 
 /* Cursor color matches terminal text per mode */
-html.dark .blink-cursor       { color: #C8FF3E !important; }
-html:not(.dark) .blink-cursor { color: #2D9E4E !important; }
+html.dark .blink-cursor       { color: #3B82F6 !important; }
+html:not(.dark) .blink-cursor { color: #3B82F6 !important; }
 
 /* Cell E — target by class, :has() unreliable */
 .cell-contact { align-self: stretch; }
@@ -1209,22 +1218,24 @@ html.dark .cell:not(.terminal-cell) {
   background: rgba(22,22,20,0.5);
   backdrop-filter: blur(16px) saturate(120%);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.04);
   border-left: 3px solid transparent;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.06),
     0 4px 16px rgba(0,0,0,0.3);
   position: relative;
+  transition: background 200ms ease, box-shadow 200ms ease, transform 200ms ease, border 200ms ease;
 }
 html:not(.dark) .cell:not(.terminal-cell) {
   background: rgba(255,255,255,0.50);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(255,255,255,0.9);
+  border: 1px solid rgba(13,13,12,0.06);
   border-left: 3px solid transparent;
   box-shadow:
     0 2px 8px rgba(0,0,0,0.05),
     inset 0 1px 0 rgba(255,255,255,1);
+  transition: background 200ms ease, box-shadow 200ms ease, transform 200ms ease, border 200ms ease;
 }
 
 /* Cell specular top edge — dark mode only */
@@ -1243,17 +1254,22 @@ html.dark .cell:not(.terminal-cell)::before {
   pointer-events: none;
 }
 
-/* Copy email button — glass CTA */
+/* Copy email button — glass CTA (gradient border on hover only) */
 html.dark .copy-btn {
-  background: rgba(200,255,62,0.08);
+  background: rgba(240,238,232,0.08);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(200,255,62,0.3);
-  color: #C8FF3E;
+  border: 2px solid rgba(240,238,232,0.15);
+  color: var(--text);
+  transition: all 200ms ease;
 }
 html.dark .copy-btn:hover {
-  background: rgba(200,255,62,0.15);
-  border-color: rgba(200,255,62,0.5);
+  background: rgba(240,238,232,0.15);
+  border: 2px solid;
+  border-image: linear-gradient(135deg, #3B82F6, #A78BFA) 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 0 8px rgba(59,130,246,0.2);
 }
 html:not(.dark) .copy-btn {
   background: rgba(255,255,255,0.6);
@@ -1311,21 +1327,26 @@ html.dark .cell:not(.terminal-cell)::before {
   );
 }
 
-/* 4. Primary CTA — glass treatment dark mode */
+/* 4. Primary CTA — glass treatment dark mode (no gradient until hover) */
 html.dark .btn-primary {
-  background: rgba(240,238,232,0.12);
+  background: rgba(240,238,232,0.08);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(240,238,232,0.15);
+  border: 2px solid rgba(240,238,232,0.15);
   color: var(--text);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.1),
     0 2px 8px rgba(0,0,0,0.3);
+  transition: all 200ms ease;
 }
 html.dark .btn-primary:hover {
-  background: rgba(240,238,232,0.18);
-  border-color: rgba(240,238,232,0.25);
-  opacity: 1;
+  background: rgba(240,238,232,0.15);
+  border: 2px solid;
+  border-image: linear-gradient(135deg, #3B82F6, #A78BFA) 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    0 0 12px rgba(59,130,246,0.3),
+    0 2px 12px rgba(0,0,0,0.4);
 }
 
 /* 5. Light mode primary CTA — subtle glass */
@@ -1345,20 +1366,26 @@ html:not(.dark) .btn-primary {
    specificity using !important on border only. */
 
 html.dark .cell:not(.terminal-cell):hover {
-  border-left-color: var(--accent) !important;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-left: 2px solid #3B82F6;
   background: rgba(30,30,28,0.75) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.1),
-    0 8px 32px rgba(0,0,0,0.4) !important;
+    -4px 0 12px rgba(59,130,246,0.1),
+    0 8px 16px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.06) !important;
   transform: translateY(-2px);
+  transition: background 200ms ease, box-shadow 200ms ease, transform 200ms ease, border 200ms ease;
 }
 html:not(.dark) .cell:not(.terminal-cell):hover {
-  border-left-color: var(--accent) !important;
+  border: 1px solid rgba(13,13,12,0.06);
+  border-left: 2px solid #3B82F6;
   background: rgba(255,255,255,0.9) !important;
   box-shadow:
-    0 8px 32px rgba(0,0,0,0.08),
+    -4px 0 12px rgba(59,130,246,0.08),
+    0 8px 16px rgba(0,0,0,0.08),
     inset 0 1px 0 rgba(255,255,255,1) !important;
   transform: translateY(-2px);
+  transition: background 200ms ease, box-shadow 200ms ease, transform 200ms ease, border 200ms ease;
 }
 
 /* FIX 2 — Ambient color blob
@@ -1373,6 +1400,18 @@ html:not(.dark) .cell:not(.terminal-cell):hover {
   position: relative;
 }
 
+/* ── BLOB COLOR OPTIONS (swap to test) ──
+   Option 1 — Soft Blue (modern SaaS aesthetic)
+   .hero-inner::after { background: radial-gradient(ellipse at center, rgba(6,182,212,0.22) 0%, rgba(6,182,212,0.10) 35%, rgba(6,182,212,0.03) 60%, transparent 75%); }
+
+   Option 2 — Purple (matches light mode, consistent brand)
+   .hero-inner::after { background: radial-gradient(ellipse at center, rgba(139,92,246,0.22) 0%, rgba(139,92,246,0.10) 35%, rgba(139,92,246,0.03) 60%, transparent 75%); }
+
+   Option 3 — Violet-Blue (modern, trending)
+   .hero-inner::after { background: radial-gradient(ellipse at center, rgba(124,58,255,0.22) 0%, rgba(124,58,255,0.10) 35%, rgba(124,58,255,0.03) 60%, transparent 75%); }
+
+   ACTIVE (currently lime green):
+
 /* Restore blob on homepage (dark mode) */
 .hero-inner::after {
   content: '';
@@ -1382,11 +1421,11 @@ html:not(.dark) .cell:not(.terminal-cell):hover {
   width: min(560px, 85vw);
   height: min(560px, 85vw);
   background: radial-gradient(
-    ellipse at center,
-    rgba(200,255,62,0.22) 0%,
-    rgba(200,255,62,0.10) 35%,
-    rgba(200,255,62,0.03) 60%,
-    transparent 75%
+    circle at 50% 50%,
+    rgba(59,130,246,0.25) 0%,
+    rgba(167,139,250,0.18) 40%,
+    rgba(167,139,250,0.02) 70%,
+    transparent 100%
   );
   pointer-events: none;
   z-index: 0;
@@ -1402,30 +1441,35 @@ html:not(.dark) .cell:not(.terminal-cell):hover {
 /* Restore blob on homepage (light mode) */
 html:not(.dark) .hero-inner::after {
   background: radial-gradient(
-    ellipse at center,
-    rgba(79, 70, 229, 0.20) 0%,
-    rgba(99, 102, 241, 0.09) 38%,
-    rgba(139, 92, 246, 0.02) 60%,
-    transparent 72%
+    circle at 50% 50%,
+    rgba(59, 130, 246, 0.12) 0%,
+    rgba(167, 139, 250, 0.08) 40%,
+    rgba(196, 181, 253, 0.01) 70%,
+    transparent 100%
   );
   filter: blur(20px);
   mix-blend-mode: normal;
   opacity: 1;
 }
 
+/* Ensure bento sits above blob on homepage */
+.bento { position: relative; z-index: 1; }
+
 /* Blob on non-homepage pages (fixed, site-wide) */
 body:not(:has(.hero-wrap))::after {
   content: '';
   position: fixed;
-  top: -80px;
-  right: -60px;
+  top: 50%;
+  left: 50%;
   width: min(560px, 85vw);
   height: min(560px, 85vw);
+  margin-top: calc(-1 * min(560px, 85vw) / 2);
+  margin-left: calc(-1 * min(560px, 85vw) / 2);
   background: radial-gradient(
-    ellipse at center,
-    rgba(200,255,62,0.15) 0%,
-    rgba(200,255,62,0.05) 50%,
-    transparent 80%
+    circle at 50% 50%,
+    rgba(59,130,246,0.08) 0%,
+    rgba(167,139,250,0.05) 40%,
+    transparent 70%
   );
   pointer-events: none;
   z-index: 0;
@@ -1441,53 +1485,16 @@ body:not(:has(.hero-wrap))::after {
 /* Light mode blob on non-homepage pages */
 html:not(.dark) body:not(:has(.hero-wrap))::after {
   background: radial-gradient(
-    ellipse at center,
-    rgba(79, 70, 229, 0.12) 0%,
-    rgba(99, 102, 241, 0.05) 38%,
-    rgba(139, 92, 246, 0.01) 60%,
-    transparent 72%
+    circle at 50% 50%,
+    rgba(59, 130, 246, 0.04) 0%,
+    rgba(167, 139, 250, 0.02) 40%,
+    transparent 70%
   );
   filter: blur(20px);
 }
 
 
-/* Dot grid + cursor spotlight — dark mode
-   On homepage (with .hero-wrap): scoped to hero via .hero-wrap::before
-   On other pages: site-wide body::before with gradient fade over content */
-html.dark body:not(:has(.hero-wrap))::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle 280px at var(--mouse-x, -500px) var(--mouse-y, -500px),
-      rgba(255,255,255,0.08) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      circle,
-      rgba(255,255,255,0.10) 1.5px,
-      transparent 1.5px
-    ) var(--grid-x, 0px) var(--grid-y, 0px) / 28px 28px;
-  pointer-events: none;
-  z-index: 0;
-  mask-image: radial-gradient(
-    ellipse 500px 200px at center 30%,
-    transparent 0%,
-    transparent 30%,
-    black 60%,
-    black 100%
-  );
-  -webkit-mask-image: radial-gradient(
-    ellipse 500px 200px at center 30%,
-    transparent 0%,
-    transparent 30%,
-    black 60%,
-    black 100%
-  );
-}
-
-/* Restore homepage dark mode dot grid (hero-only) */
+/* HOMEPAGE DOT GRID — dark mode (original) */
 html.dark .hero-wrap::before {
   content: '';
   position: absolute;
@@ -1521,15 +1528,45 @@ html.dark .hero-wrap::before {
   );
 }
 
-/* FIX 4 — Add transition to all cells so
-   hover lift animates smoothly */
-.cell:not(.terminal-cell) {
-  transition:
-    transform 200ms cubic-bezier(0.16,1,0.3,1),
-    box-shadow 200ms cubic-bezier(0.16,1,0.3,1),
-    background 200ms ease,
-    border-color 200ms ease;
+/* NON-HOMEPAGE DOT GRID — dark mode (subtle fade, grid stays visible) */
+html.dark body:not(:has(.hero-wrap))::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle 280px at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(255,255,255,0.08) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.10) 1.5px,
+      transparent 1.5px
+    ) var(--grid-x, 0px) var(--grid-y, 0px) / 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 8%,
+    rgba(0,0,0,0.15) 18%,
+    rgba(0,0,0,0.10) 65%,
+    rgba(0,0,0,0) 90%,
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 8%,
+    rgba(0,0,0,0.15) 18%,
+    rgba(0,0,0,0.10) 65%,
+    rgba(0,0,0,0) 90%,
+    rgba(0,0,0,0) 100%
+  );
 }
+
+/* Transitions moved to .cell:not(.terminal-cell) base state */
 
 
 /* ══════════════════════════════
@@ -1571,7 +1608,7 @@ html.dark .hero-wrap::before {
   letter-spacing: 0.08em;
   color: var(--text-muted);
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(240,238,232,0.25);
   border-radius: 999px;
   padding: 6px 16px;
   cursor: pointer;
@@ -1579,7 +1616,8 @@ html.dark .hero-wrap::before {
 }
 .filter-btn:hover {
   color: var(--text);
-  border-color: var(--text);
+  border-color: rgba(240,238,232,0.4);
+  background: rgba(240,238,232,0.04);
 }
 .filter-btn.active {
   color: var(--accent-fg);

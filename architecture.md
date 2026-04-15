@@ -113,23 +113,32 @@ quarto render
 
 ```
 1. Reset
-2. Color variables  ← ONLY place to change colors
+2. Color variables (--accent: #3B82F6, --accent-alt: #A78BFA, etc.)
+   ← ONLY place to change accent colors or gradients
 3. Animations (keyframes)
 4. Navbar
-5. Hero
-6. Bento grid
+5. Hero & blobs (centered radial-gradient, 50% 50%)
+6. Bento grid (glass cells with refined shadow hovers)
 7. Tools strip
-8. Project cards      ← shared between index + projects pages
+8. Project cards (pronounced gradient-colored shadows on hover)
 9. Toast
-10. Page banner       ← projects.qmd, resume.qmd
+10. Page banner
 11. Resume page
 12. About page
 13. Case study page
 14. Responsive (mobile breakpoints)
 ```
 
-All colors are CSS custom properties. Light/dark variants are in `:root`
-and `html.dark` respectively. No color value appears outside those two blocks.
+**Key patterns:**
+- All colors are CSS custom properties in `:root` and `html.dark` blocks
+- Gradients: `--accent-gradient: linear-gradient(135deg, #3B82F6, #A78BFA)` used
+  throughout for visual consistency
+- Shadows: Explicit blue (`rgba(59,130,246,...)`) + violet (`rgba(167,139,250,...)`)
+  layering creates branded gradient effect without `border-image`
+- Transitions: Specific properties only (no `transition: all`) to prevent lingering effects
+- Blobs: All use `radial-gradient(circle at 50% 50%, ...)` centered in viewport;
+  non-homepage blobs have reduced opacity (0.08/0.05 vs. 0.20/0.12) to avoid
+  interference with cards
 
 ---
 
