@@ -2,16 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.13">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Resume — Yash Tiwari – Yash Tiwari — Portfolio</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -256,10 +253,11 @@ if (copyBtn && toast) {
 /* ── 5. Cursor-reactive blob ──
    Blob follows cursor globally at 35% speed, capped at
    MAX_DRIFT px from origin. Returns to origin after 3 s
-   of idle or on mouse leave. Now targets document.body
-   for site-wide effect.                                     */
+   of idle or on mouse leave.
+   On homepage: targets .hero-inner (prominent blob)
+   On other pages: targets document.body (ambient blob)   */
 (function() {
-  const blob = document.body;
+  const blob = document.querySelector('.hero-inner') || document.body;
 
   let targetX = 0, targetY = 0;
   let currentX = 0, currentY = 0;
@@ -324,11 +322,12 @@ if (copyBtn && toast) {
    2. Grid parallax: very slow lerp (0.035)
    Touch/stylus devices: fully excluded.
    Spotlight hides when cursor leaves viewport.
-   Now targets document.body for site-wide effect.      */
+   On homepage: targets .hero-wrap (hero grid effects)
+   On other pages: targets document.body (full-page grid)  */
 (function() {
   if (window.matchMedia('(hover: none)').matches) return;
 
-  const grid = document.body;
+  const grid = document.querySelector('.hero-wrap') || document.body;
 
   const MAX_SHIFT  = 4;
   const LERP_GRID  = 0.035;

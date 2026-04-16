@@ -2,16 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.13">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Yash Tiwari — Portfolio</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -186,10 +183,11 @@ ul.task-list li input[type="checkbox"] {
       <!-- Cell B: Availability — EDIT dates here -->
       <div class="cell cell-available">
         <span class="c-label">Available</span>
-        <div class="c-t1-avail">Dec 2026</div>
-        <div class="c-t2">Full-time · Open to relocate</div>
+        <div class="c-t1-avail">Summer 2026</div>
+        <div class="c-t2">Internship</div>
         <hr class="c-div">
-        <div class="c-t2">Summer 2026 · Internship</div>
+        <div class="c-t2">Graduating Dec 2026</div>
+        <div class="c-t2">Full-time · Open to relocate</div>
         <div class="dot-row">
           <span class="dot-green"></span>
           <span class="c-t2" style="font-size:10px">Actively looking</span>
@@ -205,9 +203,9 @@ ul.task-list li input[type="checkbox"] {
         </div>
         <div class="t-dim">&gt;&gt;&gt; yt.load('yash_tiwari')</div>
         <div class="t-dim">&gt;&gt;&gt; profile.arc</div>
-        <div class="t-bright">['2x founder', 'defense UX', 'ML analyst', 'agent builder']</div>
+        <div class="t-bright">['Mech Engineer', '2x Founder', 'shipped production UX/UI', 'Data Science', 'Marketing Analytics']</div>
         <div class="t-dim">&gt;&gt;&gt; profile.approach</div>
-        <div class="t-bright">'Ship first. Explain why it works second.'</div>
+        <div class="t-bright">'Fast iteration. Deliberate execution.'</div>
         <div class="t-bright"><span class="blink-cursor">█</span></div>
       </div>
 
@@ -217,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
         <div class="c-quote">"You are what<br>you don't automate."</div>
         <hr class="c-div">
         <div class="c-building-sub">Currently Building</div>
-        <div class="c-t2">Agentic Workflows · n8n · OpenAI API</div>
+        <div class="c-t2">Bayesian MMM · Agentic Workflows</div>
       </div>
 
       <!-- Cell E: Contact — EDIT email + copy-btn target in js/main.js -->
@@ -425,10 +423,11 @@ if (copyBtn && toast) {
 /* ── 5. Cursor-reactive blob ──
    Blob follows cursor globally at 35% speed, capped at
    MAX_DRIFT px from origin. Returns to origin after 3 s
-   of idle or on mouse leave. Now targets document.body
-   for site-wide effect.                                     */
+   of idle or on mouse leave.
+   On homepage: targets .hero-inner (prominent blob)
+   On other pages: targets document.body (ambient blob)   */
 (function() {
-  const blob = document.body;
+  const blob = document.querySelector('.hero-inner') || document.body;
 
   let targetX = 0, targetY = 0;
   let currentX = 0, currentY = 0;
@@ -493,11 +492,12 @@ if (copyBtn && toast) {
    2. Grid parallax: very slow lerp (0.035)
    Touch/stylus devices: fully excluded.
    Spotlight hides when cursor leaves viewport.
-   Now targets document.body for site-wide effect.      */
+   On homepage: targets .hero-wrap (hero grid effects)
+   On other pages: targets document.body (full-page grid)  */
 (function() {
   if (window.matchMedia('(hover: none)').matches) return;
 
-  const grid = document.body;
+  const grid = document.querySelector('.hero-wrap') || document.body;
 
   const MAX_SHIFT  = 4;
   const LERP_GRID  = 0.035;

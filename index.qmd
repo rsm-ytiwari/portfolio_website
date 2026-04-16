@@ -128,10 +128,11 @@ page-layout: custom
       <!-- Cell B: Availability — EDIT dates here -->
       <div class="cell cell-available">
         <span class="c-label">Available</span>
-        <div class="c-t1-avail">Dec 2026</div>
-        <div class="c-t2">Full-time · Open to relocate</div>
+        <div class="c-t1-avail">Summer 2026</div>
+        <div class="c-t2">Internship</div>
         <hr class="c-div">
-        <div class="c-t2">Summer 2026 · Internship</div>
+        <div class="c-t2">Graduating Dec 2026</div>
+        <div class="c-t2">Full-time · Open to relocate</div>
         <div class="dot-row">
           <span class="dot-green"></span>
           <span class="c-t2" style="font-size:10px">Actively looking</span>
@@ -147,9 +148,9 @@ page-layout: custom
         </div>
         <div class="t-dim">&gt;&gt;&gt; yt.load('yash_tiwari')</div>
         <div class="t-dim">&gt;&gt;&gt; profile.arc</div>
-        <div class="t-bright">['2x founder', 'defense UX', 'ML analyst', 'agent builder']</div>
+        <div class="t-bright">['Mech Engineer', '2x Founder', 'shipped production UX/UI', 'Data Science', 'Marketing Analytics']</div>
         <div class="t-dim">&gt;&gt;&gt; profile.approach</div>
-        <div class="t-bright">'Ship first. Explain why it works second.'</div>
+        <div class="t-bright">'Fast iteration. Deliberate execution.'</div>
         <div class="t-bright"><span class="blink-cursor">█</span></div>
       </div>
 
@@ -159,7 +160,7 @@ page-layout: custom
         <div class="c-quote">"You are what<br>you don't automate."</div>
         <hr class="c-div">
         <div class="c-building-sub">Currently Building</div>
-        <div class="c-t2">Agentic Workflows · n8n · OpenAI API</div>
+        <div class="c-t2">Bayesian MMM · Agentic Workflows</div>
       </div>
 
       <!-- Cell E: Contact — EDIT email + copy-btn target in js/main.js -->
