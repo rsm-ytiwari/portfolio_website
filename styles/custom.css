@@ -582,22 +582,30 @@ html.dark .cell-available {
 html.dark .b-read-time { color: var(--accent); }
 
 .b-featured-badge {
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 9px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   color: var(--accent);
   margin-left: auto;
-  padding-left: 8px;
+  padding: 2px 0;
+  flex-shrink: 0;
 }
 
 .b-card-featured {
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+  border: 1.5px solid rgba(59, 130, 246, 0.35);
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.12), 0 0 1px rgba(59, 130, 246, 0.2);
 }
 
 .b-card-featured:hover {
-  border-color: rgba(59, 130, 246, 0.4);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 32px rgba(59, 130, 246, 0.16), 0 0 1px rgba(59, 130, 246, 0.3);
+}
+
+/* Ensure meta row wraps properly on smaller screens */
+.p-meta {
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 
@@ -982,66 +990,138 @@ html.dark .b-read-time { color: var(--accent); }
 }
 .post-sep { color: var(--border); font-size: 12px; }
 
+/* Force light theme for post pages */
+body:has(.post-body) {
+  background: var(--bg);
+  color: var(--text);
+}
+body:has(.post-body),
+body:has(.post-body) html {
+  --bg: #F4F2ED;
+  --text: #0D0D0C;
+  --text-muted: #5A5754;
+  --accent: #0D0D0C;
+  --border: rgba(13, 13, 12, 0.1);
+  --card-bg: #FAFAF8;
+  --bg-sec: #ECEAE3;
+}
+body:has(.post-body).dark {
+  background: #F4F2ED !important;
+  color: #0D0D0C !important;
+}
+
 .post-body {
-  max-width: 680px;
+  max-width: 760px;
   margin: 0 auto;
   padding: 0 64px 96px;
+  font-size: 16px;
+  line-height: 1.85;
 }
+
 .post-body p {
   font-size: 16px;
   line-height: 1.85;
   font-weight: 300;
-  color: var(--text-muted);
-  margin-bottom: 22px;
+  color: #5A5754;
+  margin-bottom: 24px;
 }
+
 .post-body h2 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
-  color: var(--text);
-  margin: 52px 0 16px;
+  color: #0D0D0C;
+  margin: 56px 0 20px;
   letter-spacing: -0.3px;
 }
+
 .post-body h3 {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
-  color: var(--text);
-  margin: 36px 0 10px;
+  color: #0D0D0C;
+  margin: 40px 0 12px;
 }
+
 .post-body ul,
 .post-body ol {
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--text-muted);
-  padding-left: 22px;
-  margin-bottom: 22px;
+  font-size: 16px;
+  line-height: 1.85;
+  color: #5A5754;
+  padding-left: 24px;
+  margin-bottom: 24px;
 }
+
+.post-body li {
+  margin-bottom: 8px;
+}
+
 .post-body blockquote {
-  border-left: 2px solid var(--accent);
+  border-left: 3px solid #0D0D0C;
   margin: 36px 0;
-  padding: 4px 0 4px 22px;
+  padding: 4px 0 4px 24px;
   font-style: italic;
-  color: var(--text-muted);
+  color: #5A5754;
+  background: rgba(13, 13, 12, 0.03);
+  padding: 16px 0 16px 24px;
+  border-radius: 4px;
 }
+
 .post-body hr {
   border: none;
-  border-top: 1px solid var(--border);
-  margin: 48px 0;
+  border-top: 1px solid rgba(13, 13, 12, 0.1);
+  margin: 56px 0;
 }
+
+/* Hide code blocks entirely */
+.post-body pre,
+.post-body pre code {
+  display: none !important;
+}
+
 .post-body code {
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
-  background: var(--bg-sec);
-  padding: 2px 6px;
+  background: #ECEAE3;
+  padding: 3px 7px;
   border-radius: 4px;
+  color: #0D0D0C;
 }
-.post-body pre code {
-  display: block;
-  padding: 16px;
-  overflow-x: auto;
-  font-size: 12px;
+
+/* Style plotly graph containers */
+.post-body .quarto-figure {
+  margin: 48px 0;
+  padding: 24px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid rgba(13, 13, 12, 0.08);
 }
-html:not(.dark) .post-body p,
-html:not(.dark) .post-body li { color: #4A4845; }
+
+.post-body .quarto-figure-center {
+  text-align: center;
+}
+
+.post-body .quarto-figure-center figure {
+  margin: 0;
+}
+
+.post-body .quarto-figure figcaption {
+  font-size: 14px;
+  color: #5A5754;
+  margin-top: 16px;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* MathML/LaTeX equations */
+.post-body .math {
+  font-style: italic;
+  color: #0D0D0C;
+  margin: 20px 0;
+}
+
+/* Inline math */
+.post-body mjx-container {
+  font-size: 16px !important;
+}
 
 
 /* ══════════════════════════════
@@ -1074,8 +1154,14 @@ html:not(.dark) .post-body li { color: #4A4845; }
   .case-body        { padding: 40px 24px 60px; }
   .result-grid      { grid-template-columns: 1fr; }
   .case-meta-row    { gap: 20px; }
-  .post-banner      { padding: 60px 24px 36px; }
-  .post-body        { padding: 0 24px 64px; }
+  .post-banner      { padding: 60px 20px 32px; max-width: 100%; }
+  .post-title       { font-size: clamp(24px, 6vw, 32px); }
+  .post-subtitle    { font-size: 14px; }
+  .post-body        { padding: 0 20px 60px; max-width: 100%; }
+  .post-body p      { font-size: 15px; line-height: 1.8; }
+  .post-body h2     { font-size: 18px; margin: 40px 0 16px; }
+  .post-body h3     { font-size: 16px; margin: 28px 0 10px; }
+  .quarto-figure    { margin: 32px 0; padding: 16px; }
 }
 
 /* ════════════════════════════════════════
