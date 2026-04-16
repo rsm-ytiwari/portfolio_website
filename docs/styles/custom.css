@@ -645,7 +645,8 @@ html.dark .b-read-time { color: var(--accent); }
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--text-muted);
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  display: block;
 }
 .banner-title {
   font-family: 'Instrument Serif', serif;
@@ -1067,20 +1068,14 @@ html.dark .b-read-time { color: var(--accent); }
   color: var(--text);
 }
 
-/* Responsive graph containers - work in both light and dark themes */
+/* Remove container styling for quarto figures - let graphs breathe */
 .post-body .quarto-figure {
   margin: 48px 0;
-  padding: 16px;
-  background: white;
-  border-radius: 6px;
-  border: 1px solid var(--border);
+  padding: 0;
+  background: transparent;
+  border: none;
   width: 100%;
   max-width: 100%;
-}
-
-html.dark .post-body .quarto-figure {
-  background: var(--bg-sec);
-  border-color: rgba(240, 238, 232, 0.12);
 }
 
 .post-body .quarto-figure-center {
