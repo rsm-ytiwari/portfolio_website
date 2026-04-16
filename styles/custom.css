@@ -990,25 +990,7 @@ html.dark .b-read-time { color: var(--accent); }
 }
 .post-sep { color: var(--border); font-size: 12px; }
 
-/* Force light theme for post pages */
-body:has(.post-body) {
-  background: var(--bg);
-  color: var(--text);
-}
-body:has(.post-body),
-body:has(.post-body) html {
-  --bg: #F4F2ED;
-  --text: #0D0D0C;
-  --text-muted: #5A5754;
-  --accent: #0D0D0C;
-  --border: rgba(13, 13, 12, 0.1);
-  --card-bg: #FAFAF8;
-  --bg-sec: #ECEAE3;
-}
-body:has(.post-body).dark {
-  background: #F4F2ED !important;
-  color: #0D0D0C !important;
-}
+/* Article pages respect user's theme preference */
 
 .post-body {
   max-width: 760px;
@@ -1022,14 +1004,14 @@ body:has(.post-body).dark {
   font-size: 16px;
   line-height: 1.85;
   font-weight: 300;
-  color: #5A5754;
+  color: var(--text-muted);
   margin-bottom: 24px;
 }
 
 .post-body h2 {
   font-size: 22px;
   font-weight: 600;
-  color: #0D0D0C;
+  color: var(--text);
   margin: 56px 0 20px;
   letter-spacing: -0.3px;
 }
@@ -1037,7 +1019,7 @@ body:has(.post-body).dark {
 .post-body h3 {
   font-size: 17px;
   font-weight: 600;
-  color: #0D0D0C;
+  color: var(--text);
   margin: 40px 0 12px;
 }
 
@@ -1045,7 +1027,7 @@ body:has(.post-body).dark {
 .post-body ol {
   font-size: 16px;
   line-height: 1.85;
-  color: #5A5754;
+  color: var(--text-muted);
   padding-left: 24px;
   margin-bottom: 24px;
 }
@@ -1055,19 +1037,18 @@ body:has(.post-body).dark {
 }
 
 .post-body blockquote {
-  border-left: 3px solid #0D0D0C;
+  border-left: 3px solid var(--text);
   margin: 36px 0;
-  padding: 4px 0 4px 24px;
-  font-style: italic;
-  color: #5A5754;
-  background: rgba(13, 13, 12, 0.03);
   padding: 16px 0 16px 24px;
+  font-style: italic;
+  color: var(--text-muted);
+  background: var(--bg-sec);
   border-radius: 4px;
 }
 
 .post-body hr {
   border: none;
-  border-top: 1px solid rgba(13, 13, 12, 0.1);
+  border-top: 1px solid var(--border);
   margin: 56px 0;
 }
 
@@ -1080,19 +1061,26 @@ body:has(.post-body).dark {
 .post-body code {
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
-  background: #ECEAE3;
+  background: var(--bg-sec);
   padding: 3px 7px;
   border-radius: 4px;
-  color: #0D0D0C;
+  color: var(--text);
 }
 
-/* Style plotly graph containers */
+/* Responsive graph containers - work in both light and dark themes */
 .post-body .quarto-figure {
   margin: 48px 0;
-  padding: 24px;
+  padding: 16px;
   background: white;
-  border-radius: 8px;
-  border: 1px solid rgba(13, 13, 12, 0.08);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 100%;
+}
+
+html.dark .post-body .quarto-figure {
+  background: var(--bg-sec);
+  border-color: rgba(240, 238, 232, 0.12);
 }
 
 .post-body .quarto-figure-center {
@@ -1105,7 +1093,7 @@ body:has(.post-body).dark {
 
 .post-body .quarto-figure figcaption {
   font-size: 14px;
-  color: #5A5754;
+  color: var(--text-muted);
   margin-top: 16px;
   font-style: italic;
   line-height: 1.6;
@@ -1114,13 +1102,86 @@ body:has(.post-body).dark {
 /* MathML/LaTeX equations */
 .post-body .math {
   font-style: italic;
-  color: #0D0D0C;
+  color: var(--text);
   margin: 20px 0;
 }
 
 /* Inline math */
 .post-body mjx-container {
   font-size: 16px !important;
+}
+
+
+/* ══════════════════════════════
+   SPLASH PAGE — Article Gate
+══════════════════════════════ */
+.splash-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 24px;
+}
+
+.back-link {
+  position: absolute;
+  top: 80px;
+  left: 64px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+.back-link:hover { color: var(--text); }
+
+.splash-content {
+  max-width: 680px;
+  text-align: center;
+}
+
+.splash-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.splash-title {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 16px;
+  line-height: 1.3;
+  letter-spacing: -1px;
+}
+
+.splash-subtitle {
+  font-size: 18px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 48px;
+  font-weight: 400;
+}
+
+.splash-button {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+.splash-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
 }
 
 
@@ -1162,6 +1223,14 @@ body:has(.post-body).dark {
   .post-body h2     { font-size: 18px; margin: 40px 0 16px; }
   .post-body h3     { font-size: 16px; margin: 28px 0 10px; }
   .quarto-figure    { margin: 32px 0; padding: 16px; }
+
+  /* Splash page responsive */
+  .splash-container { padding: 40px 24px; min-height: auto; }
+  .back-link        { position: relative; top: auto; left: auto; margin-bottom: 32px; }
+  .splash-content   { max-width: 100%; }
+  .splash-title     { font-size: clamp(24px, 6vw, 40px); margin-bottom: 12px; }
+  .splash-subtitle  { font-size: 16px; margin-bottom: 32px; }
+  .splash-meta      { font-size: 13px; }
 }
 
 /* ════════════════════════════════════════
