@@ -581,6 +581,25 @@ html.dark .cell-available {
 .b-read-time { font-size: 10px; color: var(--text-muted); }
 html.dark .b-read-time { color: var(--accent); }
 
+.b-featured-badge {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-left: auto;
+  padding-left: 8px;
+}
+
+.b-card-featured {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+.b-card-featured:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
 
 /* ══════════════════════════════
    TOAST NOTIFICATION

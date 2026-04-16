@@ -21,7 +21,10 @@ project:
     - projects.json  # → copied to docs/projects.json (single source of truth for cards)
     - blog.json      # → copied to docs/blog.json (single source of truth for writing)
   render:
-    - "*.qmd"   # Only render .qmd files — excludes info.md and index.html
+    - "*.qmd"                  # Root-level .qmd files only
+    - "posts/*.qmd"            # Posts subdirectory
+    - "projects/*.qmd"         # Projects subdirectory
+    - "!others/**"             # Exclude others/ (scratch/homework files)
 
 website:
   title: "Yash Tiwari — Portfolio"
