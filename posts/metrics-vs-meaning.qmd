@@ -1,0 +1,110 @@
+---
+pagetitle: "The Dashboard That Lied By Telling the Truth — Yash Tiwari"
+page-layout: custom
+---
+
+```{=html}
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR — uses ../ prefix (posts/ subdirectory)
+═══════════════════════════════════════════════════════════════ -->
+<header class="navbar">
+  <a href="../index.html" class="nav-logo">YT.</a>
+
+  <nav class="nav-links">
+    <a href="../index.html"    class="nav-link">Home</a>
+    <a href="../projects.html" class="nav-link">Projects</a>
+    <a href="../blog.html"     class="nav-link">Writing</a>
+    <a href="../resume.html"   class="nav-link">Resume</a>
+    <a href="../about.html"    class="nav-link">About</a>
+  </nav>
+
+  <div class="nav-right">
+    <a href="https://github.com/rsm-ytiwari" target="_blank" rel="noopener" class="nav-icon" aria-label="GitHub">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+      </svg>
+    </a>
+    <a href="https://www.linkedin.com/in/yash-tiwari-here/" target="_blank" rel="noopener" class="nav-icon" aria-label="LinkedIn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+    <button class="nav-icon" aria-label="Search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+    <button class="theme-pill" id="theme-toggle" aria-label="Toggle theme">
+      <span id="theme-icon">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     POST BANNER
+     EDIT: date, read_time, category, title, subtitle
+═══════════════════════════════════════════════════════════════ -->
+<div class="post-banner">
+  <a href="../blog.html" class="back-link">← All Writing</a>
+  <div class="post-meta-row">
+    <span class="p-year">Apr 2026</span>
+    <span class="post-sep">·</span>
+    <span class="b-read-time">5 min read</span>
+    <span class="post-sep">·</span>
+    <span class="p-year">Data Science</span>
+  </div>
+  <h1 class="post-title">The Dashboard That Lied<br>By Telling the Truth</h1>
+  <p class="post-subtitle">
+    A metric can be perfectly accurate and completely misleading at the same time.
+  </p>
+</div>
+```
+
+::: {.post-body}
+
+Imagine a product team tracks one metric: daily active users. It goes up every week. They celebrate. Then, three quarters later, revenue collapses.
+
+What happened? Nothing on the dashboard was wrong. The numbers were right. The dashboard lied anyway.
+
+## The measurement was correct. The model was broken.
+
+Every metric embeds a theory — an implicit claim about what the number *means*. DAU is a proxy for engagement. Engagement is a proxy for value delivered. Value delivered is a proxy for willingness to pay. Willingness to pay is a proxy for revenue.
+
+When DAU went up, the team assumed the whole chain held. It didn't. Users were active but not finding value. They were clicking around, confused. Confusion generates activity. Activity looks like engagement. Engagement looks like growth.
+
+The metric was accurate. The theory behind it was wrong.
+
+## We mistake precision for validity
+
+A thermometer can tell you the temperature in a room to two decimal places. That doesn't tell you if the room is comfortable for a human being. We've built a data culture that is obsessed with precision but careless about validity.
+
+Precision is a property of measurement. Validity is a property of the relationship between the measurement and what you actually care about. You can have one without the other. Most dashboards optimize for precision and assume validity.
+
+## The question that fixes it
+
+Before you build any metric, ask: *what decision does this change?*
+
+If DAU goes up by 10%, what do you do differently? If the answer is "we celebrate and keep doing what we're doing," the metric isn't driving decisions — it's decorating them. You're not measuring to learn. You're measuring to confirm.
+
+The useful metrics are the ones that make you act asymmetrically. High number → one action. Low number → different action. If both outcomes lead to the same plan, the metric is noise dressed as signal.
+
+## Dashboards are not understanding
+
+A dashboard shows you *what* happened. It says nothing about *why*. And it is completely silent on *what to do next*.
+
+Understanding requires a model — a causal story about the world. Dashboards show you symptoms. Models explain mechanisms. Most teams invest heavily in dashboards and lightly in models, then wonder why they keep being surprised.
+
+The dashboard that lied wasn't broken. The team's mental model of what it meant was.
+
+---
+
+*Measurement is a tool for thinking, not a substitute for it.*
+
+:::

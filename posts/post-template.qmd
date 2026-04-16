@@ -1,16 +1,12 @@
+---
+pagetitle: "Post Title — Yash Tiwari"
+page-layout: custom
+---
+
+```{=html}
 <!-- ═══════════════════════════════════════════════════════════
-     case-study-template.html
-     Shared navbar for all pages in projects/ subdirectory.
-     Included via: include-before-body: ../_partials/case-study-template.html
-
-     NOTE ON VARIABLES:
-     Quarto's include-before-body inserts this file verbatim —
-     Pandoc $variable$ substitution does NOT run here.
-     Page-specific content (banner, meta, results) lives in the
-     individual .qmd file. See projects/new-project-template.qmd.
-
-     EDIT NAV LINKS HERE if you rename pages.
-     All hrefs use ../ because case studies live in projects/.
+     NAVBAR — uses ../ prefix (posts/ subdirectory)
+     Duplicate this file to start a new post.
 ═══════════════════════════════════════════════════════════════ -->
 <header class="navbar">
   <a href="../index.html" class="nav-logo">YT.</a>
@@ -50,3 +46,43 @@
     </button>
   </div>
 </header>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     POST BANNER
+     EDIT: date, read time, category, title, subtitle
+═══════════════════════════════════════════════════════════════ -->
+<div class="post-banner">
+  <a href="../blog.html" class="back-link">← All Writing</a>
+  <div class="post-meta-row">
+    <span class="p-year">Apr 2026</span>
+    <span class="post-sep">·</span>
+    <span class="b-read-time">4 min read</span>
+    <span class="post-sep">·</span>
+    <span class="p-year">Data Science</span>
+  </div>
+  <h1 class="post-title">Post Title Here</h1>
+  <p class="post-subtitle">
+    One-sentence hook under the title.
+  </p>
+</div>
+```
+
+::: {.post-body}
+
+Start with a clean opening paragraph that earns the reader's attention quickly.
+
+## Section Heading
+
+Write in normal Quarto markdown here. Keep paragraphs tight, use whitespace generously, and let the page styling carry the reading experience.
+
+- Lists work naturally inside the post body.
+- Inline code like `model.fit()` picks up the shared monospace styling.
+
+> Good writing usually means removing more than adding.
+
+## Another Section
+
+Use this file as a reusable starting point for future posts, then add the corresponding entry to `blog.json`.
+
+:::

@@ -1,12 +1,11 @@
 ---
-pagetitle: "Projects — Yash Tiwari"
+pagetitle: "Writing — Yash Tiwari"
 page-layout: custom
 ---
 
 ```{=html}
 <!-- ═══════════════════════════════════════════════════════════
-     NAVBAR — identical across all pages.
-     EDIT NAV LINKS HERE if you rename pages.
+     NAVBAR
 ═══════════════════════════════════════════════════════════════ -->
 <header class="navbar">
   <a href="index.html" class="nav-logo">YT.</a>
@@ -49,142 +48,132 @@ page-layout: custom
 
 
 <!-- ═══════════════════════════════════════════════════════════
-     FEATURED BANNER
-     EDIT BANNER HERE — change the title and subtitle freely.
-     The label ("Work") is a small uppercase tag above the title.
+     PAGE BANNER
+     EDIT the subtitle copy here. The Twain quote is intentional.
 ═══════════════════════════════════════════════════════════════ -->
 <div class="page-banner">
-  <!-- EDIT LABEL -->
-  <div class="banner-label">Work</div>
-
-  <!-- EDIT TITLE -->
-  <h1 class="banner-title">All Projects</h1>
-
-  <!-- EDIT SUBTITLE -->
+  <div class="banner-label">Writing</div>
+  <h1 class="banner-title">Short letters.</h1>
+  <p class="banner-sub" style="font-style:italic; margin-bottom:10px;">
+    "I didn't have time to write you a short letter,<br>
+    so I wrote you a long one." — Mark Twain
+  </p>
   <p class="banner-sub">
-    ML pipelines, product analytics, and agentic systems — built
-    to drive measurable business outcomes, not just to demo well.
+    Posts that took longer to write than they take to read.
   </p>
 </div>
-<!-- ── END BANNER ── -->
 
-
-<!--
-TO ADD A NEW PROJECT:
-1. Add an entry to projects.json (set featured: false
-   unless you want it on the homepage too)
-2. Create projects/your-project.qmd (copy traway.qmd)
-3. Run: quarto render
-That's it. No HTML to touch.
--->
 
 <!-- ═══════════════════════════════════════════════════════════
-     FULL PROJECTS GRID — rendered from projects.json
-     EDIT projects.json to add, remove, or update projects.
+     BLOG GRID — rendered from blog.json
+     EDIT blog.json to add, remove, or update posts.
+     Set draft: true to hide a post without deleting it.
 ═══════════════════════════════════════════════════════════════ -->
 <div class="projects-section">
 
-  <!-- Stats bar: project count + discipline tags -->
   <div class="projects-stats">
-    <span id="project-count">—</span> Projects
-    &nbsp;·&nbsp; ML · Analytics · Agentic AI
+    <span id="post-count">—</span> Posts
   </div>
 
-  <!-- Filter bar: "All" is hardcoded; category buttons injected by JS -->
   <div class="filter-bar" id="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
   </div>
 
-  <!-- Empty state: shown when active filter has no matches -->
   <p id="empty-state"
      style="display:none; color:var(--text-muted); font-size:14px; padding:40px 0;">
-    No projects in this category yet.
+    Nothing here yet in this category.
   </p>
 
-  <div id="projects-grid" class="cards-grid"></div>
+  <div id="blog-grid" class="cards-grid"></div>
 
 </div>
-<!-- ── END PROJECTS GRID ── -->
+
 
 <script>
-/* EDIT projects.json to add/remove projects */
 (function () {
-  // Detect the repo base path from window.location
-  const path = window.location.pathname;
-  const base = path.includes('/portfolio_website/')
-    ? '/portfolio_website/'
-    : './';
+  const CATEGORY_ORDER = [
+    'Data Science',
+    'Marketing',
+    'Philosophy',
+    'Future'
+  ];
 
   function cardHTML(item) {
-    const preview = item.image
-      ? `<img src="${item.image}" alt="${item.title}" class="p-preview-img">`
-      : `<div class="p-preview"><span>Project Preview</span></div>`;
-
-    const tags = item.tags.slice(0, 4)
-      .map(function (t) { return `<span class="p-tag">${t}</span>`; })
+    const tags = (item.tags || []).slice(0, 4)
+      .map(function (t) { return '<span class="p-tag">' + t + '</span>'; })
       .join('');
-
     const link = item.href || '#';
-
     const catAttr = Array.isArray(item.category)
       ? item.category.join(',')
       : (item.category || '');
 
-    return `
-      <div class="p-card" data-category="${catAttr}">
-        ${preview}
-        <div class="p-body">
-          <div class="p-meta">
-            <span class="p-num">${item.number}</span>
-            <span class="p-year">${item.year}</span>
-          </div>
-          <div class="p-title">${item.title}</div>
-          <div class="p-desc">${item.summary}</div>
-          <div class="p-tags">${tags}</div>
-          <a href="${link}" class="p-more">Read more →</a>
-        </div>
-      </div>`;
+    return [
+      '<div class="p-card b-card" data-category="' + catAttr + '">',
+      '  <div class="p-body">',
+      '    <div class="p-meta">',
+      '      <span class="p-year">' + item.date + '</span>',
+      '      <span class="b-read-time">' + item.read_time + ' read</span>',
+      '    </div>',
+      '    <div class="p-title">' + item.title + '</div>',
+      '    <div class="p-desc">' + item.summary + '</div>',
+      '    <div class="p-tags">' + tags + '</div>',
+      '    <a href="' + link + '" class="p-more">Read →</a>',
+      '  </div>',
+      '</div>'
+    ].join('\n');
   }
 
   function updateEmptyState() {
-    const visible = Array.from(
-      document.querySelectorAll('#projects-grid .p-card')
+    var visible = Array.from(
+      document.querySelectorAll('#blog-grid .p-card')
     ).filter(function (c) { return c.style.display !== 'none'; });
-    const emptyEl = document.getElementById('empty-state');
-    if (emptyEl) emptyEl.style.display = visible.length === 0 ? 'block' : 'none';
+    var el = document.getElementById('empty-state');
+    if (el) el.style.display = visible.length === 0 ? 'block' : 'none';
   }
 
-  fetch(base + 'projects.json')
+  const path = window.location.pathname;
+  const base = path.includes('/portfolio_website/') ? '/portfolio_website/' : './';
+
+  fetch(base + 'blog.json')
     .then(function (r) { return r.json(); })
-    .then(function (projects) {
+    .then(function (posts) {
 
-      /* ── Stats bar ── */
-      document.getElementById('project-count').textContent = projects.length;
+      /* Filter out drafts */
+      var live = posts.filter(function (p) { return !p.draft; });
 
-      /* ── Category filter buttons ── */
-      const cats = Array.from(new Set(
-        projects.reduce(function (acc, p) {
+      /* Stats bar */
+      document.getElementById('post-count').textContent = live.length;
+
+      /* Inject category filter buttons */
+      var cats = Array.from(new Set(
+        live.reduce(function (acc, p) {
           return acc.concat(
             Array.isArray(p.category) ? p.category : [p.category || 'Other']
           );
         }, [])
-      )).sort();
+      )).sort(function (a, b) {
+        var aIndex = CATEGORY_ORDER.indexOf(a);
+        var bIndex = CATEGORY_ORDER.indexOf(b);
+        if (aIndex === -1 && bIndex === -1) return a.localeCompare(b);
+        if (aIndex === -1) return 1;
+        if (bIndex === -1) return -1;
+        return aIndex - bIndex;
+      });
 
-      const bar = document.getElementById('filter-bar');
+      var bar = document.getElementById('filter-bar');
       cats.forEach(function (cat) {
-        const btn = document.createElement('button');
-        btn.className = 'filter-btn';
+        var btn = document.createElement('button');
+        btn.className    = 'filter-btn';
         btn.dataset.filter = cat;
-        btn.textContent = cat;
+        btn.textContent  = cat;
         bar.appendChild(btn);
       });
 
-      /* ── Render cards ── */
-      document.getElementById('projects-grid').innerHTML =
-        projects.map(cardHTML).join('');
+      /* Render cards */
+      document.getElementById('blog-grid').innerHTML = live.map(cardHTML).join('');
 
-      /* ── Click-to-navigate ── */
-      document.querySelectorAll('#projects-grid .p-card').forEach(function (card) {
+      /* Click-to-navigate on card body */
+      document.querySelectorAll('#blog-grid .p-card').forEach(function (card) {
         card.addEventListener('click', function (e) {
           if (e.target.closest('a')) return;
           var link = this.querySelector('.p-more');
@@ -195,35 +184,28 @@ That's it. No HTML to touch.
         });
       });
 
-      /* ── Filter bar click handler ── */
+      /* Filter bar */
       bar.addEventListener('click', function (e) {
-        const btn = e.target.closest('.filter-btn');
+        var btn = e.target.closest('.filter-btn');
         if (!btn) return;
-
         document.querySelectorAll('.filter-btn')
           .forEach(function (b) { b.classList.remove('active'); });
         btn.classList.add('active');
-
-        const filter = btn.dataset.filter;
-        document.querySelectorAll('#projects-grid .p-card').forEach(function (card) {
-          const cardCats = card.dataset.category
-            ? card.dataset.category.split(',')
-            : [];
-          const show = filter === 'all' || cardCats.includes(filter);
-          card.style.display = show ? '' : 'none';
+        var filter = btn.dataset.filter;
+        document.querySelectorAll('#blog-grid .p-card').forEach(function (card) {
+          var cardCats = card.dataset.category
+            ? card.dataset.category.split(',') : [];
+          card.style.display = (filter === 'all' || cardCats.includes(filter)) ? '' : 'none';
         });
-
         updateEmptyState();
       });
 
     })
     .catch(function (err) {
-      console.error('Could not load projects.json:', err);
+      console.error('Could not load blog.json:', err);
     });
 })();
 </script>
 
-
-<!-- Toast (shared element for clipboard feedback) -->
 <div class="toast" id="toast">✓ Copied to clipboard</div>
 ```

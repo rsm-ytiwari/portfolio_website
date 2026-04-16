@@ -1,0 +1,15 @@
+[
+  {
+    "id": "metrics-vs-meaning",
+    "number": "01",
+    "date": "Apr 2026",
+    "read_time": "5 min",
+    "title": "The Dashboard That Lied By Telling the Truth",
+    "summary": "A metric can be perfectly accurate and completely misleading at the same time. On the gap between measurement and understanding.",
+    "tags": ["Analytics", "Decision-making", "Epistemology"],
+    "category": ["Data Science"],
+    "href": "posts/metrics-vs-meaning.html",
+    "featured": false,
+    "draft": false
+  }
+]

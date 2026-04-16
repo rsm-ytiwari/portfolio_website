@@ -577,6 +577,10 @@ html.dark .cell-available {
 .view-all  { text-align:right; margin-top:32px; }
 .view-all a { font-size:13px; font-weight:500; color:var(--text); text-decoration:none; }
 
+/* ── Blog card additions ── */
+.b-read-time { font-size: 10px; color: var(--text-muted); }
+html.dark .b-read-time { color: var(--accent); }
+
 
 /* ══════════════════════════════
    TOAST NOTIFICATION
@@ -928,6 +932,100 @@ html.dark .cell-available {
 
 
 /* ══════════════════════════════
+   POST PAGE (posts/*.html)
+══════════════════════════════ */
+.post-banner {
+  padding: 80px 64px 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.post-title {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  color: var(--text);
+  margin: 20px 0 14px;
+}
+.post-subtitle {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 560px;
+}
+.post-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.post-sep { color: var(--border); font-size: 12px; }
+
+.post-body {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 64px 96px;
+}
+.post-body p {
+  font-size: 16px;
+  line-height: 1.85;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-bottom: 22px;
+}
+.post-body h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 52px 0 16px;
+  letter-spacing: -0.3px;
+}
+.post-body h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 36px 0 10px;
+}
+.post-body ul,
+.post-body ol {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-muted);
+  padding-left: 22px;
+  margin-bottom: 22px;
+}
+.post-body blockquote {
+  border-left: 2px solid var(--accent);
+  margin: 36px 0;
+  padding: 4px 0 4px 22px;
+  font-style: italic;
+  color: var(--text-muted);
+}
+.post-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 48px 0;
+}
+.post-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  background: var(--bg-sec);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.post-body pre code {
+  display: block;
+  padding: 16px;
+  overflow-x: auto;
+  font-size: 12px;
+}
+html:not(.dark) .post-body p,
+html:not(.dark) .post-body li { color: #4A4845; }
+
+
+/* ══════════════════════════════
    RESPONSIVE — mobile breakpoint
 ══════════════════════════════ */
 @media (max-width: 768px) {
@@ -957,6 +1055,8 @@ html.dark .cell-available {
   .case-body        { padding: 40px 24px 60px; }
   .result-grid      { grid-template-columns: 1fr; }
   .case-meta-row    { gap: 20px; }
+  .post-banner      { padding: 60px 24px 36px; }
+  .post-body        { padding: 0 24px 64px; }
 }
 
 /* ════════════════════════════════════════
