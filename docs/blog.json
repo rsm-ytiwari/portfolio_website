@@ -8,7 +8,7 @@
     "summary": "Statistical tests validate your calculations, not your decisions — and the way you interact with the test can break its validity.",
     "tags": ["A/B Testing", "Statistics", "Frequentist Methods"],
     "category": ["Data Science"],
-    "href": "posts/ab-testing-protocol-matters.html",
+    "href": "posts/ab-testing-protocol-matters-splash.html",
     "featured": true,
     "draft": false
   },
@@ -21,7 +21,7 @@
     "summary": "A metric can be perfectly accurate and completely misleading at the same time. On the gap between measurement and understanding.",
     "tags": ["Analytics", "Decision-making", "Epistemology"],
     "category": ["Data Science"],
-    "href": "posts/metrics-vs-meaning.html",
+    "href": "posts/metrics-vs-meaning-splash.html",
     "featured": false,
     "draft": false
   }
