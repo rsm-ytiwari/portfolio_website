@@ -1,5 +1,18 @@
 [
   {
+    "id": "ab-testing-protocol-matters",
+    "number": "02",
+    "date": "Apr 2026",
+    "read_time": "10 min",
+    "title": "A/B Testing a Call to Action: Why Getting the Math Right Isn't Enough",
+    "summary": "Statistical tests validate your calculations, not your decisions — and the way you interact with the test can break its validity.",
+    "tags": ["A/B Testing", "Statistics", "Frequentist Methods"],
+    "category": ["Data Science"],
+    "href": "posts/ab-testing-protocol-matters.html",
+    "featured": true,
+    "draft": false
+  },
+  {
     "id": "metrics-vs-meaning",
     "number": "01",
     "date": "Apr 2026",

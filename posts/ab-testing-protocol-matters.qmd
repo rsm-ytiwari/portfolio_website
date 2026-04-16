@@ -1,0 +1,472 @@
+---
+pagetitle: "A/B Testing a Call to Action: Why Getting the Math Right Isn't Enough — Yash Tiwari"
+page-layout: custom
+---
+
+```{=html}
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR — uses ../ prefix (posts/ subdirectory)
+═══════════════════════════════════════════════════════════════ -->
+<header class="navbar">
+  <a href="../index.html" class="nav-logo">YT.</a>
+
+  <nav class="nav-links">
+    <a href="../index.html"    class="nav-link">Home</a>
+    <a href="../projects.html" class="nav-link">Projects</a>
+    <a href="../blog.html"     class="nav-link">Writing</a>
+    <a href="../resume.html"   class="nav-link">Resume</a>
+    <a href="../about.html"    class="nav-link">About</a>
+  </nav>
+
+  <div class="nav-right">
+    <a href="https://github.com/rsm-ytiwari" target="_blank" rel="noopener" class="nav-icon" aria-label="GitHub">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+      </svg>
+    </a>
+    <a href="https://www.linkedin.com/in/yash-tiwari-here/" target="_blank" rel="noopener" class="nav-icon" aria-label="LinkedIn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+    <button class="nav-icon" aria-label="Search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+    <button class="theme-pill" id="theme-toggle" aria-label="Toggle theme">
+      <span id="theme-icon">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════
+     POST BANNER
+═══════════════════════════════════════════════════════════════ -->
+<div class="post-banner">
+  <a href="../blog.html" class="back-link">← All Writing</a>
+  <div class="post-meta-row">
+    <span class="p-year">Apr 2026</span>
+    <span class="post-sep">·</span>
+    <span class="b-read-time">10 min read</span>
+    <span class="post-sep">·</span>
+    <span class="p-year">Data Science</span>
+  </div>
+  <h1 class="post-title">A/B Testing a Call to Action:<br>Why Getting the Math Right Isn't Enough</h1>
+  <p class="post-subtitle">
+    Statistical tests validate your calculations, not your decisions — and the way you interact with the test can break its validity.
+  </p>
+</div>
+```
+
+::: {.post-body}
+
+Your landing page has a sign-up button. You tested it. The data said it works. Six months later, you're still waiting for the promised uplift that never came.
+
+This happens more often than anyone admits. Companies run A/B tests correctly, use the right statistical formula, set the right significance threshold, and still get the wrong answer. The infuriating part? The math was right. The test was right. The decision-making process was wrong.
+
+This is the story of how frequentist statistics — the framework that powers A/B testing — is really a **protocol**, not a formula. And why understanding that distinction means the difference between a test you can trust and a test that confidently lies to you.
+
+## The Problem Disguised as a Button
+
+Let's say you have two calls to action on your landing page.
+
+**CTA A:** "Sign up for our newsletter here!"
+**CTA B:** "Stay up to date by signing up!"
+
+They're nearly identical. But you suspect one will drive more signups. So you run an A/B test: randomly show half your visitors CTA A, the other half CTA B, and measure which one converts better.
+
+This seems straightforward. But underneath that simplicity lurks something messier: you're trying to detect a tiny signal buried in pure noise.
+
+Each visitor who lands on your page is like a weighted coin flip. Heads = they sign up. Tails = they don't. CTA A might have a 22% chance of heads. CTA B might have an 18% chance. That 4% difference is real, but it's small. And when you only see each visitor once, figuring out whether a 4% difference actually exists is a problem that requires tools. Statistical tools. Frequentist tools. Tools that, despite their precision, have a fundamental blind spot.
+
+To know whether you actually detected a real difference, you need to understand what you're actually measuring.
+
+## What You're Estimating (And How)
+
+Here's the formal version of what's happening.
+
+Each visitor either signs up (a 1) or doesn't (a 0). Under the hood, that's a Bernoulli distribution — a coin flip with a bias. CTA A flips a coin biased toward signup with probability πA. CTA B flips a coin biased toward signup with probability πB.
+
+The thing you care about is θ (theta) — the difference: θ = πA − πB.
+
+In the real world, you don't know πA or πB. But you can estimate them. If 220 out of 1,000 visitors who see CTA A sign up, your estimate of πA is 0.22. Same for B: 180 out of 1,000 gives you πB = 0.18. So your estimate of the difference is:
+
+$$\hat{\theta} = \bar{X}_A - \bar{X}_B = 0.22 - 0.18 = 0.04$$
+
+This θ̂ (theta-hat) is your estimator. It's a specific function of your data. And here's the key insight: the fact that you *have* an estimator means you can now ask a scientific question.
+
+Does this estimate get closer to the truth as you gather more data?
+
+## Simulating Data
+
+Here's where most people get confused about statistics.
+
+In the real world, you never know the true values of πA and πB. That's the whole problem. You run your test, you get an estimate, and you have to decide whether to trust it — all without ever knowing whether you're right.
+
+But we're going to do something that sounds backwards: we're going to *pretend we know the truth*. We'll set πA and πB ourselves, generate fake visitor data under those conditions, and then ask: can our statistical tools recover the truth we planted?
+
+It's like a test of the tools themselves. If our estimator can't find a true effect we put there on purpose, it's broken. If it can, we know it's at least doing *something* right.
+
+For this exercise, let's say:
+- CTA A has a true signup rate of πA = 0.22 (22%)
+- CTA B has a true signup rate of πB = 0.18 (18%)
+- So the true difference is θ = 0.04 (4 percentage points)
+
+We'll generate 1,000 visitors seeing CTA A and 1,000 seeing CTA B. Each visitor is a Bernoulli coin flip — heads (1) if they sign up, tails (0) if they don't. We'll store these simulated visitors so we can test our statistical tools on them throughout the rest of this article.
+
+```{python}
+#| label: simulate-data
+#| echo: true
+
+import numpy as np
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+# We're in a world where we know the truth
+n = 1000
+pi_A = 0.22  # True signup rate for CTA A
+pi_B = 0.18  # True signup rate for CTA B
+
+# Simulate 1,000 visitor outcomes for each CTA
+# 1 = signup, 0 = no signup
+visits_A = np.random.binomial(1, pi_A, n)
+visits_B = np.random.binomial(1, pi_B, n)
+
+# Quick sanity check: what did we actually observe?
+print(f"Observed signup rate for A: {visits_A.mean():.4f}")
+print(f"Observed signup rate for B: {visits_B.mean():.4f}")
+print(f"Observed difference: {(visits_A.mean() - visits_B.mean()):.4f}")
+print(f"True difference: 0.04")
+```
+
+Notice: our observed rates (0.22 and 0.18) are *close to* but not exactly equal to the truth (0.22 and 0.18). That's noise. That's why we need statistics.
+
+Now we have data. Let's see what our tools can learn from it.
+
+## Does More Data Help? (The Law of Large Numbers)
+
+The Law of Large Numbers is one of those boring-sounding theorems that changes everything.
+
+It says: as your sample gets bigger, your sample average converges to the true population average. Imagine you're flipping a coin repeatedly and tracking the running average of heads. With 10 flips, you might get 40% heads (fluky). With 100 flips, you get closer to 50%. With 1,000 flips, even closer. By infinity, you'd hit exactly 50%.
+
+For your A/B test, this means something concrete: if CTA A really is 22% better than CTA B, and you keep gathering more visitors, your estimate θ̂ will eventually drift toward the true θ = 0.04 and stay there.
+
+Here's what that looks like in practice. Imagine you simulate this: flip 1,000 visitors for each CTA, compute the running difference after 1 visitor, after 2, after 3, all the way to 1,000. Plot it.
+
+```{python}
+#| label: fig-lln
+#| fig-cap: "Running average of the difference (θ̂) converges to the true difference (θ = 0.04) as sample size grows. Early samples are noisy; later samples settle."
+#| echo: true
+
+import plotly.graph_objects as go
+
+# Using the simulated data from the previous section,
+# compute the cumulative mean of the difference
+differences = visits_A - visits_B
+theta_hat = np.cumsum(differences) / np.arange(1, n + 1)
+
+# Create interactive plot
+fig = go.Figure()
+
+# Add the running mean line
+fig.add_trace(go.Scatter(
+    x=np.arange(1, n + 1),
+    y=theta_hat,
+    mode='lines',
+    line=dict(color='rgb(0, 100, 200)', width=2),
+    hovertemplate='Sample size: %{x}<br>θ̂: %{y:.4f}<extra></extra>'
+))
+
+# Add reference line for true difference
+fig.add_hline(y=0.04, line_dash="dash", line_color="rgb(255, 100, 0)",
+              annotation_text="True θ = 0.04", annotation_position="right")
+
+fig.update_layout(
+    title="Convergence to the True Difference",
+    xaxis_title="Sample Size (visitors per group)",
+    yaxis_title="Estimated Difference (θ̂)",
+    hovermode='x unified',
+    plot_bgcolor='rgb(240, 240, 240)',
+    height=500,
+    width=800
+)
+
+fig.show()
+```
+
+See how it bounces around wildly at first? That's noise. Flukes. A stretch of visitors who just happened to convert more. But as you add more visitors, the bouncing stops. The line finds the truth.
+
+The Law of Large Numbers guarantees this will happen — eventually. But "eventually" might be never in a business sense. You can't wait for infinity. You have to make a decision with a *fixed* number of visitors. And here's where convergence gets weird: knowing that θ̂ converges to θ tells you nothing about how confident you should be with a sample size of 1,000.
+
+You need to measure how uncertain θ̂ actually is.
+
+## How Uncertain Is It? (Bootstrap Standard Errors)
+
+Uncertainty needs a number. Not a feeling. A number.
+
+Here's one way to think about it: if you ran this exact A/B test 1,000 times, over and over, you'd get 1,000 slightly different estimates of θ. They'd cluster around the true value, but each run would give you something different, depending on which visitors you happened to sample.
+
+The spread of those estimates — their standard deviation — is the uncertainty. It's called the standard error.
+
+You could calculate the standard error using a formula. But there's another way: the bootstrap. Resample from your observed data (with replacement) many times. Compute θ̂ for each resample. Take the standard deviation of those resampled estimates. That's your standard error.
+
+Here's why this matters: you don't need to know the mathematical formula. You just need data and computing power.
+
+```{python}
+#| label: bootstrap-se
+#| echo: true
+
+# Bootstrap standard error
+n_bootstrap = 1000
+theta_boots = np.zeros(n_bootstrap)
+
+np.random.seed(42)  # For reproducibility
+for i in range(n_bootstrap):
+    boot_A = np.random.choice(visits_A, size=len(visits_A), replace=True)
+    boot_B = np.random.choice(visits_B, size=len(visits_B), replace=True)
+    theta_boots[i] = boot_A.mean() - boot_B.mean()
+
+# Standard error from bootstrap
+se_boot = np.std(theta_boots, ddof=1)
+print(f"Bootstrapped SE: {se_boot:.4f}")
+
+# Compare to analytical SE formula
+p_A = visits_A.mean()
+p_B = visits_B.mean()
+n_A = n_B = n
+se_analytical = np.sqrt((p_A * (1 - p_A) / n_A) + (p_B * (1 - p_B) / n_B))
+print(f"Analytical SE: {se_analytical:.4f}")
+
+# 95% confidence interval
+ci_lower = np.percentile(theta_boots, 2.5)
+ci_upper = np.percentile(theta_boots, 97.5)
+print(f"95% CI: [{ci_lower:.4f}, {ci_upper:.4f}]")
+```
+
+The bootstrap gives you a distribution of plausible estimates. From that distribution, you can extract a confidence interval: "the true difference is probably somewhere in this range, with 95% confidence."
+
+But a confidence interval is only useful if you understand its shape. And the shape is determined by something surprising.
+
+## The Shape of Your Uncertainty (The Central Limit Theorem)
+
+Here's where things get elegant.
+
+No matter what distribution your data comes from — Bernoulli coin flips, in this case — the sampling distribution of your estimate becomes approximately *Normal* as your sample size grows. Bell curve. Symmetric. Predictable.
+
+This is the Central Limit Theorem. It's the theorem that made frequentist statistics possible.
+
+Why does a Normal distribution matter so much? Because we know exactly what it looks like. We know where the tails are. We can say: "my estimate is here, and under the null hypothesis, this is how extreme that is." That's where p-values come from. That's where the math becomes a decision tool.
+
+Watch what happens as you increase sample size:
+
+```{python}
+#| label: fig-clt
+#| fig-cap: "Sampling distribution of θ̂ becomes progressively more Normal as sample size increases. At n=25, it's bumpy. At n=500, it's a smooth bell curve."
+#| echo: true
+
+from plotly.subplots import make_subplots
+
+sample_sizes = [25, 50, 100, 500]
+n_simulations = 1000
+results = {}
+
+np.random.seed(42)
+for n_size in sample_sizes:
+    theta_estimates = np.zeros(n_simulations)
+
+    for j in range(n_simulations):
+        visits_A_sim = np.random.binomial(1, pi_A, n_size)
+        visits_B_sim = np.random.binomial(1, pi_B, n_size)
+        theta_estimates[j] = visits_A_sim.mean() - visits_B_sim.mean()
+
+    results[n_size] = theta_estimates
+
+# Create 2x2 subplot grid
+fig = make_subplots(rows=2, cols=2, subplot_titles=[f"n = {n}" for n in sample_sizes])
+
+for idx, n_size in enumerate(sample_sizes):
+    row = (idx // 2) + 1
+    col = (idx % 2) + 1
+
+    fig.add_trace(
+        go.Histogram(x=results[n_size], nbinsx=30,
+                     marker_color='rgb(0, 100, 200)',
+                     showlegend=False,
+                     hovertemplate='θ̂: %{x:.3f}<br>Frequency: %{y}<extra></extra>'),
+        row=row, col=col
+    )
+
+    # Update axes
+    fig.update_xaxes(title_text="θ̂", range=[-0.1, 0.15], row=row, col=col)
+    fig.update_yaxes(title_text="Frequency", row=row, col=col)
+
+fig.update_layout(height=700, width=900, showlegend=False)
+fig.show()
+```
+
+At n=25, the distribution is rough and asymmetric. It doesn't look like anything special. But jump to n=500, and it's a pristine bell curve. Almost magical.
+
+## Turning Evidence into a Decision (Hypothesis Testing and Regression)
+
+Now comes the formal decision.
+
+Your null hypothesis is: there is no difference. θ = 0. CTA A and CTA B convert at exactly the same rate.
+
+You want to know: do your data provide enough evidence to reject this?
+
+Here's how frequentist hypothesis testing works. You take your estimate θ̂, divide it by its standard error, and get a *z-score*:
+
+$$z = \frac{\hat{\theta} - 0}{SE(\hat{\theta})}$$
+
+Under the null hypothesis, this z-score follows a standard Normal distribution — mean 0, standard deviation 1. So you know: if the null is true, what's the probability of observing a z-score this extreme or more extreme?
+
+That probability is your p-value.
+
+Here's the thing nobody mentions: this same test is mathematically identical to fitting a simple regression.
+
+Stack your data into a single dataset. One column: the outcome (1 if signup, 0 if not). Another column: a treatment indicator (1 if CTA A, 0 if CTA B). Fit:
+
+$$Y_i = \beta_0 + \beta_1 D_i + \varepsilon_i$$
+
+The coefficient β₁ estimates the difference in means. Its standard error, t-statistic, and p-value will match your hypothesis test (up to rounding). The machinery is identical.
+
+```{python}
+#| label: hypothesis-test
+#| echo: true
+
+from scipy import stats
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+# Hypothesis test approach
+theta_hat = visits_A.mean() - visits_B.mean()
+z_stat = (theta_hat - 0) / se_analytical
+p_value = 2 * (1 - stats.norm.cdf(abs(z_stat)))
+print(f"z-statistic: {z_stat:.4f}")
+print(f"p-value: {p_value:.4f}\n")
+
+# Regression approach
+data = pd.DataFrame({
+    'Y': np.concatenate([visits_A, visits_B]),
+    'D': np.concatenate([np.ones(n), np.zeros(n)])
+})
+
+# Fit OLS regression
+X = data[['D']]
+y = data['Y']
+model = LinearRegression()
+model.fit(X, y)
+
+# Get regression statistics
+from scipy.stats import t as t_dist
+y_pred = model.predict(X)
+residuals = y - y_pred
+rss = np.sum(residuals**2)
+mse = rss / (len(y) - 2)
+var_covar = mse * np.linalg.inv(X.T @ X)
+se_coef = np.sqrt(np.diag(var_covar))
+t_stat = model.coef_[0] / se_coef[0]
+p_value_reg = 2 * (1 - t_dist.cdf(abs(t_stat), len(y) - 2))
+
+print(f"Regression Results:")
+print(f"β₁ (coefficient): {model.coef_[0]:.4f}")
+print(f"SE(β₁): {se_coef[0]:.4f}")
+print(f"t-statistic: {t_stat:.4f}")
+print(f"p-value: {p_value_reg:.4f}")
+```
+
+Both approaches give the same answer because they're asking the same question in different languages.
+
+And the machinery works beautifully — as long as you use it the way it was designed.
+
+## The Protocol Is the Test (The Problem with Peeking)
+
+Now your boss gets impatient.
+
+Instead of waiting for all 1,000 visitors, she wants to check the results after every 100 visitors. If any of those early peeks shows statistical significance at α = 0.05, she declares a winner.
+
+This is called *peeking*. Or *sequential testing* if you're being technical. And it breaks everything.
+
+Think of it like lottery tickets. Each peek is another chance to win the jackpot. A single ticket has a 5% chance of winning. But if you buy 10 tickets and check them one by one, your odds of winning something are much higher. Each individual check uses the same winning criteria, but the cumulative odds are different.
+
+A single hypothesis test at α = 0.05 has a 5% false positive rate. If there's truly no difference, you have a 5% chance of wrongly declaring one.
+
+But when you run 10 tests on accumulating data, each peek is another chance to get a false positive. The math says the cumulative false positive rate should be roughly 1 − (0.95)^10 = 40%. In practice, it's lower — around 20% — but still catastrophically higher than 5%.
+
+Let's prove this with a simulation. Assume there's no real difference: πA = πB = 0.20. Generate 1,000 observations for each group. Then peek after every 100 visitors, testing at each checkpoint. Count how many of 10,000 simulated experiments produced at least one false positive.
+
+```{python}
+#| label: peeking-simulation
+#| echo: true
+
+np.random.seed(42)
+
+n_experiments = 10000
+n_per_peek = 100
+n_peeks = 10
+false_positives = 0
+
+for exp in range(n_experiments):
+    # Generate fresh data for this experiment
+    # Under null hypothesis: πA = πB = 0.20 (no difference)
+    visits_A_null = np.random.binomial(1, 0.20, n_per_peek * n_peeks)
+    visits_B_null = np.random.binomial(1, 0.20, n_per_peek * n_peeks)
+
+    for peek in range(1, n_peeks + 1):
+        n_current = peek * n_per_peek
+
+        # Subset accumulated data up to this peek
+        A_accum = visits_A_null[:n_current]
+        B_accum = visits_B_null[:n_current]
+
+        # Compute z-statistic on accumulated data
+        p_A_null = A_accum.mean()
+        p_B_null = B_accum.mean()
+        se_null = np.sqrt((p_A_null * (1 - p_A_null) / n_current) +
+                          (p_B_null * (1 - p_B_null) / n_current))
+
+        if se_null > 0:
+            z_null = (p_A_null - p_B_null) / se_null
+            p_val = 2 * (1 - stats.norm.cdf(abs(z_null)))
+
+            if p_val < 0.05:
+                false_positives += 1
+                break  # Stop after first false positive in this experiment
+
+empirical_fpr = false_positives / n_experiments
+print(f"Empirical false positive rate under peeking: {empirical_fpr:.4f}")
+print(f"Nominal false positive rate (single test): 0.05")
+print(f"Inflation factor: {empirical_fpr / 0.05:.2f}x")
+```
+
+The empirical false positive rate jumps from 5% to somewhere between 20% and 25%.
+
+This is not a flaw in the test. The test is working correctly. The test is answering the question it was asked: "If I run this test right now, what's the probability of a false positive?" Each individual test has a 5% false positive rate.
+
+The problem is that you're using the test as a *sequential decision tool* when it was designed as a *point-in-time decision tool*. You're running it 10 times on the same data, each time asking "is it significant yet?" The cumulative answer to that question is totally different from the answer to "is it significant?"
+
+This is the insight that breaks your brain. Everything was right. The formula, the calculation, the significance threshold — all correct. But the *protocol* — the way you decided to interact with the test — invalidated the whole thing.
+
+## The Reframe
+
+So what does this mean for A/B testing in the real world?
+
+It means that statistical significance is not a property of data. It's a property of a *process*. The test doesn't tell you whether your finding is true. It tells you whether your decision-making process is legitimate.
+
+This is why the test works when followed as designed: you pre-register your sample size, you don't peek, you run the test once, you make a decision. The protocol is honest.
+
+But in the real world? That uplift you've been waiting for — the one that never came? It might not have been because the test was wrong. It might have been because someone looked at it on day three, saw a p-value of 0.048, and made a decision. Every "statistically significant" result needs an audit: When did you decide to stop? Did you peek? Did you test multiple hypotheses and report only the winning one? Did you adjust your sample size mid-experiment?
+
+The math was never the problem. The protocol was.
+
+Which means trusting an A/B test isn't about understanding the formula. It's about understanding the discipline.
+
+:::
