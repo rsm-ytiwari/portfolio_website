@@ -59,7 +59,7 @@ page-layout: custom
     so I wrote you a long one." — Mark Twain
   </p>
   <p class="banner-sub">
-    Posts that took longer to write than they take to read.
+    Each article is an attempt to explain something I found genuinely confusing to someone who's smart but not a specialist. No SEO, no hot takes.
   </p>
 </div>
 
@@ -106,13 +106,17 @@ page-layout: custom
     const catAttr = Array.isArray(item.category)
       ? item.category.join(',')
       : (item.category || '');
+    const featuredBadge = item.featured
+      ? '<span class="b-featured-badge">Long Read</span>'
+      : '';
 
     return [
-      '<div class="p-card b-card" data-category="' + catAttr + '">',
+      '<div class="p-card b-card' + (item.featured ? ' b-card-featured' : '') + '" data-category="' + catAttr + '">',
       '  <div class="p-body">',
       '    <div class="p-meta">',
       '      <span class="p-year">' + item.date + '</span>',
       '      <span class="b-read-time">' + item.read_time + ' read</span>',
+      '      ' + featuredBadge,
       '    </div>',
       '    <div class="p-title">' + item.title + '</div>',
       '    <div class="p-desc">' + item.summary + '</div>',

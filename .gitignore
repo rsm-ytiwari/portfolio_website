@@ -21,3 +21,6 @@ node_modules/
 
 # RSM VS Code generated files
 .devcontainer/
+
+# Scratch/homework files
+others/
