@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Replicating Card &amp; Krueger (1994) — Yash Tiwari – Yash Tiwari — Portfolio</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     head-extras.html — injected into <head> on every page
+     via include-in-header in _quarto.yml
+
+     FONTS IN USE:
+       Instrument Serif (italic) — logo, hero name, case study titles
+       Geist                     — all body text, UI labels
+       JetBrains Mono            — terminal bento cell
+
+     To swap fonts: update the Google Fonts URL below,
+     then update font-family values in styles/custom.css.
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- Favicon — SVG supports light/dark mode automatically -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+
+<!-- Dark mode initialised before first paint — prevents flash of light mode -->
+<script>document.documentElement.classList.add('dark');</script>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&amp;family=Geist:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../styles/custom.css">
+</head>
+
+<body>
+
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR — uses ../ prefix (posts/ subdirectory)
+═══════════════════════════════════════════════════════════════ -->
+<header class="navbar">
+  <a href="../index.html" class="nav-logo">YT.</a>
+
+  <nav class="nav-links">
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../projects.html" class="nav-link">Projects</a>
+    <a href="../blog.html" class="nav-link">Writing</a>
+    <a href="../resume.html" class="nav-link">Resume</a>
+    <a href="../about.html" class="nav-link">About</a>
+  </nav>
+
+  <div class="nav-right">
+    <a href="https://github.com/rsm-ytiwari" target="_blank" rel="noopener" class="nav-icon" aria-label="GitHub">
+      <svg width="17" height="17" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+      </svg>
+    </a>
+    <a href="https://www.linkedin.com/in/yash-tiwari-here/" target="_blank" rel="noopener" class="nav-icon" aria-label="LinkedIn">
+      <svg width="17" height="17" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+        <rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+      </svg>
+    </a>
+    <button class="nav-icon" aria-label="Search">
+      <svg width="17" height="17" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+    <button class="theme-pill" id="theme-toggle" aria-label="Toggle theme">
+      <span id="theme-icon">
+        <svg width="13" height="13" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     POST BANNER
+═══════════════════════════════════════════════════════════════ -->
+<div class="post-banner">
+  <a href="../blog.html" class="back-link">← All Writing</a>
+  <div class="post-meta-row">
+    <span class="p-year">Apr 2026</span>
+    <span class="post-sep">·</span>
+    <span class="b-read-time">8 min read</span>
+    <span class="post-sep">·</span>
+    <span class="p-year">Data Science</span>
+  </div>
+  <h1 class="post-title">Replicating Card &amp; Krueger (1994): When the Minimum Wage Didn’t Bite</h1>
+  <p class="post-subtitle">
+    A classic labor-econ puzzle, re-run from the raw survey data — and a look at what robust standard errors do to the headline.
+  </p>
+</div>
+<div class="post-body">
+<p>Textbook intuition says raising the minimum wage should shrink employment: the price of labor goes up, quantity demanded goes down. In 1992, New Jersey handed economists a natural experiment — it raised the state minimum from $4.25 to $5.05 while Pennsylvania kept theirs unchanged — and David Card and Alan Krueger walked 410 fast-food restaurants in both states through a before-and-after survey. When they ran the difference-in-differences, the sign flipped: NJ employment <em>rose</em> slightly relative to PA. The paper became one of the most-cited results in applied labor economics and earned Card a Nobel in 2021.</p>
+<p>This post re-runs their numbers from the original <code>public.dat</code> file, lands the headline coefficient essentially on top of the paper’s (2.326 vs.&nbsp;2.33), and then asks a small follow-up question the paper doesn’t: <strong>what happens if you relax the assumption that store-level variance is constant?</strong> The point estimate survives. The significance doesn’t.</p>
+<h2 id="caveats-up-front">Caveats up front</h2>
+<p>Before the numbers, a quick honesty ledger:</p>
+<ul>
+<li><strong>All three anchor checks hit.</strong> NJ wave-1 FTE = 20.44, PA wave-1 FTE = 23.33, Table 4 NJ coefficient = 2.326 with OLS SE 1.192 (paper: 20.44 / 23.33 / 2.33 / 1.19). N = 357.</li>
+<li><strong>One numerical quirk.</strong> Table 3’s row 3 “Change in FTE” depends on how you compute it. Computing it as the <strong>difference of the two period means</strong> — what the paper appears to do, and what the figure below visualises — gives PA = −2.17, NJ = +0.59, DiD = +2.75 (paper +2.76). Computing it as the <strong>mean of per-store changes</strong> — the more natural <code>EMPTOT2 − EMPTOT</code> approach my <code>build.py</code> uses — gives PA = −2.28, NJ = +0.47, DiD = +2.75. Same DiD, 0.12-FTE drift in the individual state means. The gap reflects minor sample asymmetries (a few stores appear in one wave but not the other), not a real disagreement.</li>
+<li><strong>Everything below comes from a single run of <a href="https://github.com/rsm-ytiwari"><code>src/build.py</code></a></strong>, no manual adjustment.</li>
+</ul>
+<h2 id="what-the-paper-studies">What the paper studies</h2>
+<p>In April 1992, New Jersey raised its minimum wage from $4.25 to $5.05/hr while neighboring Pennsylvania kept its minimum unchanged. Card and Krueger surveyed 410 fast-food restaurants (Burger King, KFC, Roy Rogers, Wendy’s) in both states shortly before and about eight months after the increase, then used a difference-in-differences design to estimate the employment effect. The conventional prediction — that a binding minimum wage reduces employment — would have NJ employment fall relative to PA. Instead, the authors find the opposite: employment at NJ stores rose <em>slightly</em> relative to PA stores, yielding a positive (statistically weak) treatment effect on full-time-equivalent employment.</p>
+<p><strong>FTE</strong> is defined as <code>full-time workers + 0.5 × part-time workers + managers</code>. So a store with 10 full-timers, 8 part-timers, and 2 managers counts as 10 + 4 + 2 = 16 FTE.</p>
+<h2 id="replication-setup">Replication setup</h2>
+<p>Data: the authors’ <code>public.dat</code> (410 stores × 46 variables, two survey waves), parsed per the column order in their own <code>check.sas</code> input script. Derived variables (<code>EMPTOT</code>, <code>DEMP</code>, <code>GAP</code>, chain dummies, etc.) follow <code>check.sas</code> verbatim. The full pipeline — parse → derive → fit — runs as a single script end-to-end.</p>
+<h2 id="table-2-store-characteristics-by-state">Table 2 — Store characteristics by state</h2>
+<p>Means of key store characteristics in wave 1 (pre-hike) and wave 2 (post-hike), separately for Pennsylvania (NJ = 0) and New Jersey (NJ = 1). Replicated values match the published table to within rounding.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th style="text-align: right;">PA mean</th>
+<th style="text-align: right;">PA SE</th>
+<th style="text-align: right;">NJ mean</th>
+<th style="text-align: right;">NJ SE</th>
+<th style="text-align: right;">NJ − PA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BK (share Burger King)</td>
+<td style="text-align: right;">0.443</td>
+<td style="text-align: right;">0.056</td>
+<td style="text-align: right;">0.411</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">−0.032</td>
+</tr>
+<tr class="even">
+<td>KFC</td>
+<td style="text-align: right;">0.152</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">0.205</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.054</td>
+</tr>
+<tr class="odd">
+<td>Roy Rogers</td>
+<td style="text-align: right;">0.215</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: right;">0.248</td>
+<td style="text-align: right;">0.024</td>
+<td style="text-align: right;">0.033</td>
+</tr>
+<tr class="even">
+<td>Wendy’s</td>
+<td style="text-align: right;">0.190</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.136</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">−0.054</td>
+</tr>
+<tr class="odd">
+<td>Company-owned</td>
+<td style="text-align: right;">0.354</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">0.341</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">−0.013</td>
+</tr>
+<tr class="even">
+<td>FTE (wave 1)</td>
+<td style="text-align: right;">23.331</td>
+<td style="text-align: right;">1.351</td>
+<td style="text-align: right;">20.439</td>
+<td style="text-align: right;">0.508</td>
+<td style="text-align: right;"><strong>−2.892</strong></td>
+</tr>
+<tr class="odd">
+<td>% full-time (wave 1)</td>
+<td style="text-align: right;">0.350</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">0.328</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">−0.022</td>
+</tr>
+<tr class="even">
+<td>Starting wage (wave 1)</td>
+<td style="text-align: right;">4.630</td>
+<td style="text-align: right;">0.040</td>
+<td style="text-align: right;">4.612</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">−0.018</td>
+</tr>
+<tr class="odd">
+<td>At minimum (wave 1)</td>
+<td style="text-align: right;">0.329</td>
+<td style="text-align: right;">0.053</td>
+<td style="text-align: right;">0.305</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">−0.024</td>
+</tr>
+<tr class="even">
+<td>Meal price (wave 1)</td>
+<td style="text-align: right;">3.042</td>
+<td style="text-align: right;">0.069</td>
+<td style="text-align: right;">3.351</td>
+<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">0.309</td>
+</tr>
+<tr class="odd">
+<td>Hours open (wave 1)</td>
+<td style="text-align: right;">14.525</td>
+<td style="text-align: right;">0.332</td>
+<td style="text-align: right;">14.418</td>
+<td style="text-align: right;">0.153</td>
+<td style="text-align: right;">−0.107</td>
+</tr>
+<tr class="even">
+<td>Bonus program</td>
+<td style="text-align: right;">0.291</td>
+<td style="text-align: right;">0.051</td>
+<td style="text-align: right;">0.236</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">−0.055</td>
+</tr>
+<tr class="odd">
+<td>FTE (wave 2)</td>
+<td style="text-align: right;">21.166</td>
+<td style="text-align: right;">0.943</td>
+<td style="text-align: right;">21.027</td>
+<td style="text-align: right;">0.520</td>
+<td style="text-align: right;"><strong>−0.138</strong></td>
+</tr>
+<tr class="even">
+<td>% full-time (wave 2)</td>
+<td style="text-align: right;">0.304</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">0.359</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">0.055</td>
+</tr>
+<tr class="odd">
+<td>Starting wage (wave 2)</td>
+<td style="text-align: right;">4.617</td>
+<td style="text-align: right;">0.042</td>
+<td style="text-align: right;">5.081</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;"><strong>0.463</strong></td>
+</tr>
+<tr class="even">
+<td>At new minimum (wave 2)</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.855</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;"><strong>0.842</strong></td>
+</tr>
+<tr class="odd">
+<td>Meal price (wave 2)</td>
+<td style="text-align: right;">3.027</td>
+<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">3.415</td>
+<td style="text-align: right;">0.036</td>
+<td style="text-align: right;">0.388</td>
+</tr>
+<tr class="even">
+<td>Hours open (wave 2)</td>
+<td style="text-align: right;">14.654</td>
+<td style="text-align: right;">0.327</td>
+<td style="text-align: right;">14.420</td>
+<td style="text-align: right;">0.152</td>
+<td style="text-align: right;">−0.234</td>
+</tr>
+<tr class="odd">
+<td>Special low-wage exemption</td>
+<td style="text-align: right;">0.234</td>
+<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">0.203</td>
+<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">−0.031</td>
+</tr>
+</tbody>
+</table>
+<p>Two things jump out:</p>
+<ol type="1">
+<li><strong>The treatment did bite.</strong> NJ’s share of stores at the prevailing minimum jumped from 30.5% to 85.5% after April 1992 — almost every NJ store was now paying exactly $5.05. PA didn’t move. This is a binding wage floor, not a nominal one.</li>
+<li><strong>NJ stores were smaller to begin with.</strong> Wave-1 FTE is 20.4 in NJ vs.&nbsp;23.3 in PA — a baseline gap of ~2.9 FTE. Any credible DiD has to explain why that gap shrinks after the wage hike.</li>
+</ol>
+<h2 id="table-3-fte-before-after-and-change">Table 3 — FTE before, after, and change</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">PA mean</th>
+<th style="text-align: right;">PA SE</th>
+<th style="text-align: right;">NJ mean</th>
+<th style="text-align: right;">NJ SE</th>
+<th style="text-align: right;">NJ − PA</th>
+<th style="text-align: right;">Diff SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FTE before</td>
+<td style="text-align: right;">23.331</td>
+<td style="text-align: right;">1.351</td>
+<td style="text-align: right;">20.439</td>
+<td style="text-align: right;">0.508</td>
+<td style="text-align: right;">−2.892</td>
+<td style="text-align: right;">1.444</td>
+</tr>
+<tr class="even">
+<td>FTE after</td>
+<td style="text-align: right;">21.166</td>
+<td style="text-align: right;">0.943</td>
+<td style="text-align: right;">21.027</td>
+<td style="text-align: right;">0.520</td>
+<td style="text-align: right;">−0.138</td>
+<td style="text-align: right;">1.077</td>
+</tr>
+<tr class="odd">
+<td>Change in FTE</td>
+<td style="text-align: right;">−2.283</td>
+<td style="text-align: right;">1.253</td>
+<td style="text-align: right;">0.467</td>
+<td style="text-align: right;">0.481</td>
+<td style="text-align: right;"><strong>+2.750</strong></td>
+<td style="text-align: right;">1.342</td>
+</tr>
+</tbody>
+</table>
+<p>The headline is the last cell: the NJ − PA difference in FTE change is <strong>+2.75</strong> (paper reports <strong>+2.76</strong>). Positive. Opposite sign from the textbook. The 0.12-FTE drift on the individual PA / NJ change values is the quirk flagged in the caveats above — it comes from using mean-of-per-store-changes instead of difference-of-means, and the DiD is identical either way.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="card-krueger-replication-assets/fig1-did-fte.png"></p>
+<figcaption>Difference-in-differences: average FTE per store, Pennsylvania and New Jersey, before and after the NJ minimum-wage hike. The gap between the two trajectories is the 2.75-FTE DiD.</figcaption>
+</figure>
+</div>
+<p>The picture is the whole paper in one chart. If you believe PA was a valid counterfactual — that NJ stores would have followed the same trend absent the hike — you read the gap between the two lines at wave 2 as the causal effect of the minimum wage on employment. And that gap is positive.</p>
+<h2 id="table-4-col-i-difference-in-differences-regression">Table 4 col (i) — Difference-in-differences regression</h2>
+<p>The same result, one more time, as a regression. Change in FTE is regressed on a New Jersey dummy. The sample follows <code>check.sas:152-153</code>: stores with a valid wave-2 employment reading, either a valid wage change or permanent closure. N = 357.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">Coefficient</th>
+<th style="text-align: right;">OLS SE</th>
+<th style="text-align: right;">HC1 SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Constant</td>
+<td style="text-align: right;">−2.127</td>
+<td style="text-align: right;">1.074</td>
+<td style="text-align: right;">1.372</td>
+</tr>
+<tr class="even">
+<td>NJ dummy</td>
+<td style="text-align: right;"><strong>2.326</strong></td>
+<td style="text-align: right;"><strong>1.192</strong></td>
+<td style="text-align: right;"><strong>1.452</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The NJ coefficient is <strong>2.326</strong> with OLS standard error <strong>1.192</strong>, against the paper’s 2.33 (1.19). Point estimate and standard error both match essentially exactly. The coefficient reads as “NJ stores gained roughly 2.3 FTE per store relative to PA stores after the minimum wage rose,” and is marginally significant under OLS (t ≈ 1.95, so the 95% CI just barely touches zero).</p>
+<h2 id="additional-robust-standard-errors">Additional — robust standard errors</h2>
+<p>The paper reports plain OLS standard errors, which assume residual variance is constant across stores. That assumption is suspect here on inspection alone: a store employing 40 FTE has far more room to swing by ±5 workers than a store employing 10. Splitting the Table 4 sample at the median baseline FTE (19.5) makes the asymmetry concrete — residual variance is <strong>41.7</strong> among small stores versus <strong>102.2</strong> among large stores, a ratio of <strong>2.45×</strong>. That’s textbook heteroskedasticity.</p>
+<p>Heteroskedasticity-consistent (HC1) standard errors are the minimal fix. The HC1 standard error on the NJ coefficient is <strong>1.452</strong> — about 22% larger than the OLS 1.192. Under HC1, the coefficient is no longer significant at conventional levels (t ≈ 1.60, p ≈ 0.11). The point estimate — the core finding — is unchanged. But inference tightens from “marginally positive” to “statistically indistinguishable from zero” once heteroskedasticity is allowed in.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img src="card-krueger-replication-assets/fig2-ols-vs-hc1.png"></p>
+<figcaption>OLS vs HC1 95% CIs on the NJ coefficient. Same point estimate, different inference: OLS just barely excludes zero, HC1 clearly does not.</figcaption>
+</figure>
+</div>
+<p>This doesn’t overturn Card &amp; Krueger’s broader evidence — the 1994 paper rests on many specifications, including the wage-gap regressions in Table 4 columns iii–v, and the book-length follow-up marshalls much more. But it does illustrate how sensitive the headline t-statistic is to a standard-error choice that rarely gets discussed in pop summaries of the result. Clustering by chain was considered and rejected — only four chains is too few for cluster-robust inference to be well-behaved.</p>
+<h2 id="so-what">So what</h2>
+<p>The Card &amp; Krueger point estimate is remarkably robust: it survives different samples, different software, different standard-error assumptions. What <em>doesn’t</em> survive is the clean “NJ employment went up, and it was statistically significant” story, at least not under HC1. The coefficient is still positive, the direction still counterintuitive — but under the more defensible variance assumption, the estimate stops being distinguishable from zero. Whether you call that “the effect is positive but noisily measured” or “the effect is effectively zero” says more about your priors than about the data.</p>
+<h2 id="reproducibility">Reproducibility</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run <span class="at">--with</span> numpy <span class="at">--with</span> pandas <span class="at">--with</span> statsmodels python src/build.py</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run <span class="at">--with</span> numpy <span class="at">--with</span> pandas <span class="at">--with</span> statsmodels <span class="at">--with</span> matplotlib <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    python src/outputs/make_figures.py</span></code></pre></div>
+<p>The first command writes table CSVs to <code>src/outputs/tables/</code>. The second re-generates the two figures in this post.</p>
+<h2 id="references">References</h2>
+<p>Card, David, and Alan B. Krueger. 1994. “Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania.” <em>American Economic Review</em> 84 (4): 772–793.</p>
+</div>
+
+
+<!-- AUTO-GENERATED — do not edit directly.
+     Source of truth: js/main.js
+     Regenerated by sync-scripts.py on every quarto render. -->
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   main.js — Yash Tiwari Portfolio
+
+   EDIT THIS FILE to change any interactive behaviour.
+   After editing, Quarto picks it up on next render.
+
+   Contents:
+     1. Theme toggle (dark / light mode)
+     2. Typewriter animation (hero role line)
+     3. Copy email to clipboard + toast notification
+     4. Active nav link detection (auto, based on current URL)
+═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Theme Toggle ── */
+const html       = document.documentElement;
+const toggleBtn  = document.getElementById('theme-toggle');
+const themeLabel = document.getElementById('theme-label');
+const themeIcon  = document.getElementById('theme-icon');
+
+const SUN  = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+const MOON = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+if (toggleBtn) {
+  toggleBtn.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    const dark = html.classList.contains('dark');
+    themeLabel.textContent = dark ? 'Dark' : 'Light';
+    themeIcon.innerHTML    = dark ? MOON  : SUN;
+  });
+}
+
+/* ── 2. Typewriter ──
+   EDIT TW_TEXT to change the animated role line on the homepage. */
+const TW_TEXT = 'MS Business Analytics · Builder · Agentic AI';
+const twEl    = document.getElementById('typewriter');
+let   twIdx   = 0;
+function typeChar() {
+  if (twIdx < TW_TEXT.length) {
+    twEl.textContent += TW_TEXT.charAt(twIdx++);
+    setTimeout(typeChar, 38);
+  }
+}
+if (twEl) setTimeout(typeChar, 700);
+
+/* ── 3. Copy Email + Toast ──
+   EDIT the email string below if your address changes.         */
+const copyBtn = document.getElementById('copy-btn');
+const toast   = document.getElementById('toast');
+let   tTimer, rTimer;
+
+if (copyBtn && toast) {
+  copyBtn.addEventListener('click', () => {
+    const email = 'ytiwari@ucsd.edu';   // ← EDIT EMAIL HERE
+    const write = () => {
+      copyBtn.textContent = 'Copied ✓';
+      toast.classList.add('show');
+      clearTimeout(tTimer); clearTimeout(rTimer);
+      tTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+      rTimer = setTimeout(() => { copyBtn.textContent = 'Copy email ↗'; }, 3000);
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(email).then(write).catch(write);
+    } else { write(); }
+  });
+}
+
+/* ── 4. Active Nav Link Detection ──
+   Reads the current page filename and marks the matching
+   .nav-link as .active automatically. No edits needed.        */
+(function () {
+  const path    = window.location.pathname;
+  const current = (path.split('/').filter(Boolean).pop() || 'index').replace('.html', '');
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('active');
+    const href     = link.getAttribute('href') || '';
+    const linkPage = href.split('/').pop().replace('.html', '') || 'index';
+    if (linkPage === current || (current === '' && linkPage === 'index')) {
+      link.classList.add('active');
+    }
+  });
+})();
+
+/* ── 5. Cursor-reactive blob ──
+   Blob follows cursor globally at 35% speed, capped at
+   MAX_DRIFT px from origin. Returns to origin after 3 s
+   of idle or on mouse leave.
+   On homepage: targets .hero-inner (prominent blob)
+   On other pages: targets document.body (ambient blob)   */
+(function() {
+  const blob = document.querySelector('.hero-inner') || document.body;
+
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
+  let rafId = null;
+  let idleTimer = null;
+  const STRENGTH  = 0.35;
+  const LERP      = 0.09;
+  const MAX_DRIFT = 120;
+
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  function lerp(a, b, t)    { return a + (b - a) * t; }
+
+  function animate() {
+    currentX = lerp(currentX, targetX, LERP);
+    currentY = lerp(currentY, targetY, LERP);
+
+    blob.style.setProperty('--blob-x', currentX.toFixed(2) + 'px');
+    blob.style.setProperty('--blob-y', currentY.toFixed(2) + 'px');
+
+    if (
+      Math.abs(currentX - targetX) > 0.05 ||
+      Math.abs(currentY - targetY) > 0.05
+    ) {
+      rafId = requestAnimationFrame(animate);
+    } else {
+      rafId = null;
+    }
+  }
+
+  function resetTarget() {
+    targetX = 0;
+    targetY = 0;
+    if (!rafId) rafId = requestAnimationFrame(animate);
+  }
+
+  function scheduleIdle() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(resetTarget, 3000);
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const rect = blob.getBoundingClientRect();
+    const cx = rect.left + rect.width  / 2;
+    const cy = rect.top  + rect.height / 2;
+
+    const rawX = (e.clientX - cx) * STRENGTH;
+    const rawY = (e.clientY - cy) * STRENGTH;
+
+    targetX = clamp(rawX, -MAX_DRIFT, MAX_DRIFT);
+    targetY = clamp(rawY, -MAX_DRIFT, MAX_DRIFT);
+
+    if (!rafId) rafId = requestAnimationFrame(animate);
+    scheduleIdle();
+  });
+
+  document.addEventListener('mouseleave', resetTarget);
+})();
+
+/* ── 6. Cursor spotlight + grid parallax ──
+   TWO separate effects layered:
+   1. Spotlight: direct cursor tracking (no lerp)
+   2. Grid parallax: very slow lerp (0.035)
+   Touch/stylus devices: fully excluded.
+   Spotlight hides when cursor leaves viewport.
+   On homepage: targets .hero-wrap (hero grid effects)
+   On other pages: targets document.body (full-page grid)  */
+(function() {
+  if (window.matchMedia('(hover: none)').matches) return;
+
+  const grid = document.querySelector('.hero-wrap') || document.body;
+
+  const MAX_SHIFT  = 4;
+  const LERP_GRID  = 0.035;
+
+  let targetGX = 0, targetGY = 0;
+  let currentGX = 0, currentGY = 0;
+  let gridRaf = null;
+
+  function lerpG(a, b, t) { return a + (b - a) * t; }
+
+  function animateGrid() {
+    currentGX = lerpG(currentGX, targetGX, LERP_GRID);
+    currentGY = lerpG(currentGY, targetGY, LERP_GRID);
+    grid.style.setProperty('--grid-x', currentGX.toFixed(2) + 'px');
+    grid.style.setProperty('--grid-y', currentGY.toFixed(2) + 'px');
+    const still =
+      Math.abs(currentGX - targetGX) < 0.02 &&
+      Math.abs(currentGY - targetGY) < 0.02;
+    gridRaf = still ? null : requestAnimationFrame(animateGrid);
+  }
+
+  document.addEventListener('mousemove', function(e) {
+    const rect = grid.getBoundingClientRect();
+    grid.style.setProperty('--mouse-x', (e.clientX - rect.left).toFixed(0) + 'px');
+    grid.style.setProperty('--mouse-y', (e.clientY - rect.top).toFixed(0) + 'px');
+    const cx = rect.left + rect.width  / 2;
+    const cy = rect.top  + rect.height / 2;
+    const rawX = ((e.clientX - cx) / rect.width)  * MAX_SHIFT * 2;
+    const rawY = ((e.clientY - cy) / rect.height) * MAX_SHIFT * 2;
+    targetGX = Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, rawX));
+    targetGY = Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, rawY));
+    if (!gridRaf) gridRaf = requestAnimationFrame(animateGrid);
+  });
+
+  document.addEventListener('mouseleave', function() {
+    grid.style.setProperty('--mouse-x', '-500px');
+    grid.style.setProperty('--mouse-y', '-500px');
+    targetGX = 0; targetGY = 0;
+    if (!gridRaf) gridRaf = requestAnimationFrame(animateGrid);
+  });
+})();
+
+</script>
+
+
+
+
+</body></html>

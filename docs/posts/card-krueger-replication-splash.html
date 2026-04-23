@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>About — Yash Tiwari – Yash Tiwari — Portfolio</title>
+<title>Replicating Card &amp; Krueger (1994) — Yash Tiwari – Yash Tiwari — Portfolio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -53,7 +53,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&amp;family=Geist:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
 
 
-<link rel="stylesheet" href="styles/custom.css">
+<link rel="stylesheet" href="../styles/custom.css">
 </head>
 
 <body>
@@ -63,18 +63,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 <!-- ═══════════════════════════════════════════════════════════
-     NAVBAR
-     EDIT NAV LINKS HERE if you rename pages.
+     NAVBAR — uses ../ prefix (posts/ subdirectory)
+     SPLASH PAGE — card-krueger-replication
 ═══════════════════════════════════════════════════════════════ -->
 <header class="navbar">
-  <a href="index.html" class="nav-logo">YT.</a>
+  <a href="../index.html" class="nav-logo">YT.</a>
 
   <nav class="nav-links">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="projects.html" class="nav-link">Projects</a>
-    <a href="blog.html" class="nav-link">Writing</a>
-    <a href="resume.html" class="nav-link">Resume</a>
-    <a href="about.html" class="nav-link">About</a>
+    <a href="../index.html" class="nav-link">Home</a>
+    <a href="../projects.html" class="nav-link">Projects</a>
+    <a href="../blog.html" class="nav-link">Writing</a>
+    <a href="../resume.html" class="nav-link">Resume</a>
+    <a href="../about.html" class="nav-link">About</a>
   </nav>
 
   <div class="nav-right">
@@ -107,203 +107,29 @@ ul.task-list li input[type="checkbox"] {
 
 
 <!-- ═══════════════════════════════════════════════════════════
-     ABOUT SECTION
+     SPLASH PAGE — Article Gate
 ═══════════════════════════════════════════════════════════════ -->
-<div class="about-section">
-  <div class="about-grid">
+<div class="splash-container">
+  <a href="../blog.html" class="back-link">← All Writing</a>
 
-    <!-- LEFT — PHOTO ─────────────────────────────────────────
-         EDIT PHOTO: Place your photo at assets/profile.jpg
-         then uncomment the <img> and remove the placeholder div.
-    ─────────────────────────────────────────────────────────── -->
+  <div class="splash-content">
+    <div class="splash-meta">
+      <span class="p-year">Apr 2026</span>
+      <span class="post-sep">·</span>
+      <span class="b-read-time">8 min read</span>
+      <span class="post-sep">·</span>
+      <span class="p-year">Data Science</span>
+    </div>
 
-  
-    <img src="assets/profile.jpg" alt="Yash Tiwari" class="about-photo">
+    <h1 class="splash-title">Replicating Card &amp; Krueger (1994): When the Minimum Wage Didn’t Bite</h1>
 
+    <p class="splash-subtitle">
+      A classic labor-econ puzzle, re-run from the raw survey data — and a look at what robust standard errors do to the headline.
+    </p>
 
-    <!-- Remove this placeholder once you add profile.jpg
-    <div class="about-photo-placeholder">
-      Add photo →<br>assets/profile.jpg
-    </div> -->
-
-    <!-- RIGHT — BIO + SECTIONS ───────────────────────────── -->
-    <div>
-
-      <!-- ── EDIT NAME & TAGLINE HERE ── -->
-      <h1 class="about-name">Yash Tiwari</h1>
-      <p class="about-tagline">
-        MS Business Analytics · UC San Diego · San Diego, CA
-      </p>
-
-      <!-- ── EDIT BIO HERE ────────────────────────────────── -->
-      <p class="about-bio">
-        Master's student in Business Analytics at UC San Diego with strong
-        experience in machine learning, data analysis, and product analytics.
-        Proven ability to drive measurable business impact through
-        data-driven decision-making, automation, and experimentation.
-        <br><br>
-        Two startups. ML pipelines ranked #1 out of 60 teams. Defense UX
-        shipped to the Indian Navy. I sit at the intersection of engineering,
-        business, and design — and I work best when something real needs to ship.
-      </p>
-      <!-- ── END BIO ── -->
-
-
-      <!-- ── EDUCATION ─────────────────────────────────────
-           EDIT EDUCATION HERE — update school, degree, year, GPA.
-      ────────────────────────────────────────────────────── -->
-      <div class="section-title">Education</div>
-
-      <div class="edu-item">
-        <div class="edu-school">University of California, San Diego</div>
-        <div class="edu-degree">Master of Science in Business Analytics — Rady School of Management</div>
-        <div class="edu-meta">Expected Dec 2026 &nbsp;·&nbsp; GPA 3.93 &nbsp;·&nbsp; San Diego, CA</div>
-        <div class="edu-meta" style="margin-top:6px; font-size:11px">
-          Coursework: Business Analytics · Collecting &amp; Analyzing Large Datasets · Statistical Modelling
-        </div>
-      </div>
-
-      <div class="edu-item">
-        <div class="edu-school">National Institute of Technology, Srinagar</div>
-        <div class="edu-degree">Bachelor of Technology in Mechanical Engineering</div>
-        <div class="edu-meta">Jun 2025 &nbsp;·&nbsp; GPA 3.89 &nbsp;·&nbsp; India</div>
-        <div class="edu-meta" style="margin-top:6px; font-size:11px">
-          Awards: 2× First Runner-up, All India UX/UI Case Competition
-        </div>
-      </div>
-      <!-- ── END EDUCATION ── -->
-
-
-      <!-- ── EXPERIENCE ────────────────────────────────────
-           EDIT EXPERIENCE HERE — each .timeline-item is one role.
-           Duplicate a block to add a new role.
-      ────────────────────────────────────────────────────── -->
-      <div class="section-title" style="margin-top:40px">Experience</div>
-
-      <div class="timeline">
-
-        <!-- Role 1 — EDIT HERE -->
-        <div class="timeline-item">
-          <div class="timeline-role">Product Analyst (Full-time Intern, CEO's Office)</div>
-          <div class="timeline-company">Intellsys.ai, GrowthJockey — India</div>
-          <div class="timeline-period">Jan 2025 – Jun 2025</div>
-          <ul class="timeline-bullets">
-            <li>Built automated n8n + Python pipelines processing 100K+ records/day from structured and unstructured data sources, reducing acquisition costs by $100K+.</li>
-            <li>Conducted statistical analysis and A/B tests across 1M+ recipients, improving engagement by 30%.</li>
-            <li>Analyzed website traffic, funnel drop-offs, and behavioral cohorts using Google Analytics, Excel, and Tableau to generate data-backed recommendations.</li>
-          </ul>
-        </div>
-        <!-- End Role 1 -->
-
-        <!-- Role 2 — EDIT HERE -->
-        <div class="timeline-item">
-          <div class="timeline-role">User Experience Designer Intern</div>
-          <div class="timeline-company">BotLab Dynamics Pvt. Ltd. — New Delhi, India</div>
-          <div class="timeline-period">Dec 2023 – Dec 2024</div>
-          <ul class="timeline-bullets">
-            <li>Led end-to-end design of a data-driven GCS app for the Indian Navy iDEX initiative, reducing operator task time by ~25%.</li>
-            <li>Delivered 50+ screens and supported full product lifecycle including requirements gathering and design-to-development handoff.</li>
-          </ul>
-        </div>
-        <!-- End Role 2 -->
-
-        <!-- Role 3 — EDIT HERE -->
-        <div class="timeline-item">
-          <div class="timeline-role">Co-founder &amp; CEO</div>
-          <div class="timeline-company">Traway &amp; TheLoudKitchens — Srinagar</div>
-          <div class="timeline-period">Dec 2022 – Jul 2024</div>
-          <ul class="timeline-bullets">
-            <li>Built and scaled 2 student-led ventures; led 10+ cross-functional members and executed 175+ events.</li>
-            <li>Applied segmentation, pricing, and cohort analysis on 3,000+ customers, improving retention to 60%+.</li>
-            <li>Achieved 3× increase in AOV for TheLoudKitchens and improved retention for Traway.</li>
-          </ul>
-        </div>
-        <!-- End Role 3 -->
-
-        <!-- ── ADD NEW ROLES ABOVE THIS LINE ──
-             Duplicate a .timeline-item block from above.       -->
-
-      </div><!-- /timeline -->
-      <!-- ── END EXPERIENCE ── -->
-
-
-      <!-- ── SKILLS ─────────────────────────────────────────
-           EDIT SKILLS HERE — add/remove .skill-tag items.
-           Add a new .skill-group block to create a new category.
-      ────────────────────────────────────────────────────── -->
-      <div class="section-title">Skills</div>
-
-      <div class="skills-grid">
-
-        <!-- Category 1 — EDIT HERE -->
-        <div class="skill-group">
-          <div class="skill-group-title">Programming &amp; ML</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">R</span>
-            <span class="skill-tag">Pandas</span>
-            <span class="skill-tag">Polars</span>
-            <span class="skill-tag">Scikit-learn</span>
-            <span class="skill-tag">PyTorch</span>
-            <span class="skill-tag">XGBoost</span>
-            <span class="skill-tag">GLM</span>
-            <span class="skill-tag">Random Forest</span>
-            <span class="skill-tag">Uplift Modeling</span>
-          </div>
-        </div>
-
-        <!-- Category 2 — EDIT HERE -->
-        <div class="skill-group">
-          <div class="skill-group-title">Analytics &amp; Experimentation</div>
-          <div class="skill-tags">
-            <span class="skill-tag">A/B Testing</span>
-            <span class="skill-tag">EDA</span>
-            <span class="skill-tag">Statistical Testing</span>
-            <span class="skill-tag">Data Mining</span>
-            <span class="skill-tag">Root Cause Analysis</span>
-            <span class="skill-tag">ROI Analysis</span>
-            <span class="skill-tag">Feature Engineering</span>
-          </div>
-        </div>
-
-        <!-- Category 3 — EDIT HERE -->
-        <div class="skill-group">
-          <div class="skill-group-title">Big Data &amp; Cloud</div>
-          <div class="skill-tags">
-            <span class="skill-tag">Snowflake</span>
-            <span class="skill-tag">PySpark</span>
-            <span class="skill-tag">Hadoop</span>
-            <span class="skill-tag">Tableau</span>
-            <span class="skill-tag">Google Analytics</span>
-          </div>
-        </div>
-
-        <!-- Category 4 — EDIT HERE -->
-        <div class="skill-group">
-          <div class="skill-group-title">Automation &amp; Tools</div>
-          <div class="skill-tags">
-            <span class="skill-tag">n8n</span>
-            <span class="skill-tag">Zapier</span>
-            <span class="skill-tag">Make</span>
-            <span class="skill-tag">OpenAI API</span>
-            <span class="skill-tag">FastAPI</span>
-            <span class="skill-tag">Streamlit</span>
-            <span class="skill-tag">Git</span>
-            <span class="skill-tag">Vim / NeoVim</span>
-          </div>
-        </div>
-
-      </div><!-- /skills-grid -->
-      <!-- ── END SKILLS ── -->
-
-    </div><!-- /right column -->
-  </div><!-- /about-grid -->
+    <a href="./card-krueger-replication.html" class="splash-button">Read Article</a>
+  </div>
 </div>
-<!-- ── END ABOUT SECTION ── -->
-
-
-<div class="toast" id="toast">✓ Copied to clipboard</div>
 
 
 <!-- AUTO-GENERATED — do not edit directly.

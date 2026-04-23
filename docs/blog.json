@@ -1,5 +1,18 @@
 [
   {
+    "id": "card-krueger-replication",
+    "number": "03",
+    "date": "Apr 2026",
+    "read_time": "8 min",
+    "title": "Replicating Card & Krueger (1994): When the Minimum Wage Didn't Bite",
+    "summary": "Card & Krueger's 1994 paper found that New Jersey's minimum-wage hike raised fast-food employment relative to Pennsylvania. Replicating their Table 4 from the raw survey data hits the coefficient exactly — until HC1 standard errors quietly erase its significance.",
+    "tags": ["Econometrics", "Difference-in-Differences", "Replication", "Labor Economics"],
+    "category": ["Data Science"],
+    "href": "posts/card-krueger-replication-splash.html",
+    "featured": false,
+    "draft": false
+  },
+  {
     "id": "ab-testing-protocol-matters",
     "number": "02",
     "date": "Apr 2026",
