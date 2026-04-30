@@ -4,17 +4,6 @@ page-layout: custom
 ---
 
 ```{=html}
-<!-- ═══════════════════════════════════════════════════════════
-     HOW TO DUPLICATE THIS TEMPLATE:
-     1. Copy this file: cp traway.qmd yourproject.qmd
-     2. Update the YAML title above
-     3. Fill in each EDIT section below
-     4. Add a card in projects.qmd and index.qmd pointing here
-
-     NAVBAR NOTE: links use ../ because this file is in projects/
-     subdirectory. Top-level pages use plain filenames (index.html).
-═══════════════════════════════════════════════════════════════ -->
-
 <!-- NAVBAR — uses ../ paths because this page is in projects/ -->
 <header class="navbar">
   <a href="../index.html" class="nav-logo">YT.</a>
@@ -58,11 +47,9 @@ page-layout: custom
 
 <!-- ═══════════════════════════════════════════════════════════
      CASE STUDY BANNER
-     EDIT BANNER HERE — tag, title, subtitle, and meta fields.
 ═══════════════════════════════════════════════════════════════ -->
 <div class="case-banner">
 
-  <!-- Back link -->
   <a href="../projects.html" class="back-link">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
@@ -70,20 +57,16 @@ page-layout: custom
     All Projects
   </a>
 
-  <!-- EDIT TAG — short category label (e.g. "Analytics", "ML", "UX") -->
   <div class="case-tag">Analytics · Entrepreneurship</div>
 
-  <!-- EDIT TITLE -->
   <h1 class="case-title">Traway Operations Analytics</h1>
 
-  <!-- EDIT SUBTITLE — one compelling sentence about what you built and why it mattered -->
   <p class="case-subtitle">
     Cohort analysis, pricing segmentation, and retention modeling for a
     student-led mobility startup — turning 3,200 customers into actionable
     growth levers.
   </p>
 
-  <!-- EDIT META — these four fields appear as a row of facts -->
   <div class="case-meta-row">
     <div class="case-meta-item">
       <span class="case-meta-key">Timeline</span>
@@ -109,15 +92,9 @@ page-layout: custom
 
 <!-- ═══════════════════════════════════════════════════════════
      CASE STUDY BODY
-     Each .case-section is one narrative block.
-     EDIT each section label, heading, and paragraphs.
-     Add or remove sections freely — they're just divs.
 ═══════════════════════════════════════════════════════════════ -->
 <div class="case-body">
 
-
-  <!-- SECTION: OVERVIEW ─────────────────────────────────── -->
-  <!-- EDIT OVERVIEW HERE -->
   <div class="case-section">
     <div class="case-section-label">01 / Overview</div>
     <h3>What is Traway?</h3>
@@ -133,11 +110,7 @@ page-layout: custom
       the needle on retention and order value.
     </p>
   </div>
-  <!-- ── END OVERVIEW ── -->
 
-
-  <!-- SECTION: PROBLEM ──────────────────────────────────── -->
-  <!-- EDIT PROBLEM HERE -->
   <div class="case-section">
     <div class="case-section-label">02 / Problem</div>
     <h3>The retention problem</h3>
@@ -151,11 +124,7 @@ page-layout: custom
       intuition-based — and the gap between our best and worst cohorts was wide.
     </p>
   </div>
-  <!-- ── END PROBLEM ── -->
 
-
-  <!-- SECTION: APPROACH ─────────────────────────────────── -->
-  <!-- EDIT APPROACH HERE — describe your methodology step by step -->
   <div class="case-section">
     <div class="case-section-label">03 / Approach</div>
     <h3>Cohort analysis + pricing regression</h3>
@@ -167,16 +136,11 @@ page-layout: custom
       <li>Used EDA to surface seasonal patterns and inform event scheduling decisions.</li>
     </ul>
   </div>
-  <!-- ── END APPROACH ── -->
 
-
-  <!-- SECTION: RESULTS ──────────────────────────────────── -->
-  <!-- EDIT RESULTS HERE — the three stat cards are the headline numbers -->
   <div class="case-section">
     <div class="case-section-label">04 / Results</div>
     <h3>Measurable business impact</h3>
 
-    <!-- EDIT STAT CARDS — change number and label for each card -->
     <div class="result-grid">
       <div class="result-card">
         <span class="result-num">60%+</span>
@@ -197,11 +161,7 @@ page-layout: custom
       for TheLoudKitchens and established a repeatable retention playbook for Traway.
     </p>
   </div>
-  <!-- ── END RESULTS ── -->
 
-
-  <!-- SECTION: LEARNINGS (optional) ────────────────────── -->
-  <!-- EDIT LEARNINGS HERE — or delete this section entirely -->
   <div class="case-section">
     <div class="case-section-label">05 / Learnings</div>
     <h3>What I would do differently</h3>
@@ -212,11 +172,8 @@ page-layout: custom
       about analytics infrastructure in every subsequent project.
     </p>
   </div>
-  <!-- ── END LEARNINGS ── -->
-
 
 </div><!-- /case-body -->
-<!-- ── END CASE STUDY BODY ── -->
 
 
 <div class="toast" id="toast">✓ Copied to clipboard</div>
