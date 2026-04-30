@@ -14,7 +14,7 @@ page-layout: custom
   <nav class="nav-links">
     <a href="../index.html"    class="nav-link">Home</a>
     <a href="../projects.html" class="nav-link">Projects</a>
-    <a href="../blog.html"     class="nav-link">Writing</a>
+    <a href="../blog.html"     class="nav-link">Deep Dives</a>
     <a href="../resume.html"   class="nav-link">Resume</a>
     <a href="../about.html"    class="nav-link">About</a>
   </nav>
@@ -53,7 +53,7 @@ page-layout: custom
      EDIT: date, read_time, category, title, subtitle, article_href
 ═══════════════════════════════════════════════════════════════ -->
 <div class="splash-container">
-  <a href="../blog.html" class="back-link">← All Writing</a>
+  <a href="../blog.html" class="back-link">← All Deep Dives</a>
 
   <div class="splash-content">
     <div class="splash-meta">

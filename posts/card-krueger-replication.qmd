@@ -13,7 +13,7 @@ page-layout: custom
   <nav class="nav-links">
     <a href="../index.html"    class="nav-link">Home</a>
     <a href="../projects.html" class="nav-link">Projects</a>
-    <a href="../blog.html"     class="nav-link">Writing</a>
+    <a href="../blog.html"     class="nav-link">Deep Dives</a>
     <a href="../resume.html"   class="nav-link">Resume</a>
     <a href="../about.html"    class="nav-link">About</a>
   </nav>
@@ -51,7 +51,7 @@ page-layout: custom
      POST BANNER
 ═══════════════════════════════════════════════════════════════ -->
 <div class="post-banner">
-  <a href="../blog.html" class="back-link">← All Writing</a>
+  <a href="../blog.html" class="back-link">← All Deep Dives</a>
   <div class="post-meta-row">
     <span class="p-year">Apr 2026</span>
     <span class="post-sep">·</span>

@@ -1,5 +1,5 @@
 ---
-pagetitle: "Writing — Yash Tiwari"
+pagetitle: "Deep Dives — Yash Tiwari"
 page-layout: custom
 ---
 
