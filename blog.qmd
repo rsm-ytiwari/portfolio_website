@@ -11,12 +11,29 @@ page-layout: custom
   <a href="index.html" class="nav-logo">YT.</a>
 
   <nav class="nav-links">
-    <a href="index.html"    class="nav-link">Home</a>
+    <a href="index.html" class="nav-link">Home</a>
     <a href="projects.html" class="nav-link">Projects</a>
-    <a href="blog.html"     class="nav-link">Deep Dives</a>
-    <a href="resume.html"   class="nav-link">Resume</a>
-    <a href="about.html"    class="nav-link">About</a>
+
+    <!-- DROPDOWN -->
+    <div class="nav-dropdown">
+      <a href="blog.html" class="nav-link">Deep Dives</a>
+      <div class="dropdown-menu">
+        <a href="posts/card-krueger-replication.html" class="dropdown-item">
+          Replicating Card & Krueger (1994)
+        </a>
+        <a href="posts/ab-testing-protocol-matters.html" class="dropdown-item">
+          A/B Testing a Call to Action
+        </a>
+        <a href="posts/metrics-vs-meaning.html" class="dropdown-item">
+          The Dashboard That Lied By Telling the Truth
+        </a>
+      </div>
+    </div>
+
+    <a href="resume.html" class="nav-link">Resume</a>
+    <a href="about.html" class="nav-link">About</a>
   </nav>
+</header>
 
   <div class="nav-right">
     <a href="https://github.com/rsm-ytiwari" target="_blank" rel="noopener" class="nav-icon" aria-label="GitHub">
