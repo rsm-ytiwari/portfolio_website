@@ -16,7 +16,7 @@ For the reasoning behind these file choices, see [decisions.md](decisions.md) an
 | Favicon | [assets/favicon.svg](../assets/favicon.svg) |
 | Dark-mode default (initial theme) | [_partials/head-extras.html](../_partials/head-extras.html) — inline `<script>` adds `html.dark` before paint |
 | Theme toggle behavior | [js/main.js](../js/main.js) → section `1. Theme Toggle` |
-| Navbar links (site-wide) | Every `*.qmd` file's navbar block (copy-paste; all files must stay in sync) |
+| Navbar links (site-wide) | **All 15 files** must be updated together: `index.qmd`, `about.qmd`, `projects.qmd`, `resume.qmd`, `blog.qmd` (root pages) + `posts/ab-testing-protocol-matters-splash.qmd`, `posts/ab-testing-protocol-matters.qmd`, `posts/metrics-vs-meaning-splash.qmd`, `posts/metrics-vs-meaning.qmd`, `posts/card-krueger-replication-splash.qmd`, `posts/card-krueger-replication.qmd`, `posts/splash-template.qmd`, `posts/post-template.qmd` (post pages) + `projects/traway.qmd` (project page) + `_partials/case-study-template.html` (shared partial). Post pages also have a `← All Deep Dives` back-link that must stay in sync with the nav label. Use `grep -rn 'nav-link">' --include="*.qmd" --include="*.html" \| grep -v docs/` to find all instances before editing. |
 | Nav active-link detection | [js/main.js](../js/main.js) → section `4. Active Nav Link Detection` |
 | Responsive / mobile breakpoints | [styles/custom.css](../styles/custom.css) → `@media (max-width: 768px)` block |
 

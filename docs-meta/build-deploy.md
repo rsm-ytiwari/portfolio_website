@@ -127,6 +127,7 @@ Alternative (one command): `quarto publish gh-pages` — but the current workflo
 - **The render globs must include any new folder of `.qmd` files.** If you add `essays/` as a new content type, update `_quarto.yml` `render:` to include `"essays/*.qmd"`.
 - **`resources:` must include any static file that should ship to the published site.** Quarto copies only what's listed (plus what's referenced from CSS/HTML). New JSON data files or asset folders need to be added.
 - **`others/` is excluded.** It's the scratch/homework folder — anything there is intentionally not rendered and not pushed.
+- **Notebook posts use project-specific Python kernels.** Posts with embedded Python cells (e.g. `posts/ab-testing-protocol-matters.qmd`) run under a named Jupyter kernel, not the system Python. The kernel spec lives in `~/Library/Jupyter/kernels/<kernel-name>/kernel.json` and points to a project `.venv`. If `quarto render` fails with `ModuleNotFoundError`, find the kernel's Python via that JSON and run `<venv>/bin/pip install <package>`. Current kernel for ab-testing post: `replicate-scientific-paper` → `/Users/yashtiwari/MSBA/Quarters/Spring_2026/marketing_analytics/replicate_scientific_paper/.venv/bin/python`. Required packages: `numpy`, `scipy`, `pandas`, `scikit-learn`, `plotly`.
 - **Path depth matters.** A case study at `projects/<slug>.qmd` renders to `docs/projects/<slug>.html` — all its intra-site links need `../`. Only case studies and posts live in subdirectories.
 
 ---
