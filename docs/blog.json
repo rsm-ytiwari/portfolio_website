@@ -1,11 +1,24 @@
 [
   {
+    "id": "blueprinty-poisson-mle",
+    "number": "04",
+    "date": "May 2026",
+    "read_time": "12 min",
+    "title": "Does Blueprinty's Software Actually Help Firms Win More Patents?",
+    "summary": "Building a Poisson regression from scratch on 1,500 engineering firms to see whether a marketing claim survives basic causal scrutiny. Hand-rolled MLE, a counterfactual, and an honest answer.",
+    "tags": ["Poisson Regression", "MLE", "Marketing Analytics", "Python"],
+    "category": ["Data Science"],
+    "href": "posts/blueprinty-poisson-mle-splash.html",
+    "featured": true,
+    "draft": false
+  },
+  {
     "id": "card-krueger-replication",
     "number": "03",
     "date": "Apr 2026",
     "read_time": "8 min",
     "title": "Replicating Card & Krueger (1994): When the Minimum Wage Didn't Bite",
-    "summary": "Card & Krueger's 1994 paper found that New Jersey's minimum-wage hike raised fast-food employment relative to Pennsylvania. Replicating their Table 4 from the raw survey data hits the coefficient exactly — until HC1 standard errors quietly erase its significance.",
+    "summary": "Card & Krueger's 1994 paper found that New Jersey's minimum-wage hike raised fast-food employment relative to Pennsylvania. Replicating their Table 4 from the raw survey data hits the coefficient exactly, until HC1 standard errors quietly erase its significance.",
     "tags": ["Econometrics", "Difference-in-Differences", "Replication", "Labor Economics"],
     "category": ["Data Science"],
     "href": "posts/card-krueger-replication-splash.html",
@@ -18,11 +31,11 @@
     "date": "Apr 2026",
     "read_time": "10 min",
     "title": "A/B Testing a Call to Action: Why Getting the Math Right Isn't Enough",
-    "summary": "Statistical tests validate your calculations, not your decisions — and the way you interact with the test can break its validity.",
+    "summary": "Statistical tests validate your calculations, not your decisions, and the way you interact with the test can break its validity.",
     "tags": ["A/B Testing", "Statistics", "Frequentist Methods"],
     "category": ["Data Science"],
     "href": "posts/ab-testing-protocol-matters-splash.html",
-    "featured": true,
+    "featured": false,
     "draft": false
   },
   {

@@ -1,0 +1,300 @@
+---
+pagetitle: "Does Blueprinty's Software Help? Poisson Regression via MLE | Yash Tiwari"
+page-layout: custom
+format:
+  html:
+    html-math-method: katex
+---
+
+```{=html}
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR — uses ../ prefix (posts/ subdirectory)
+═══════════════════════════════════════════════════════════════ -->
+<header class="navbar">
+  <a href="../index.html" class="nav-logo">YT.</a>
+
+  <nav class="nav-links">
+    <a href="../index.html"    class="nav-link">Home</a>
+    <a href="../projects.html" class="nav-link">Projects</a>
+    <a href="../blog.html"     class="nav-link">Deep Dives</a>
+    <a href="../resume.html"   class="nav-link">Resume</a>
+    <a href="../about.html"    class="nav-link">About</a>
+  </nav>
+
+  <div class="nav-right">
+    <a href="https://github.com/rsm-ytiwari" target="_blank" rel="noopener" class="nav-icon" aria-label="GitHub">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+      </svg>
+    </a>
+    <a href="https://www.linkedin.com/in/yash-tiwari-here/" target="_blank" rel="noopener" class="nav-icon" aria-label="LinkedIn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+    <button class="nav-icon" aria-label="Search">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </button>
+    <button class="theme-pill" id="theme-toggle" aria-label="Toggle theme">
+      <span id="theme-icon">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </span>
+      <span id="theme-label">Dark</span>
+    </button>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     POST BANNER
+═══════════════════════════════════════════════════════════════ -->
+<div class="post-banner">
+  <a href="../blog.html" class="back-link">← All Deep Dives</a>
+  <div class="post-meta-row">
+    <span class="p-year">May 2026</span>
+    <span class="post-sep">·</span>
+    <span class="b-read-time">12 min read</span>
+    <span class="post-sep">·</span>
+    <span class="p-year">Data Science</span>
+  </div>
+  <h1 class="post-title">Does Blueprinty's Software Actually Help Firms Win More Patents?</h1>
+  <p class="post-subtitle">
+    Building a Poisson regression from scratch, then asking what a 23% boost in patent rate really means.
+  </p>
+</div>
+```
+
+::: {.post-body}
+
+Blueprinty makes software that helps engineering firms file patent applications. Their marketing team wants to say something punchy: "firms that use our product get more patents approved." Looking at the raw data, they have a case. Customers in the sample average 4.13 patents over five years, non-customers average 3.47. That is a 19% gap, and it looks like a slam-dunk.
+
+But Blueprinty did not run a randomized experiment. The 481 customers in this dataset chose to buy the software, and the 1,019 non-customers chose not to. If the kind of firm that buys patent-filing software is also the kind of firm that would have filed more patents anyway, the raw gap tells me almost nothing about the product's effect.
+
+This post is my attempt to do the work properly. I derive the Poisson likelihood by hand, code up the log-likelihood, find the maximum likelihood estimate numerically, extend the model into a regression that controls for age and region, and then use the fitted model to estimate the counterfactual effect of being a customer. The headline that comes out the other side is **about 0.79 additional patents per firm over five years**, which is bigger than the raw gap (because the regression actually un-confounds an offsetting effect, not the one I expected). I will walk through how I got there.
+
+## Honesty ledger
+
+A short note up front, in the spirit of the Card & Krueger post.
+
+- **Every number cited below is computed by [`src/blueprinty/analyze.py`](https://github.com/rsm-ytiwari/Portfolio_website/blob/main/src/blueprinty/analyze.py)** in a single run. Nothing is hand-edited. The script also dumps a `numbers.json` next to the figures so anyone reading this can cross-check.
+- **My hand-rolled MLE matches `statsmodels.GLM` to 6 decimal places on the coefficients and 8 decimals on the standard errors.** When I show "my code" and "the library" next to each other, it is genuinely the same fit, not two estimators that happen to round the same way.
+- **One numerical wrinkle.** L-BFGS-B is more numerically stable than vanilla BFGS for this design matrix because `age²` ranges up to about 2,500, which can blow the optimizer's first step into a region where `exp(Xβ)` overflows. I started the optimizer at the intercept-only MLE and added box constraints. Result: clean convergence.
+
+## Why this is not a slam-dunk for Blueprinty's marketing team
+
+The cleanest way to evaluate Blueprinty's claim would be to randomize firms into "gets the software" and "does not get the software," wait five years, count patents. We do not have that. We have an observational snapshot of 1,500 firms with patent counts, age, region, and a customer flag.
+
+Two paths the raw gap could come from, and only one of them is the product working:
+
+1. **The software actually helps.** Customers file more applications, or file better-targeted applications, and so they end up with more approvals.
+2. **Selection bias.** The kind of firm that pays for patent-filing software is already a more patent-hungry firm. They would have filed more patents whether or not Blueprinty existed.
+
+I cannot fully separate these paths with this data (no experiment, no instrumental variable). What I *can* do is control for the firm-level characteristics I have: age and region. If the raw gap survives that adjustment, the case for the product is stronger. If it shrinks to zero, it was selection bias all along. If it gets bigger, something interesting is going on.
+
+## Exploring the data
+
+I have 1,500 firms. 481 are customers, 1,019 are not. The outcome is `patents`, the number of patents awarded to the firm over the last five years. Let me look at three things: the patent distribution by customer status, the geographic mix, and the age mix.
+
+### Patents by customer status
+
+{{< include blueprinty-poisson-mle-assets/_fig1-patents-by-customer.qmd >}}
+
+*Non-customer mean = 3.47 patents over 5 years. Customer mean = 4.13. The gap is 0.66 patents per firm, or about 19%. Hover over the bars to see exact counts.*
+
+The customer distribution is shifted right of the non-customer distribution. Not dramatically: the mode is similar, the right tail is similar, and there are non-customers earning 12 or more patents just as there are customers doing the same. But the average is meaningfully higher among customers. That is the gap I need to explain.
+
+### Region
+
+Blueprinty's customers do not look like the rest of the sample on geography.
+
+{{< include blueprinty-poisson-mle-assets/_fig2-region-distribution.qmd >}}
+
+*Share of each group based in each region. Customers are 68% Northeast. Non-customers are 27% Northeast. This is the most obvious confounder in the data.*
+
+Two-thirds of Blueprinty's customers are in the Northeast. Only about a quarter of non-customers are. If Northeast firms patent at different rates than the rest of the country (for industry-mix reasons, or proximity-to-USPTO reasons, or anything else), the raw customer gap is going to be tangled up with a regional effect.
+
+### Age
+
+{{< include blueprinty-poisson-mle-assets/_fig3-age-distribution.qmd >}}
+
+*Density of firm age by customer status. The two distributions overlap almost completely. Mean ages: 26.1 (non-customers) vs 26.9 (customers).*
+
+Age looks like a weak confounder at the marginal level. The distributions sit on top of each other, and the means differ by less than a year. I will still include age in the regression because patenting is plausibly hump-shaped in firm age (very young firms have not built up engineering talent, very old firms become bureaucratic), and `age²` lets the model express that without making me pre-commit to where the hump is.
+
+### Where this leaves me
+
+Region is the obvious confounder. Age is a candidate but looks small. The Poisson regression is the tool that lets me control for both of them and ask the right question: holding age and region fixed, what is the effect of being a customer on patent count?
+
+## A simple Poisson model, fit by maximum likelihood
+
+Before the regression, I want to do the simplest version of this estimation by hand, so the logic is transparent.
+
+The outcome is a count: 0, 1, 2, ..., 16 patents per firm. Counts are non-negative integers, so the Normal distribution is the wrong starting point. The natural model is Poisson: $Y_i \sim \text{Poisson}(\lambda)$ with probability mass function
+
+$$
+f(Y_i \mid \lambda) \;=\; \frac{e^{-\lambda}\, \lambda^{Y_i}}{Y_i!}.
+$$
+
+Under the assumption that the $n = 1{,}500$ firms are independent, the joint likelihood is the product, and the log-likelihood simplifies cleanly.
+
+$$
+\mathcal{L}(\lambda \mid \mathbf{Y}) \;=\; \prod_{i=1}^{n} \frac{e^{-\lambda}\lambda^{Y_i}}{Y_i!}
+\quad\Longrightarrow\quad
+\ell(\lambda) \;=\; -n\lambda \;+\; \log\lambda \cdot \sum_{i=1}^{n} Y_i \;-\; \sum_{i=1}^{n} \log(Y_i!).
+$$
+
+This is what I want to maximize. Coding it up in Python is a few lines.
+
+```python
+from scipy.special import gammaln
+import numpy as np
+
+def poisson_loglikelihood(lam, Y):
+    """Log-likelihood of an iid Poisson(λ) sample, vectorized in λ."""
+    if lam <= 0:
+        return -np.inf
+    return -len(Y) * lam + np.log(lam) * Y.sum() - gammaln(Y + 1).sum()
+```
+
+(`gammaln(Y + 1)` is just $\log(Y!)$, but numerically stable for large $Y$. It is a constant in $\lambda$, so it does not move the argmax, but I keep it so the curve I plot is the actual log-likelihood and not a shifted version.)
+
+What does this look like? I evaluate the log-likelihood on a grid of $\lambda$ values from 0.5 to 8 and plot the result.
+
+{{< include blueprinty-poisson-mle-assets/_fig4-loglik-curve.qmd >}}
+
+*Log-likelihood of an intercept-only Poisson model, as a function of λ. The dotted line marks the sample mean ȳ = 3.6847, which is where the curve peaks.*
+
+The curve is smooth, concave, and clearly maximized somewhere near 3.7. If I take the first derivative of $\ell(\lambda)$ and set it equal to zero,
+
+$$
+\frac{d\ell}{d\lambda} \;=\; -n \;+\; \frac{1}{\lambda}\sum Y_i \;=\; 0 \quad\Longrightarrow\quad \hat\lambda_{\text{MLE}} \;=\; \bar{Y}.
+$$
+
+The MLE is exactly the sample mean. That is a satisfying result because the Poisson's expected value *is* $\lambda$, so the MLE saying "use the sample mean to estimate the population mean" is the simplest sanity check that the math is right.
+
+To confirm this works in code (and to prove the optimizer will be reliable when I move to a more complex model), I also run `scipy.optimize.minimize_scalar` on the negative log-likelihood. It returns:
+
+```
+Numerical MLE:  3.6846670
+Sample mean:    3.6846667
+Absolute diff:  4.68e-09
+```
+
+Agreement to about nine decimals. The univariate problem is essentially solved analytically by `optimize`. With that confidence, I can move to the harder model.
+
+## Poisson regression
+
+The intercept-only model treats every firm the same. That is fine for a demonstration, but useless for Blueprinty's question. I want each firm $i$ to have its own rate parameter $\lambda_i$ that depends on its characteristics.
+
+$$
+Y_i \sim \text{Poisson}(\lambda_i), \qquad \lambda_i \;=\; \exp\!\left(X_i'\beta\right).
+$$
+
+The exponential is the standard inverse link for a Poisson GLM. The reason is mechanical: $\lambda_i$ has to be positive, but $X_i'\beta$ is an arbitrary linear combination that can be negative. Wrapping it in $\exp(\cdot)$ keeps the rate on the positive real line no matter what $\beta$ happens to be.
+
+The log-likelihood becomes
+
+$$
+\ell(\beta) \;=\; \sum_{i=1}^{n}\!\left[ Y_i \cdot X_i'\beta \;-\; \exp(X_i'\beta) \;-\; \log(Y_i!)\right].
+$$
+
+In code:
+
+```python
+def poisson_regression_neg_loglik(beta, Y, X):
+    eta = np.clip(X @ beta, -30, 30)   # guard against runaway exp()
+    lam = np.exp(eta)
+    return -(Y * eta - lam - gammaln(Y + 1)).sum()
+
+def poisson_regression_neg_grad(beta, Y, X):
+    """∂(−log L)/∂β = −X' (Y − λ),  with λ = exp(Xβ)."""
+    eta = np.clip(X @ beta, -30, 30)
+    return -X.T @ (Y - np.exp(eta))
+```
+
+The gradient is closed-form. Supplying it to the optimizer turns out to matter a lot, because finite-difference gradients in this model can overflow when the optimizer takes a wild first step.
+
+### The design matrix
+
+$X$ has eight columns:
+
+1. A column of ones (the intercept).
+2. `age` (firm age in years).
+3. `age²` (squared, to allow a hump-shape).
+4 through 7. Region dummies for Northeast, Northwest, South, and Southwest. I drop Midwest so the intercept is identified (you cannot include a dummy for every category alongside the intercept, because the dummies sum to the intercept column and the system goes singular).
+8. `iscustomer` (0 or 1).
+
+I fit with `scipy.optimize.minimize`, method `L-BFGS-B`, supplying both the function and the analytical gradient. Standard errors come from the inverse of the analytical information matrix $X' \text{diag}(\hat\lambda) X$, evaluated at the converged $\hat\beta$. Then I refit the same model with `statsmodels.GLM(..., family=Poisson())` as a check.
+
+### Coefficients: my MLE vs the library
+
+| Variable     | My MLE coef | My MLE SE | GLM coef  | GLM SE  |
+|--------------|------------:|----------:|----------:|--------:|
+| (Intercept)  | -0.5089     | 0.1832    | -0.5089   | 0.1832  |
+| age          | 0.1486      | 0.0139    | 0.1486    | 0.0139  |
+| age²         | -0.0030     | 0.0003    | -0.0030   | 0.0003  |
+| Northeast    | 0.0292      | 0.0436    | 0.0292    | 0.0436  |
+| Northwest    | -0.0176     | 0.0538    | -0.0176   | 0.0538  |
+| South        | 0.0566      | 0.0527    | 0.0566    | 0.0527  |
+| Southwest    | 0.0506      | 0.0472    | 0.0506    | 0.0472  |
+| **iscustomer** | **0.2076** | **0.0309** | **0.2076** | **0.0309** |
+
+The maximum coefficient difference across the eight variables is **2.06 × 10⁻⁶**. The maximum SE difference is **1.55 × 10⁻⁸**. For all practical purposes, my hand-rolled MLE and statsmodels' GLM are the same fit. Any small remaining discrepancy is the price of approximate numerical optimization (BFGS converges to a tolerance, not to exact zero gradient) versus statsmodels' iteratively reweighted least squares, which is a Newton method tailored to GLMs.
+
+A picture of the same table, with 95% confidence intervals so the geometry of "what matters" is visible at a glance:
+
+{{< include blueprinty-poisson-mle-assets/_fig5-coef-forest.qmd >}}
+
+*Each coefficient with its 95% confidence interval. The blue dot is the customer effect. Region coefficients (vs Midwest baseline) all sit on top of zero. Age and age² are clearly significant.*
+
+A few things jump out:
+
+- **The customer coefficient is 0.21 and tightly estimated.** Its 95% CI does not come close to zero. The z-statistic is about 6.7, well into "very significant" territory.
+- **Region coefficients are tiny and not significant.** Northeast, Northwest, South, Southwest all have confidence intervals that comfortably include zero. Once I control for age and customer status, the region a firm is based in does not detectably predict patent count.
+- **Age and age² do the heavy lifting on the firm-side covariates.** The signs imply a hump-shape: patenting increases with age up to a point, then decreases. Setting $\partial \log \lambda / \partial \text{age} = 0$ gives the peak at $-\hat\beta_{\text{age}}/(2\hat\beta_{\text{age}^2}) \approx 25$ years, which is right in the middle of the observed age distribution.
+
+The interesting and slightly counterintuitive piece is this: the regional skew that looked so dramatic in the raw EDA does *not* end up doing the suppressing work I expected. Customer firms cluster in the Northeast, but Northeast firms are not actually patenting at a notably different rate than firms elsewhere. So the apparent regional pattern is not a confounder. It is a coincidence.
+
+## What is the actual effect of being a customer?
+
+A Poisson regression's coefficients are not directly readable as "extra patents per firm" because the model is multiplicative in the rate. The customer coefficient of 0.21 means $\exp(0.21) \approx 1.23$, so being a customer multiplies a firm's expected patent count by about 1.23. Whether that translates to "one more patent" or "three more patents" depends on the firm's baseline rate.
+
+To get an interpretable number, I use the fitted model to predict each firm's expected patents under two counterfactuals: everyone forced to be a non-customer (`iscustomer = 0`), and everyone forced to be a customer (`iscustomer = 1`). Age and region stay at each firm's actual values. The average difference is the estimate of the customer effect on the average firm in the sample.
+
+The numbers:
+
+- Average predicted patents if non-customer: **3.4362**
+- Average predicted patents if customer:     **4.2290**
+- **Average treatment effect: +0.7928 patents per firm over 5 years.**
+
+That is *larger* than the raw gap of +0.66 I started with. The regression, in adjusting for age, has slightly amplified the customer effect rather than shrinking it. The reason is that customer firms are on average a fraction of a year older than non-customer firms (26.9 vs 26.1), and they sit very close to the patenting peak. The regression pushes some credit that the raw mean was giving to "age" back onto "customer."
+
+Because the model is multiplicative, the per-firm effect varies. Older firms near the patenting peak get a larger absolute bump than very young or very old firms.
+
+{{< include blueprinty-poisson-mle-assets/_fig6-counterfactual.qmd >}}
+
+*Per-firm predicted effect of being a Blueprinty customer, calculated as ŷ₁ − ŷ₀ for each firm. The median firm gets about 0.84 extra patents over five years; the 10th percentile gets 0.60, the 90th percentile gets 0.92. The dotted line is the overall average.*
+
+So what does this say about Blueprinty's marketing claim?
+
+**On the data and within the model, the customer effect is real, statistically clean, and economically meaningful.** Going from non-customer to customer is associated with about a 0.79 patent bump per firm over five years, holding age and region fixed. That is a 23% lift on the baseline rate. The effect is precisely estimated (the regression's standard error on the customer coefficient implies a 95% CI on the multiplier of roughly [1.16, 1.31]).
+
+**But the result is observational, and I want to be careful not to oversell it.** The 1,500 firms in this dataset selected themselves into and out of Blueprinty's customer pool. The regression controls for the two firm characteristics I have (age, region). It cannot control for anything I do not see: a firm's overall patent strategy, R&D budget, in-house IP team, industry sub-niche. If "firms that adopt patent-filing software" are *also* "firms that take patenting seriously enough to invest in any tool that helps," then some unknown portion of the 0.79-patent effect is patent-seriousness, not Blueprinty.
+
+A randomized trial would settle this. Absent that, the honest framing is: the data are *consistent with* Blueprinty's claim that its software helps, the effect that survives age-and-region adjustment is meaningful, and a marketing team using the +0.79-patent number should also disclose that the estimate is observational and likely an upper bound on the true causal effect.
+
+## Reproducibility
+
+```bash
+uv run --with numpy --with pandas --with scipy --with statsmodels --with plotly \
+    python src/blueprinty/analyze.py
+```
+
+That single command reads [`others/blueprinty/blueprinty.csv`](https://github.com/rsm-ytiwari/Portfolio_website/blob/main/others/blueprinty/blueprinty.csv), runs the univariate Poisson MLE, runs the regression by hand and cross-checks against statsmodels, computes the counterfactual ATE, and writes six interactive Plotly figures plus `coef-table.csv` and `numbers.json` into [`posts/blueprinty-poisson-mle-assets/`](https://github.com/rsm-ytiwari/Portfolio_website/tree/main/posts/blueprinty-poisson-mle-assets). Everything in this post comes out of one run of that script. Re-running it on a clean checkout should reproduce every number in the prose to the decimal place shown.
+
+:::
